@@ -1,0 +1,11 @@
+// 載入低階模組彙整器, 使用 as * 免除輸入引用低階模組的名稱
+@use "./modules/index" as *;
+
+/* 設定網頁主體: start */
+html,
+body {
+  font-family: 'Noto Sans TC', sans-serif;
+  font-size: 1rem;
+  line-height: 1.4;
+  background-color: #f6f7f8;
+}
