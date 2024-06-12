@@ -6,7 +6,8 @@
       {{#if userAuth}}
       {{!-- 排版搜尋表單、漢堡排 --}}
       <div class="d-flex nowrap">
-        {{>field-search-form}}
+        {{!-- 預留店家搜尋功能 --}}
+        {{!-- {{>store-search-form}} --}}
         <button class="navbar-toggler" style="position: fixed; right: 0.5rem; top: 0.5rem;" type="button"
           data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
           aria-expanded="false" aria-label="Toggle navigation">
@@ -14,32 +15,32 @@
         </button>
       </div>
       <div class="collapse navbar-collapse" id="navbarCollapse">
-        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0 me-3">
           {{#if userAuth.isAdmin}}
-          <li class="nav-item me-1">
+          <li class="nav-item me-3">
             <a href="/admin/stores" class="nav-link text-container">管理員專區</a>
           </li>
           {{/if}}
-          <li class="nav-item me-1 d-inline-flex align-items-center">
+          <li class="nav-item me-3 d-inline-flex align-items-center">
             <span class="nav-link text-container">Hi, {{ userAuth.name }}</span>
           </li>
 
-          <li class="nav-item me-1">
+          <li class="nav-item me-3">
             <a href="/users/{{userAuth.id}}">
               {{#if userAuth.avatar}}
-              <img class="img-responsive center-block me-1" src="{{userAuth.avatar}}" width="40px" height="40px"
+              <img class="img-responsive center-block" src="{{userAuth.avatar}}" width="40px" height="40px"
                 style="width: 40px; border-radius: 50%" alt="使用者圖像">
               {{else}}
-              <img src="https://fakeimg.pl/40/" class="me-1" width="40px" height="40px" style="border-radius: 50%;" />
+              <img src="https://fakeimg.pl/40/" class="" width="40px" height="40px" style="border-radius: 50%;"/>
               {{/if}}
             </a>
           </li>
 
-          <li class="nav-item me-1">
+          <li class="nav-item me-3">
             <a href="/users/{{userAuth.id}}" class="nav-link text-container">個人頁面</a>
           </li>
-          <li class="nav-item me-1">
-            <a href="/logout"><button class="btn btn-outline-info my-sm-0 my-2">登出</button></a>
+          <li class="nav-item">
+            <a href="/logout"><button class="btn btn-outline-secondary btn-color my-sm-0 my-2">登出</button></a>
           </li>
         </ul>
       </div>
