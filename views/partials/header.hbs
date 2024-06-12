@@ -1,0 +1,49 @@
+<header>
+  <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark px-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">揪團訂飲料</a>
+      {{!-- 來自於 app.js 的 passport --}}
+      {{#if userAuth}}
+      {{!-- 排版搜尋表單、漢堡排 --}}
+      <div class="d-flex nowrap">
+        {{>field-search-form}}
+        <button class="navbar-toggler" style="position: fixed; right: 0.5rem; top: 0.5rem;" type="button"
+          data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse"
+          aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <ul class="navbar-nav ms-auto mb-2 mb-md-0">
+          {{#if userAuth.isAdmin}}
+          <li class="nav-item me-1">
+            <a href="/admin/stores" class="nav-link text-container">管理員專區</a>
+          </li>
+          {{/if}}
+          <li class="nav-item me-1 d-inline-flex align-items-center">
+            <span class="nav-link text-container">Hi, {{ userAuth.name }}</span>
+          </li>
+
+          <li class="nav-item me-1">
+            <a href="/users/{{userAuth.id}}">
+              {{#if userAuth.avatar}}
+              <img class="img-responsive center-block me-1" src="{{userAuth.avatar}}" width="40px" height="40px"
+                style="width: 40px; border-radius: 50%" alt="使用者圖像">
+              {{else}}
+              <img src="https://fakeimg.pl/40/" class="me-1" width="40px" height="40px" style="border-radius: 50%;" />
+              {{/if}}
+            </a>
+          </li>
+
+          <li class="nav-item me-1">
+            <a href="/users/{{userAuth.id}}" class="nav-link text-container">個人頁面</a>
+          </li>
+          <li class="nav-item me-1">
+            <a href="/logout"><button class="btn btn-outline-info my-sm-0 my-2">登出</button></a>
+          </li>
+        </ul>
+      </div>
+      {{/if}}
+    </div>
+  </nav>
+</header>
