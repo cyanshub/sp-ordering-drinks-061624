@@ -10,6 +10,7 @@ const userController = require('../controllers/user-controller')
 const { generalErrorHandler } = require('../middlewares/error-handler')
 const passport = require('../config/passport.js') // 使用者登入及識別
 const { authenticated, authenticatedAdmin } = require('../middlewares/auth.js') // 負責驗證
+const upload = require('../middlewares/multer.js') // 負責圖片上傳功能
 
 // 設計路由
 // 設計路由: 使用者相關
@@ -18,6 +19,10 @@ router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn) // 直接使用passport提供的方法進行登入驗證
 router.get('/logout', userController.logOut)
+router.get('/users/:id', authenticated, userController.getUser)
+router.get('/users/:id/edit', authenticated, userController.editUser)
+router.put('/users/:id', authenticated, upload.single('avatar'), userController.putUser)
+router.get('/avatars/:userId', authenticated, userController.getAvatar)
 
 // 設計路由: 前台區域
 router.get('/stores', authenticated, storeController.getStores)
