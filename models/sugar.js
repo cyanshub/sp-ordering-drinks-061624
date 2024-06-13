@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Sugar.init({
-    level: DataTypes.INTEGER
+    level: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Sugar',

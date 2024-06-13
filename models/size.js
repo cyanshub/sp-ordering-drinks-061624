@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Size.init({
-    level: DataTypes.INTEGER
+    level: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Size',

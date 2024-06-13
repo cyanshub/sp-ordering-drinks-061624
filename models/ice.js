@@ -16,7 +16,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }
   Ice.init({
-    level: DataTypes.INTEGER
+    level: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Ice',
