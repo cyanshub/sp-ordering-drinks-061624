@@ -1,0 +1,25 @@
+<ul class="nav nav-tabs mb-4">
+  {{!-- 首頁 --}}
+  <li class="nav-item">
+    <a class="nav-link btn-color
+    {{#ifCond route 'index'}} active {{/ifCond}}" href="/stores">所有店家
+    </a>
+  </li>
+
+  {{!-- 分頁: 其他功能 --}}
+  <li class="nav-item">
+    <a class="nav-link btn-color
+    {{#ifCond route ''}} active {{/ifCond}}" href="#">查看訂單
+    </a>
+  </li>
+
+  {{!-- 分頁: 其他功能 --}}
+  <li class="nav-item">
+    <a class="nav-link btn-color
+    {{#ifCond route ''}} active {{/ifCond}}" href="#">購買記錄
+    </a>
+  </li>
+
+
+
+</ul>

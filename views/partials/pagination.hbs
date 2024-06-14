@@ -1,3 +1,6 @@
+{{!-- 當總頁數>1時顯示頁碼器, 否則隱藏 --}}
+{{#ifLarger pagination.totalPage 1}}
+
 {{!-- 加上 pagination 分頁器 --}}
 <nav class="mt-3 d-flex justify-content-center" aria-label="page navigation">
   <ul class="pagination">
@@ -76,3 +79,5 @@
     <button class="btn btn-outline-primary btn-sm ms-2" style="padding: 0.2rem 0.3rem;" type="submit">GO</button>
   </form>
 </div>
+{{else}}
+{{/ifLarger}}
