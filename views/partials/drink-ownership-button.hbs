@@ -1,0 +1,18 @@
+{{!-- 加入擁有功能 --}}
+{{!-- 加入是否擁有的條件判斷式 --}}
+{{#if isOwned}}
+<form id="ownershipForm" action="/admin/ownership/{{this.id}}?_method=DELETE" method="POST"
+  style="display: contents;">
+  <input type="hidden" name="storeId" id="storeId" value="{{storeId}}">{{!-- 記錄店家資訊 --}}
+  <button id="toggleBtn1" type="submit" class="btn btn-link link-success ms-0" style="text-decoration: none;">販售</button>
+</form>
+{{else}}
+<form id="ownershipForm" action="/admin/ownership/{{this.id}}" method="POST"
+  style="display: contents;">
+  <input type="hidden" name="storeId" id="storeId" value="{{storeId}}">{{!-- 記錄店家資訊 --}}
+  <button id="toggleBtn2" type="submit" class="btn btn-link link-danger ms-0" style="text-decoration: none;">停售</button>
+</form>
+{{/if}}
+
+
+

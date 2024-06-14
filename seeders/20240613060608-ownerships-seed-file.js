@@ -5,7 +5,8 @@ module.exports = {
   async up (queryInterface, Sequelize) {
     // 查詢stores id, 獲取名稱包括迷客夏的的id
     const stores = await queryInterface.sequelize.query(
-      'SELECT id FROM stores WHERE name LIKE "%迷客夏%";',
+      // 'SELECT id FROM stores WHERE name LIKE "%迷客夏%";',
+      'SELECT id FROM stores;',
       { type: Sequelize.QueryTypes.SELECT })
 
     // 查詢所有 drinks id, 拿到所有飲料

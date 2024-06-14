@@ -1,5 +1,5 @@
 // 引入資料表 model
-const { Store, User } = require('../models')
+const { Store, User, Drink, Ownership } = require('../models')
 
 // 載入所需的工具
 const { getOffset, getPagination } = require('../helpers/pagination-helpers.js')
@@ -69,6 +69,34 @@ const adminController = {
         return { store: newStore }
       })
       .catch(err => next(err))
+  },
+  getStore: (req, res, next) => {
+    return Promise.all([
+      Store.findByPk(req.params.id, {
+        include: [{
+          model: Drink,
+          as: 'ownedDrinks',
+          order: [['id', 'ASC']]
+        }]
+      }),
+      // 撈出資料庫所有飲料, 讓個別店家勾選, 登陸進 ownerships
+      Drink.findAll({ raw: true })
+    ])
+
+      .then(([store, drinks]) => {
+        if (!store) throw new Error('該商店不存在!')
+        // 取出店家有販賣的 drink id 當作販賣清單
+        const ownedDrinksId = store.ownedDrinks ? store.ownedDrinks.map(od => od.id) : []
+
+        // 將所有飲料逐一比對販賣清單中的飲料, 並將有無結果用isOwned變數儲存
+        const drinksData = drinks.map(d => ({
+          ...d,
+          isOwned: ownedDrinksId.includes(d.id)
+        }))
+
+        store = store.toJSON()
+        return res.render('admin/store', { store, drinks: drinksData })
+      })
   },
   editStore: (req, res, next) => {
     return Store.findByPk(req.params.id, { raw: true })
@@ -145,6 +173,46 @@ const adminController = {
       .then(editedUser => {
         res.redirect('/admin/users')
         return editedUser
+      })
+      .catch(err => next(err))
+  },
+  addOwnership: (req, res, next) => {
+    const { storeId } = req.body // 從隱藏input拿取店家 id
+    const drinkId = req.params.drinkId // 從路由拿取商品 id
+    return Promise.all([
+      Drink.findByPk(drinkId),
+      Ownership.findOne({ where: { storeId, drinkId } })
+    ])
+      .then(([drink, ownership]) => {
+        if (!drink) throw new Error('該商品不存在!')
+        if (ownership) throw new Error('商品已在販賣清單!')
+        return Ownership.create({ storeId, drinkId })
+      })
+      .then(newOwnership => {
+        // 點集變更後, 稍等一下才轉址
+        setTimeout(function () { res.redirect('back') }, 1000)
+        return { ownership: newOwnership }
+      })
+      .catch(err => next(err))
+  },
+  removeOwnership: (req, res, next) => {
+    const { storeId } = req.body // 從隱藏input拿取店家 id
+    const drinkId = req.params.drinkId // 從路由拿取商品 id
+
+    return Promise.all([
+      Drink.findByPk(drinkId),
+      Ownership.findOne({ where: { storeId, drinkId } })
+    ])
+      .then(([drink, ownership]) => {
+        if (!drink) throw new Error('該商品不存在!')
+        if (!ownership) throw new Error('商品不在販賣清單!')
+        return ownership.destroy()
+      })
+      .then(deletedOwnership => {
+        // 點集變更後, 稍等一下才轉址
+        setTimeout(function () { res.redirect('back') }, 1000)
+
+        return { ownership: deletedOwnership }
       })
       .catch(err => next(err))
   }

@@ -4,11 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-  "heroku-postbuild": "",
-  "start": "node app.js",
-  "dev": "nodemon app.js",
-  "lint": "eslint \"**/*.js\" --fix",
-  "test": "mocha tests --exit --recursive --timeout 5000"
+    "heroku-postbuild": "",
+    "start": "node app.js",
+    "dev": "nodemon app.js",
+    "lint": "eslint \"**/*.js\" --fix",
+    "test": "mocha tests --exit --recursive --timeout 5000"
   },
   "engines": {
     "node": "^14.x"
