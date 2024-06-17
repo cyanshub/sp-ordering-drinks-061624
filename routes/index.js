@@ -26,6 +26,7 @@ router.get('/avatars/:userId', authenticated, userController.getAvatar)
 
 // 設計路由: 前台區域
 router.get('/stores', authenticated, storeController.getStores)
+router.get('/stores/:id', authenticated, storeController.getStore)
 
 // 設計路由: 後台區域
 router.use('/admin', authenticatedAdmin, admin)

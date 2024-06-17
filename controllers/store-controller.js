@@ -1,5 +1,5 @@
 // 引入資料表 model
-const { Store } = require('../models')
+const { Store, Drink, Size, Sugar, Ice } = require('../models')
 
 // 載入所需的工具
 const { getOffset, getPagination } = require('../helpers/pagination-helpers.js')
@@ -41,6 +41,37 @@ const storeController = {
         })
       })
       .catch(err => next(err))
+  },
+  getStore: (req, res, next) => {
+    return Promise.all([
+      Store.findByPk(req.params.id, {
+        include: [{
+          model: Drink,
+          as: 'ownedDrinks',
+          order: [['id', 'ASC']]
+        }]
+      }),
+      // 撈出資料庫所有飲料, 讓個別店家勾選, 登陸進 ownerships
+      Size.findAll({ raw: true }),
+      Sugar.findAll({ raw: true }),
+      Ice.findAll({ raw: true })
+    ])
+
+      .then(([store, sizes, sugars, ices]) => {
+        if (!store) throw new Error('該商店不存在!')
+
+        // 從店家販賣的飲料清單中, 拿取店家有販賣的飲料
+        const drinksData = store.ownedDrinks ? store.ownedDrinks.map(od => ({ ...od.toJSON() })) : []
+
+        store = store.toJSON()
+        return res.render('store', {
+          store,
+          drinks: drinksData,
+          sizes,
+          sugars,
+          ices
+        })
+      })
   }
 }
 
