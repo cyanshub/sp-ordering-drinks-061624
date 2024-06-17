@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // sugar甜度可以出現在很多筆訂單order, 但每筆訂單order只會出現一種甜度sugar
       Sugar.hasMany(models.Order, { foreignKey: 'sugarId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
+
+      Sugar.hasMany(models.Cart, { foreignKey: 'sugarId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
     }
   }
   Sugar.init({

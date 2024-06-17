@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // ice 冰量可以出現在很多筆訂單order, 但每筆訂單order只會出現一種冰量ice
       Ice.hasMany(models.Order, { foreignKey: 'iceId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
+
+      Ice.hasMany(models.Cart, { foreignKey: 'iceId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
     }
   }
   Ice.init({

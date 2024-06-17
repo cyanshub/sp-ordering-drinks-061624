@@ -24,6 +24,10 @@ router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, upload.single('avatar'), userController.putUser)
 router.get('/avatars/:userId', authenticated, userController.getAvatar)
 
+router.get('/carts', authenticated, userController.getCarts)
+router.post('/carts/:storeId', authenticated, userController.addCart)
+router.delete('/carts/:cartId', authenticated, userController.removeCart)
+
 // 設計路由: 前台區域
 router.get('/stores', authenticated, storeController.getStores)
 router.get('/stores/:id', authenticated, storeController.getStore)

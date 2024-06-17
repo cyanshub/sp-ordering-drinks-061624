@@ -1,0 +1,34 @@
+{{!-- 前台頁籤 --}}
+{{> store-tabs route = 'carts'}}
+
+{{#if carts}}
+{{#each carts}}
+<div class="mt-2">
+  {{!-- 列出訂單資訊 --}}
+  <div style="display: inline;">
+    <span>
+      {{this.User.name}} 在店家 {{this.Store.name}} 購買了 {{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}的<br>
+      飲料 {{this.Drink.name}}, {{this.amount}} 杯
+    </span>
+  </div>
+
+
+  {{!-- 取消訂單 --}}
+  <form action="/carts/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+    <button type="submit" class="btn btn-link link-danger" style="text-decoration: none; line-height: 0.8rem;"
+      onclick="return confirm(`確定要取消訂單嗎?`)">移出購物車</button>
+  </form>
+</div>
+{{/each}}
+
+
+<div class="mt-3">
+  <a class="btn btn-outline-primary mt-2 me-3" href="#">正式下訂</a>
+  <a class="btn btn-outline-secondary mt-2" href="javascript:history.back()">繼續逛逛</a>
+</div>
+
+{{else}}
+<a href="/stores">
+  <h5 class="mt-1" style="line-height: 1.5rem">購物車還是空的...<br>來去逛逛吧!</h5>
+</a>
+{{/if}}

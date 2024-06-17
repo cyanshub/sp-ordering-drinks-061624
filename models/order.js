@@ -19,6 +19,7 @@ module.exports = (sequelize, DataTypes) => {
       // user經由order可以購買很多種drink, drink經由order也可以被很多user購買
       Order.belongsTo(models.User, { foreignKey: 'userId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
       Order.belongsTo(models.Drink, { foreignKey: 'drinkId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
+      Order.belongsTo(models.Store, { foreignKey: 'storeId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
     }
   }
   Order.init({
@@ -26,8 +27,9 @@ module.exports = (sequelize, DataTypes) => {
     userId: DataTypes.INTEGER,
     drinkId: DataTypes.INTEGER,
     sizeId: DataTypes.INTEGER,
-    sugerId: DataTypes.INTEGER,
-    iceId: DataTypes.INTEGER
+    sugarId: DataTypes.INTEGER,
+    iceId: DataTypes.INTEGER,
+    storeId: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Order',

@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs')
 
 // 載入所需 model
-const { User } = require('../models')
+const { User, Cart, Drink, Store, Size, Sugar, Ice } = require('../models')
 
 // 載入所需工具
 const { localAvatarHandler } = require('../helpers/file-helpers')
@@ -115,6 +115,67 @@ const userController = {
         return { user: updatedUser }
       })
       .catch(err => next(err))
+  },
+  getCarts: (req, res, next) => {
+    return Cart.findAll({
+      raw: true,
+      nest: true,
+      where: { userId: req.user.id },
+      include: [
+        User, Drink, Store, Size, Sugar, Ice
+      ]
+    })
+      .then(carts => {
+        res.render('carts', { carts })
+      })
+  },
+  addCart: (req, res, next) => {
+    const userId = req.user.id
+    const drinkId = Number(req.body.drinkId)
+    const sizeId = Number(req.body.sizeId)
+    const sugarId = Number(req.body.sugarId)
+    const iceId = Number(req.body.iceId)
+    const amount = Number(req.body.amount)
+
+    if (!sizeId) throw new Error('請選擇中杯或大杯!')
+    if (!sugarId) throw new Error('請選擇甜度!')
+    if (!iceId) throw new Error('請選擇冰量!')
+    if (!amount) throw new Error('請選擇購買杯數!')
+
+    const storeId = Number(req.params.storeId)
+    if (!storeId) throw new Error('店家不存在!')
+    return Drink.findByPk(drinkId)
+      .then(drink => {
+        if (!drink) throw new Error('該商品不存在!')
+        return Cart.create({
+          userId,
+          drinkId,
+          sizeId,
+          sugarId,
+          iceId,
+          amount,
+          storeId
+        })
+      })
+      .then(newCart => {
+        req.flash('success_messages', '商品已成功加入購物車!')
+        res.redirect('/carts')
+        return { cart: newCart }
+      })
+      .catch(err => next(err))
+  },
+  removeCart: (req, res, next) => {
+    const cartId = Number(req.params.cartId)
+    return Cart.findByPk(cartId)
+      .then(cart => {
+        if (!cart) throw new Error('此購物車商品不存在!')
+        return cart.destroy()
+      })
+      .then(deletedCart => {
+        req.flash('success_messages', '成功退回訂單')
+        res.redirect(`/stores/${deletedCart.storeId}`)
+        return { cart: deletedCart }
+      })
   }
 }
 

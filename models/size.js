@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // size尺寸可以出現在很多筆訂單order, 但每筆訂單order只會出現一種尺寸size
       Size.hasMany(models.Order, { foreignKey: 'sizeId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
+
+      Size.hasMany(models.Cart, { foreignKey: 'sizeId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
     }
   }
   Size.init({

@@ -48,7 +48,7 @@
       {{!-- 輸入冰量 --}}
       <div class="form-row mb-3">
         <label for="iceId" class="me-3"><strong>冰量</strong></label>
-        {{#each sugars}}
+        {{#each ices}}
         <div class="mb-1">
           <input id="ice-id-{{this.id}}" name="iceId" type="radio" value="{{this.id}}" required>
           <label for="ice-id-{{this.id}}" class="me-3 cursor-pointer">{{this.level}}</label>
@@ -63,13 +63,13 @@
   <div class="mt-2 mb-3 row">
     <label for="amount" class="col-auto col-form-label"><strong>杯數</strong></label>
     <div class="col-auto">
-      <input type="number" class="form-control" id="amount" value="1" min="1" max="30" placeholder="請輸入要購買的杯數" required>
+      <input type="number" class="form-control" name="amount" id="amount" value="1" min="1" max="30" placeholder="數字" required>
     </div>
   </div>
 
   {{!-- 提交控制項 --}}
   <div class="d-flex justify-content-center mt-5">
-    <button type="submit" class="btn btn-outline-primary mx-3">前往購買</button>
+    <button type="submit" class="btn btn-outline-primary mx-3">加入購物車</button>
     <a href="javascript:history.back()" class="btn btn-outline-secondary">返回</a>
   </div>
 

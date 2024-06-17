@@ -13,6 +13,8 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       // user經由order可以購買很多種drink, drink經由order也可以被很多user購買
       User.hasMany(models.Order, { foreignKey: 'userId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
+
+      User.hasMany(models.Cart, { foreignKey: 'userId', onDelete: 'SET NULL', onUpdate: 'CASCADE' })
     }
   }
   User.init({
