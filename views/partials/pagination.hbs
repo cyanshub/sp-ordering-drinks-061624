@@ -69,9 +69,9 @@
 </nav>
 
 {{!-- 直接輸入頁碼控制項 --}}
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center ms-3">
   <form class="d-flex align-items-center" action="{{../isSearched}}" method="get" style="display: inline;">
-    <label class="me-2" for="page">預計前往第</label>
+    <label class="me-2" for="page">前往第</label>
     <input type="number" id="page" name="page" value="{{pagination.currentPage}}" min="1" max="{{pagination.totalPage}}"
       style="max-width: 2.5rem; text-align: center;">
     <input type="hidden" name="keyword" {{#if keyword}} value={{keyword}} {{/if}}>

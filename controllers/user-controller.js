@@ -6,6 +6,8 @@ const { User, Cart, Drink, Store, Size, Sugar, Ice, Order } = require('../models
 
 // 載入所需工具
 const { localAvatarHandler } = require('../helpers/file-helpers')
+const { getOffset, getPagination } = require('../helpers/pagination-helpers')
+const { Op, literal } = require('sequelize') // 引入 sequelize 查詢符、啟用 SQL 語法
 
 const userController = {
   signUpPage: (req, res, next) => {
@@ -208,7 +210,42 @@ const userController = {
       .catch(err => next(err))
   },
   getOrders: (req, res, next) => {
-    res.send('功能開發中!')
+    const DEFAULT_LIMIT = 5 // 預設每頁顯示幾筆資料
+    const page = Number(req.query.page) || 1 // 預設第一頁或從query string拿資料
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT // 預設每頁顯示資料數或從query string拿資料
+    const offset = getOffset(limit, page)
+    const keyword = req.query.keyword ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+    return Order.findAndCountAll({
+      raw: true,
+      nest: true,
+      where: {
+        userId: req.user.id,
+        ...keyword.length > 0
+          ? {
+              [Op.or]: [
+                literal(`LOWER(Store.name) LIKE '%${keyword.toLowerCase()}%'`),
+                literal(`LOWER(Store.address) LIKE '%${keyword.toLowerCase()}%'`),
+                literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`)
+              ]
+            }
+          : {}
+      },
+      order: [['id', 'DESC']], // 依建立時間降續排列
+      include: [User, Drink, Store, Size, Sugar, Ice],
+      offset,
+      limit
+    })
+      .then(orders => {
+        const data = orders.rows
+        res.render('orders', {
+          orders: data,
+          pagination: getPagination(limit, page, orders.count),
+          isSearched: '/orders', // 決定搜尋表單發送位置
+          keyword,
+          count: orders.count
+        })
+      })
+      .catch(err => next(err))
   }
 }
 

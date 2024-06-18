@@ -9,10 +9,9 @@ $maxTableWidth: 1200px;
 // 指定特定資料表(記得再修改)
 .table-width {
   max-width: $maxTableWidth;
-
 }
 
-#table-carts {
+#table-carts, #table-orders {
   border: 1px solid darken($baseColor, 5%);
   border-radius: $borderRadius;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
@@ -79,7 +78,8 @@ $maxTableWidth: 1200px;
     max-width: $maxTableWidth - 800px;
   }
 
-  #table-carts {
+    #table-carts,
+    #table-orders {
     border: none;
     box-shadow: none;
     overflow: visible;
