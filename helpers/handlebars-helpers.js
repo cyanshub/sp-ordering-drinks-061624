@@ -25,5 +25,21 @@ module.exports = {
 
   relativeTimeFromNow: a => dayjs(a).fromNow(),
 
-  formatTime: a => dayjs(a).format('YYYY-MM-DD HH:mm')
+  formatTime: a => dayjs(a).format('YYYY-MM-DD HH:mm'),
+
+  multiply: (...args) => {
+    // 過濾掉非數字的元素
+    const numbers = args.filter(arg => typeof arg === 'number')
+
+    // 如果所有的參數都不是數字，返回 'Invalid input'
+    if (numbers.length === 0) {
+      return 'Invalid input'
+    }
+
+    // 計算乘積
+    const product = numbers.reduce((acc, curr) => acc * curr, 1)
+
+    // 將結果以千分位顯示
+    return product.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+  }
 }

@@ -28,6 +28,9 @@ router.get('/carts', authenticated, userController.getCarts)
 router.post('/carts/:storeId', authenticated, userController.addCart)
 router.delete('/carts/:cartId', authenticated, userController.removeCart)
 
+router.get('/orders', authenticated, userController.getOrders)
+router.post('/orders/all', authenticated, userController.addOrders)
+
 // 設計路由: 前台區域
 router.get('/stores', authenticated, storeController.getStores)
 router.get('/stores/:id', authenticated, storeController.getStore)

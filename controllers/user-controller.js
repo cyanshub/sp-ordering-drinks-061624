@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs')
 
 // 載入所需 model
-const { User, Cart, Drink, Store, Size, Sugar, Ice } = require('../models')
+const { User, Cart, Drink, Store, Size, Sugar, Ice, Order } = require('../models')
 
 // 載入所需工具
 const { localAvatarHandler } = require('../helpers/file-helpers')
@@ -176,6 +176,39 @@ const userController = {
         res.redirect(`/stores/${deletedCart.storeId}`)
         return { cart: deletedCart }
       })
+  },
+  addOrders: (req, res, next) => {
+    return Promise.all([
+      Cart.findAll({ where: { userId: req.user.id }, raw: true }),
+      Cart.findAll({ where: { userId: req.user.id } })
+    ])
+      .then(([carts, cartsToDelete]) => {
+        if (!carts) throw new Error('購物車沒有商品!')
+        carts.forEach(cart => {
+          return Order.create({
+            userId: cart.userId,
+            drinkId: cart.drinkId,
+            sizeId: cart.sizeId,
+            sugarId: cart.sugarId,
+            iceId: cart.iceId,
+            amount: cart.amount,
+            storeId: cart.storeId
+          })
+        })
+
+        return cartsToDelete.forEach(cart => {
+          return cart.destroy()
+        })
+      })
+      .then(newOrders => {
+        req.flash('success_messages', '商品訂單正式成立!')
+        res.redirect('/orders')
+        return { orders: newOrders }
+      })
+      .catch(err => next(err))
+  },
+  getOrders: (req, res, next) => {
+    res.send('功能開發中!')
   }
 }
 

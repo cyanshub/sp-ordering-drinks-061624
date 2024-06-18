@@ -1,14 +1,17 @@
-<div class="row" style="max-width: 1080px; margin: 0 auto;">
+{{!-- 導入頁籤 --}}
+{{>store-tabs route = 'store'}}
 
-  <div class="d-flex align-items-center">
-    <div class="col col-lg-6">
+<div style="max-width: 1080px; margin-left: 0; margin-right: auto;">
+
+  <div class="row d-flex align-items-center">
+    <div class="col-lg-5 col-sm-12 ms-5">
       <img class="img-responsive center-block" src="{{store.cover}}"
         style="width:auto; max-width: 390px; margin-bottom: 1rem; transition: opacity 0.5s; opacity:0;"
         onload="this.style.opacity=1;">
       <br>
     </div>
-    <div class="col-12 col-lg-6 ms-5">
-      <h3 class="mb-2">
+    <div class="col-lg-5 col-sm-12 ms-5">
+      <h3 class="my-2">
         <strong>{{store.name}}</strong>
       </h3>
       <ul class="list-unstyled">
@@ -23,7 +26,7 @@
     </div>
   </div>
 
-  <hr style="border: none; border-top: 3px solid black;">
+  <hr style="border: none; border-top: 1px solid black;">
 
   
   {{!-- 將商品加入購物車 --}}
