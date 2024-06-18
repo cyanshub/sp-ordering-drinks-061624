@@ -50,4 +50,41 @@ a {
   text-decoration: none;
 }
 
-/* reset:end *//*# sourceMappingURL=index.css.map */
+/* reset:end */
+#table-carts {
+  border: 1px solid #327a81;
+  border-radius: 10px;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  max-width: calc(100% - 10em);
+  margin: 1em auto;
+  overflow: hidden;
+  width: 800px;
+}
+
+table {
+  width: 100%;
+}
+table th {
+  padding: 10px;
+  background-color: #327a81;
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+table td {
+  color: #2b686e;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+table td:last-child {
+  font-size: 0.95em;
+  line-height: 1.4;
+}
+table tr:nth-child(2n) {
+  background-color: white;
+}
+table tr:nth-child(2n+1) {
+  background-color: #edf7f8;
+}/*# sourceMappingURL=index.css.map */

@@ -23,5 +23,7 @@ module.exports = {
     return number.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
   },
 
-  relativeTimeFromNow: a => dayjs(a).fromNow()
+  relativeTimeFromNow: a => dayjs(a).fromNow(),
+
+  formatTime: a => dayjs(a).format('YYYY-MM-DD HH:mm')
 }

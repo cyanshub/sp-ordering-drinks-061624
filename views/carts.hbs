@@ -2,30 +2,64 @@
 {{> store-tabs route = 'carts'}}
 
 {{#if carts}}
-{{#each carts}}
+
 <div class="mt-2">
   {{!-- 列出訂單資訊 --}}
-  <div style="display: inline;">
-    <span>
-      {{this.User.name}} 在店家 {{this.Store.name}} 購買了 {{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}的<br>
-      飲料 {{this.Drink.name}}, {{this.amount}} 杯
-    </span>
+  <div id="table-carts">
+    <table cellspacing="0">
+
+      {{!-- 表頭 --}}
+      <thead>
+        <tr>
+          <th style="min-width: 60px;">用戶</th>
+          <th style="min-width: 60px;">店家</th>
+          <th style="min-width: 60px;">數量</th>
+          <th style="min-width: 100px;">商品</th>
+          <th style="min-width: 130px;">規格</th>
+          <th style="min-width: 110px;">時間</th>
+          <th style="min-width: 100px;">取消訂單</th>
+        </tr>
+      </thead>
+      
+      {{!-- 表格 --}}
+      <tbody>
+        {{#each carts}}
+        <tr>
+          <td>{{this.User.name}}</td>
+          <td>{{this.Store.name}}</td>
+
+          <td>{{this.amount}}杯</td>
+          <td>{{this.Drink.name}}</td>
+          <td>{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>
+          <td>{{formatTime this.createdAt}}</td>
+          <td>
+            {{!-- 取消訂單 --}}
+            <form action="/carts/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+              <button type="submit" class="btn btn-link btn-color " style="text-decoration: none; line-height: 1.2rem;"
+                onclick="return confirm(`確定要取消訂單嗎?`)">移出購物車</button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+      
+    </table>
+
+    
   </div>
 
 
-  {{!-- 取消訂單 --}}
-  <form action="/carts/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-    <button type="submit" class="btn btn-link link-danger" style="text-decoration: none; line-height: 0.8rem;"
-      onclick="return confirm(`確定要取消訂單嗎?`)">移出購物車</button>
-  </form>
+  {{!-- 按鈕區塊 --}}
+  <div class="mt-3 d-flex justify-content-center table-width">
+    <a class="btn btn-outline-primary mt-2 me-3" href="/history">正式下訂</a>
+    <a class="btn btn-outline-secondary mt-2" href="javascript:history.back()">繼續逛逛</a>
+  </div>
+
 </div>
-{{/each}}
 
 
-<div class="mt-3">
-  <a class="btn btn-outline-primary mt-2 me-3" href="#">正式下訂</a>
-  <a class="btn btn-outline-secondary mt-2" href="javascript:history.back()">繼續逛逛</a>
-</div>
+
+
 
 {{else}}
 <a href="/stores">

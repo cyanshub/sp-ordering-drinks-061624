@@ -7,3 +7,5 @@ upload/
 .env
 .idea
 mysql_db_backup
+
+public/dist/css

@@ -2,4 +2,5 @@
 // @forward 並非直接載入低階模組, 而是被用@use載入時才可被間接載入
 @forward "./resets";
 @forward "./variables";
+@forward "./tables";
 
