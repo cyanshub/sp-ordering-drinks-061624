@@ -100,27 +100,39 @@ a {
   .table-width {
     max-width: 400px;
   }
-  #table-carts {
+  #table-carts,
+  #table-orders {
     border: none;
     box-shadow: none;
     overflow: visible;
   }
   #table-carts table,
   #table-carts tr,
-  #table-carts td {
+  #table-carts td,
+  #table-orders table,
+  #table-orders tr,
+  #table-orders td {
     display: block;
   }
-  #table-carts table td:nth-child(1), #table-carts table td:nth-child(2), #table-carts table td:nth-child(3), #table-carts table td:nth-child(6), #table-carts table td:nth-child(7) {
+  #table-carts table td:nth-child(1), #table-carts table td:nth-child(2), #table-carts table td:nth-child(3), #table-carts table td:nth-child(6), #table-carts table td:nth-child(7),
+  #table-orders table td:nth-child(1),
+  #table-orders table td:nth-child(2),
+  #table-orders table td:nth-child(3),
+  #table-orders table td:nth-child(6),
+  #table-orders table td:nth-child(7) {
     text-align: left;
   }
-  #table-carts tr {
+  #table-carts tr,
+  #table-orders tr {
     padding: 10px 0;
     position: relative;
   }
-  #table-carts tr:first-child {
+  #table-carts tr:first-child,
+  #table-orders tr:first-child {
     display: none;
   }
-  #table-carts td:first-child {
+  #table-carts td:first-child,
+  #table-orders td:first-child {
     background-color: #c3cee0;
     border-bottom: 1px solid #91a4c6;
     border-radius: 10px 10px 0 0;
@@ -128,37 +140,46 @@ a {
     top: 0;
     transform: translateY(0);
     width: 100%;
-    min-width: 450px;
+    min-width: 420px;
   }
-  #table-carts td:not(:first-child) {
+  #table-carts td:not(:first-child),
+  #table-orders td:not(:first-child) {
     margin: 0;
     padding: 5px 1em;
     width: 100%;
-    min-width: 450px;
+    min-width: 420px;
   }
-  #table-carts td:not(:first-child):before {
+  #table-carts td:not(:first-child):before,
+  #table-orders td:not(:first-child):before {
     padding-top: 0.3em;
     position: relative;
   }
-  #table-carts td:last-child {
+  #table-carts td:last-child,
+  #table-orders td:last-child {
     padding-bottom: 1rem !important;
   }
-  #table-carts td:nth-child(2):before {
+  #table-carts td:nth-child(2):before,
+  #table-orders td:nth-child(2):before {
     content: "店家: ";
   }
-  #table-carts td:nth-child(3):before {
+  #table-carts td:nth-child(3):before,
+  #table-orders td:nth-child(3):before {
     content: "數量: ";
   }
-  #table-carts td:nth-child(4):before {
+  #table-carts td:nth-child(4):before,
+  #table-orders td:nth-child(4):before {
     content: "商品: ";
   }
-  #table-carts td:nth-child(5):before {
+  #table-carts td:nth-child(5):before,
+  #table-orders td:nth-child(5):before {
     content: "規格: ";
   }
-  #table-carts td:nth-child(6):before {
+  #table-carts td:nth-child(6):before,
+  #table-orders td:nth-child(6):before {
     content: "時間: ";
   }
-  #table-carts tr {
+  #table-carts tr,
+  #table-orders tr {
     background-color: white !important;
     border: 1px solid #7089b4;
     border-radius: 10px;
@@ -168,7 +189,8 @@ a {
     margin-right: auto;
     padding: 0;
   }
-  #table-carts tr:last-child {
+  #table-carts tr:last-child,
+  #table-orders tr:last-child {
     margin-bottom: 1rem;
   }
 }/*# sourceMappingURL=index.css.map */

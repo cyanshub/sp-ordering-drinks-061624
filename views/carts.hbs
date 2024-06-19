@@ -11,13 +11,12 @@
       {{!-- 表頭 --}}
       <thead>
         <tr>
-          <th style="min-width: 60px;">用戶</th>
           <th style="min-width: 60px;">店家</th>
           <th style="min-width: 60px;">數量</th>
           <th style="min-width: 100px;">商品</th>
-          <th style="min-width: 130px;">規格</th>
+          <th style="min-width: 120px;">規格</th>
           <th style="min-width: 60px;">金額</th>
-          <th style="min-width: 110px;">時間</th>
+          <th style="min-width: 100px;">時間</th>
           <th style="min-width: 100px;">取消</th>
         </tr>
       </thead>
@@ -26,8 +25,8 @@
       <tbody>
         {{#each carts}}
         <tr>
-          <td>{{this.User.name}}</td>
-          <td>{{this.Store.name}}</td>
+          
+          <td><a href="/stores/{{this.Store.id}}">{{this.Store.name}}</a></td>
           <td>{{this.amount}}杯</td>
           <td>{{this.Drink.name}}</td>
           <td>{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>

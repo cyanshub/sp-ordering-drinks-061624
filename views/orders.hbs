@@ -24,7 +24,7 @@
       <tbody>
         {{#each orders}}
         <tr>
-          <td>{{this.Store.name}}</td>
+          <td><a href="/stores/{{this.Store.id}}">{{this.Store.name}}</a></td>
           <td>{{this.amount}}杯</td>
           <td>{{this.Drink.name}}</td>
           <td>{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>
@@ -47,7 +47,7 @@
 
   {{!-- 取得資料總數, 顯示全部資料的按鈕 --}}
   <p class="small btn-color">
-    提示: 本頁搜尋表單還可搜尋飲料名稱、訂單日期年月日(含年月、月日)<br>
+    提示: 本頁搜尋表單還可搜尋飲料名稱、訂單日期<br>
     {{> pagination-toggle color = 'btn-color'}}
   </p>
 

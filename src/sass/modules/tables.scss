@@ -11,7 +11,8 @@ $maxTableWidth: 1200px;
   max-width: $maxTableWidth;
 }
 
-#table-carts, #table-orders {
+#table-carts,
+#table-orders {
   border: 1px solid darken($baseColor, 5%);
   border-radius: $borderRadius;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
@@ -75,11 +76,12 @@ $maxTableWidth: 1200px;
 // 響應式設計
 @media screen and (max-width: 860px) {
   .table-width {
-    max-width: $maxTableWidth - 800px;
+    max-width: 400px;
+    width: auto;
   }
 
-    #table-carts,
-    #table-orders {
+  #table-carts,
+  #table-orders {
     border: none;
     box-shadow: none;
     overflow: visible;
@@ -104,13 +106,17 @@ $maxTableWidth: 1200px;
       }
     }
 
+    thead {
+      tr {
+        &:first-child {
+          display: none;
+        }
+      }
+    }
+
     tr {
       padding: $padding 0;
       position: relative;
-
-      &:first-child {
-        display: none;
-      }
     }
 
 
@@ -123,14 +129,14 @@ $maxTableWidth: 1200px;
         top: 0;
         transform: translateY(0);
         width: 100%;
-        min-width: $maxTableWidth - 750px;
+        min-width: 300px;
       }
 
       &:not(:first-child) {
         margin: 0;
         padding: 5px 1em;
         width: 100%;
-        min-width: $maxTableWidth - 750px;
+        min-width: 300px;
 
 
         &:before {
