@@ -18,11 +18,9 @@
             <h5 class="card-title mt-2">{{user.name}}</h5>
             <p class="card-text">{{user.email}}</p>
             <div class="btn-container mt-4">
-              <a href="/users/{{user.id}}/edit" class="btn btn-outline-primary me-2" {{#ifCond userAuth.id user.id }} {{else}} style="pointer-events: none; color: gray;"{{/ifCond}}>編輯</a>
-              <a href="javascript:history.back()" class="btn btn-outline-secondary">返回</a>
-
+              <a href="javascript:history.back()" class="btn btn-outline-secondary me-2">返回</a>
+              <a href="/users/{{user.id}}/edit" class="btn btn-outline-primary" {{#ifCond userAuth.id user.id }} {{else}} style="pointer-events: none; color: gray;"{{/ifCond}}>編輯</a>
             </div>
-
           </div>
         </div>
       </div>
