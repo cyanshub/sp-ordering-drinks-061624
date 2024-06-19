@@ -24,6 +24,10 @@ router.delete('/stores/:id', adminController.deleteStore)
 router.get('/users', adminController.getUsers)
 router.patch('/users/:id', adminController.patchUser)
 
+// 設記路由: 訂單相關
+router.get('/orders', adminController.getOrders)
+router.delete('/orders/:orderId', adminController.deleteOrder)
+
 // 設計路由: 導向後臺首頁
 router.use('/', (req, res) => res.redirect('/admin/stores'))
 

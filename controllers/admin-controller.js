@@ -1,5 +1,5 @@
 // 引入資料表 model
-const { Store, User, Drink, Ownership } = require('../models')
+const { Store, User, Drink, Ownership, Size, Sugar, Ice, Order } = require('../models')
 
 // 載入所需的工具
 const { getOffset, getPagination } = require('../helpers/pagination-helpers.js')
@@ -215,6 +215,63 @@ const adminController = {
         return { ownership: deletedOwnership }
       })
       .catch(err => next(err))
+  },
+  getOrders: (req, res, next) => {
+    const userAuth = req.user
+    if (userAuth.email !== 'root@example.com') throw new Error('只有專責管理員可以訪問此頁面!')
+    const DEFAULT_LIMIT = 10 // 預設每頁顯示幾筆資料
+    const page = Number(req.query.page) || 1 // 預設第一頁或從query string拿資料
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT // 預設每頁顯示資料數或從query string拿資料
+    const offset = getOffset(limit, page)
+    const keyword = req.query.keyword ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+    const whereClause = { // find系列語法查詢條件
+      ...keyword.length > 0
+        ? {
+            [Op.or]: [
+              literal(`LOWER(User.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(User.email) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.address) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`DATE_ADD(Order.created_at, INTERVAL 8 HOUR) LIKE '%${keyword}%'`)
+            ]
+          }
+        : {}
+    }
+
+    return Order.findAndCountAll({
+      raw: true,
+      nest: true,
+      where: whereClause,
+      order: [['id', 'DESC']], // 依建立時間降續排列
+      include: [User, Drink, Store, Size, Sugar, Ice],
+      offset,
+      limit
+    })
+      .then(orders => {
+        const data = orders.rows
+        res.render('admin/orders', {
+          orders: data,
+          pagination: getPagination(limit, page, orders.count),
+          isSearched: '/admin/orders', // 決定搜尋表單發送位置
+          keyword,
+          count: orders.count
+        })
+      })
+      .catch(err => next(err))
+  },
+  deleteOrder: (req, res, next) => {
+    const orderId = Number(req.params.orderId)
+    return Order.findByPk(orderId)
+      .then(order => {
+        if (!order) throw new Error('指定的訂單不存在!')
+        return order.destroy()
+      })
+      .then(deletedOrder => {
+        req.flash('success_messages', '成功取消訂單!')
+        res.redirect('back')
+        return { order: deletedOrder }
+      })
   }
 }
 
