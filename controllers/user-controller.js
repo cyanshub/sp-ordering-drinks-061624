@@ -100,7 +100,7 @@ const userController = {
       })
       .catch(err => next(err))
   },
-  getAvatar: (req, res, next) => {
+  putAvatar: (req, res, next) => {
     const userId = req.params.userId
     return User.findByPk(userId, {
       attributes: { exclude: ['password'] }

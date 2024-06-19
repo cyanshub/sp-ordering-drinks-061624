@@ -22,7 +22,7 @@ router.get('/logout', userController.logOut)
 router.get('/users/:id', authenticated, userController.getUser)
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, upload.single('avatar'), userController.putUser)
-router.get('/avatars/:userId', authenticated, userController.getAvatar)
+router.put('/avatars/:userId', authenticated, userController.putAvatar)
 
 router.get('/carts', authenticated, userController.getCarts)
 router.post('/carts/:storeId', authenticated, userController.addCart)

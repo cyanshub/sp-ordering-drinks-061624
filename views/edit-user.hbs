@@ -9,7 +9,7 @@
     <label class="form-label" for="avatar">使用者頭像</label>
 
     {{!-- 移除使用者頭像 --}}
-    <a href="/avatars/{{user.id}}" class="btn btn-link small mb-1" onclick="return confirm('確定要移除使用者頭像嗎?')">移除使用者頭像</a>
+    <button type="button" id="removeAvatarBtn" class="btn btn-link small mb-1">移除使用者頭像</button>
 
     <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
   </div>
@@ -20,3 +20,16 @@
   </div>
   
 </form>
+
+{{!-- 用來移除頭像的表單 --}}
+<form id="removeAvatarForm" action="/avatars/{{user.id}}?_method=PUT" method="post" style="display: none;">
+  {{!-- 可以在這裡加上其他必要的隱藏字段 --}}
+</form>
+
+<script>
+  document.getElementById('removeAvatarBtn').addEventListener('click', function () {
+    if (confirm('確定要移除使用者頭像嗎?')) {
+      document.getElementById('removeAvatarForm').submit()
+    }
+  })
+</script>
