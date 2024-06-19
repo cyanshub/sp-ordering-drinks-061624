@@ -10,7 +10,9 @@
       <div class="mb-1">
         <input id="drink-id-{{this.id}}" name="drinkId" type="radio" value="{{this.id}}" required>
         <label for="drink-id-{{this.id}}" class="cursor-pointer">{{this.name}}/</label>
-        <label for="drink-id-{{this.id}}" class="me-3 cursor-pointer">價格:{{this.price}}元</label>
+        <label for="drink-id-{{this.id}}" class="me-3 cursor-pointer">
+          中杯M {{this.price}}元/ 大杯L {{sum this.price  5}}元
+        </label>
       </div>
     {{/each}}
     </div>

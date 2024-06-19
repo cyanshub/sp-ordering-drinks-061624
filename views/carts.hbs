@@ -31,7 +31,14 @@
           <td>{{this.amount}}杯</td>
           <td>{{this.Drink.name}}</td>
           <td>{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>
-          <td>{{multiply this.Drink.price this.amount}}元</td>
+
+          {{!-- 判斷價格是中杯還是大杯 --}}
+          {{#ifCond this.Size.level "大杯(L)"}}
+          <td>{{formatNumber (multiply (sum this.Drink.price 5) this.amount )}}元</td>
+          {{else}}
+          <td>{{formatNumber (multiply (sum this.Drink.price) this.amount )}}元</td>
+          {{/ifCond}}
+          
           <td>{{formatTime this.createdAt}}</td>
           <td>
             {{!-- 取消訂單 --}}
@@ -59,6 +66,6 @@
 
 {{else}}
 <a href="/stores">
-  <h5 class="mt-1" style="line-height: 1.5rem">購物車還是空的...<br>來去逛逛吧!</h5>
+  <h6 class="mt-1 ms-3" style="line-height: 1.5rem">還沒想到喝什麼?<br>趕快去逛逛吧!</h6>
 </a>
 {{/if}}

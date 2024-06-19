@@ -37,9 +37,29 @@ module.exports = {
     }
 
     // 計算乘積
-    const product = numbers.reduce((acc, curr) => acc * curr, 1)
+    // acc（累加器，accumulator; curr（目前元素，current element）
+    const init = 1 // 初始值 1, 逐一與crr相乘後, 放入acc, 直到處理完成為止
+    const product = numbers.reduce((acc, curr) => acc * curr, init)
 
     // 將結果以千分位顯示
-    return product.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    return product
+  },
+
+  sum: (...args) => {
+    // 過濾掉非數字的元素
+    const numbers = args.filter(arg => typeof arg === 'number')
+
+    // 如果所有的參數都不是數字，返回 'Invalid input'
+    if (numbers.length === 0) {
+      return 'Invalid input'
+    }
+
+    // 計算加總
+    // acc（累加器，accumulator; curr（目前元素，current element）
+    const init = 0 // 初始值 0, 逐一與crr相加後, 放入acc, 直到處理完成為止
+    const total = numbers.reduce((acc, curr) => acc + curr, init)
+
+    // 將結果以千分位顯示
+    return total
   }
 }
