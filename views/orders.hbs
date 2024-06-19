@@ -11,7 +11,6 @@
       {{!-- 表頭 --}}
       <thead>
         <tr>
-          <th style="min-width: 60px;">用戶</th>
           <th style="min-width: 60px;">店家</th>
           <th style="min-width: 60px;">數量</th>
           <th style="min-width: 100px;">商品</th>
@@ -25,7 +24,6 @@
       <tbody>
         {{#each orders}}
         <tr>
-          <td>{{this.User.name}}</td>
           <td>{{this.Store.name}}</td>
           <td>{{this.amount}}杯</td>
           <td>{{this.Drink.name}}</td>
@@ -49,7 +47,8 @@
 
   {{!-- 取得資料總數, 顯示全部資料的按鈕 --}}
   <p class="small btn-color">
-    {{> pagination-toggle color = 'btn-color'}}
+    {{> pagination-toggle color = 'btn-color'}}<br>
+    提示: 本頁搜尋表單還可搜尋飲料名稱、訂單日期年月日
   </p>
 
   {{!-- 新增頁碼器 --}}

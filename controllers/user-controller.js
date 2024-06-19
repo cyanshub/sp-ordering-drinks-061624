@@ -215,21 +215,24 @@ const userController = {
     const limit = Number(req.query.limit) || DEFAULT_LIMIT // 預設每頁顯示資料數或從query string拿資料
     const offset = getOffset(limit, page)
     const keyword = req.query.keyword ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+
+    const whereClause = { // find系列語法查詢條件
+      ...keyword.length > 0
+        ? {
+            [Op.or]: [
+              literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.address) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`DATE_ADD(Order.created_at, INTERVAL 8 HOUR) LIKE '%${keyword}%'`)
+            ]
+          }
+        : {}
+    }
+
     return Order.findAndCountAll({
       raw: true,
       nest: true,
-      where: {
-        userId: req.user.id,
-        ...keyword.length > 0
-          ? {
-              [Op.or]: [
-                literal(`LOWER(Store.name) LIKE '%${keyword.toLowerCase()}%'`),
-                literal(`LOWER(Store.address) LIKE '%${keyword.toLowerCase()}%'`),
-                literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`)
-              ]
-            }
-          : {}
-      },
+      where: whereClause,
       order: [['id', 'DESC']], // 依建立時間降續排列
       include: [User, Drink, Store, Size, Sugar, Ice],
       offset,
