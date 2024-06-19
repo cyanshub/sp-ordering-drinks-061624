@@ -219,7 +219,7 @@ const adminController = {
   getOrders: (req, res, next) => {
     const userAuth = req.user
     if (userAuth.email !== 'root@example.com') throw new Error('只有專責管理員可以訪問此頁面!')
-    const DEFAULT_LIMIT = 10 // 預設每頁顯示幾筆資料
+    const DEFAULT_LIMIT = 5 // 預設每頁顯示幾筆資料
     const page = Number(req.query.page) || 1 // 預設第一頁或從query string拿資料
     const limit = Number(req.query.limit) || DEFAULT_LIMIT // 預設每頁顯示資料數或從query string拿資料
     const offset = getOffset(limit, page)
