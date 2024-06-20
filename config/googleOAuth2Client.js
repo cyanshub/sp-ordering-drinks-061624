@@ -1,4 +1,7 @@
-require('dotenv').config()
+// 載入環境變數
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const { google } = require('googleapis')
 

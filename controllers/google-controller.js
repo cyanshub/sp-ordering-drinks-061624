@@ -2,7 +2,9 @@
 const nodemailer = require('nodemailer')
 
 // 載入環境變數
-require('dotenv').config()
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const googleController = {
   sendEmail: (req, res, next) => {
