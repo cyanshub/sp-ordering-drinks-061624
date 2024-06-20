@@ -55,7 +55,8 @@ a {
   max-width: 1200px;
 }
 
-#table-carts, #table-orders {
+#table-carts,
+#table-orders {
   border: 1px solid #384b6c;
   border-radius: 10px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
@@ -65,10 +66,12 @@ a {
   overflow: hidden;
   width: 1200px;
 }
-#table-carts table, #table-orders table {
+#table-carts table,
+#table-orders table {
   width: 100%;
 }
-#table-carts table th, #table-orders table th {
+#table-carts table th,
+#table-orders table th {
   padding: 10px;
   background-color: #384b6c;
   color: white;
@@ -76,29 +79,39 @@ a {
   text-transform: uppercase;
   font-weight: 300;
 }
-#table-carts table td, #table-orders table td {
+#table-carts table td,
+#table-orders table td {
   color: #30405b;
   padding: 10px;
   text-align: start;
   vertical-align: middle;
 }
-#table-carts table td:last-child, #table-orders table td:last-child {
+#table-carts table td:last-child,
+#table-orders table td:last-child {
   font-size: 0.95em;
   line-height: 1.4;
 }
-#table-carts table td:nth-child(1), #table-carts table td:nth-child(2), #table-carts table td:nth-child(3), #table-carts table td:nth-child(6), #table-carts table td:nth-child(7), #table-orders table td:nth-child(1), #table-orders table td:nth-child(2), #table-orders table td:nth-child(3), #table-orders table td:nth-child(6), #table-orders table td:nth-child(7) {
+#table-carts table td:nth-child(1), #table-carts table td:nth-child(2), #table-carts table td:nth-child(3), #table-carts table td:nth-child(6), #table-carts table td:nth-child(7),
+#table-orders table td:nth-child(1),
+#table-orders table td:nth-child(2),
+#table-orders table td:nth-child(3),
+#table-orders table td:nth-child(6),
+#table-orders table td:nth-child(7) {
   text-align: center;
 }
-#table-carts table tr:nth-child(2n), #table-orders table tr:nth-child(2n) {
+#table-carts table tr:nth-child(2n),
+#table-orders table tr:nth-child(2n) {
   background-color: white;
 }
-#table-carts table tr:nth-child(2n+1), #table-orders table tr:nth-child(2n+1) {
+#table-carts table tr:nth-child(2n+1),
+#table-orders table tr:nth-child(2n+1) {
   background-color: #e5eaf1;
 }
 
 @media screen and (max-width: 860px) {
   .table-width {
     max-width: 400px;
+    width: auto;
   }
   #table-carts,
   #table-orders {
@@ -122,14 +135,14 @@ a {
   #table-orders table td:nth-child(7) {
     text-align: left;
   }
+  #table-carts thead tr:first-child,
+  #table-orders thead tr:first-child {
+    display: none;
+  }
   #table-carts tr,
   #table-orders tr {
     padding: 10px 0;
     position: relative;
-  }
-  #table-carts tr:first-child,
-  #table-orders tr:first-child {
-    display: none;
   }
   #table-carts td:first-child,
   #table-orders td:first-child {
@@ -140,14 +153,14 @@ a {
     top: 0;
     transform: translateY(0);
     width: 100%;
-    min-width: 420px;
+    min-width: 300px;
   }
   #table-carts td:not(:first-child),
   #table-orders td:not(:first-child) {
     margin: 0;
     padding: 5px 1em;
     width: 100%;
-    min-width: 420px;
+    min-width: 300px;
   }
   #table-carts td:not(:first-child):before,
   #table-orders td:not(:first-child):before {

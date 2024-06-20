@@ -1,45 +1,49 @@
-{{!-- 餐廳後台 --}}
-{{> admin-tabs route = 'stores'}}
+{{!-- 套用自訂編距樣式 --}}
+<div class="margin-wrapper">
+  {{!-- 餐廳後台 --}}
+  {{> admin-tabs route = 'stores'}}
 
 
-<a href='/admin/stores/create'>
-  <button type="button" class="btn btn-outline-primary mt-4">新增店家</button>
-</a>
-<br />
-<br />
-<table class="table align-middle">
-  <thead class="thead-dark">
-    <tr class="table-dark">
-      <th scope="col">序號</th>
-      <th scope="col">店家名稱</th>
-      <th scope="col">店家電話</th>
-      <th scope="col">店家地址</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each stores}}
-    <tr>
-      <th scope="row">{{this.id}}</th>
-      <td><a href="/admin/stores/{{this.id}}">{{this.name}}</a></td>
-      <td>{{this.phone}}</td>
-      <td>{{this.address}}</td>
-      
-      <td>
-        <button type="button" class="btn btn-link">
-          <a class="btn btn-link link-secondary" href="/admin/stores/{{this.id}}/edit">
-            編輯
-          </a>
-        </button>
-        <form action="/admin/stores/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link link-danger"
-            onclick="return confirm(`確定要刪除{{this.name}}嗎?`)">刪除</button>
-        </form>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+  <a href='/admin/stores/create'>
+    <button type="button" class="btn btn-outline-primary mt-4">新增店家</button>
+  </a>
+  <br />
+  <br />
+  <table class="table align-middle">
+    <thead class="thead-dark">
+      <tr class="table-dark">
+        <th scope="col">序號</th>
+        <th scope="col">店家名稱</th>
+        <th scope="col">店家電話</th>
+        <th scope="col">店家地址</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each stores}}
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td><a href="/admin/stores/{{this.id}}">{{this.name}}</a></td>
+        <td>{{this.phone}}</td>
+        <td>{{this.address}}</td>
+        
+        <td>
+          <button type="button" class="btn btn-link">
+            <a class="btn btn-link link-secondary" href="/admin/stores/{{this.id}}/edit">
+              編輯
+            </a>
+          </button>
+          <form action="/admin/stores/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link link-danger"
+              onclick="return confirm(`確定要刪除{{this.name}}嗎?`)">刪除</button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
 
-{{!-- 加上 pagination 分頁器 --}}
-{{>pagination}}
+  {{!-- 加上 pagination 分頁器 --}}
+  {{>pagination}}
+
+</div>

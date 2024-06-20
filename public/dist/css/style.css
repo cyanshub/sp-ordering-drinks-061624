@@ -249,6 +249,13 @@ a {
   cursor: pointer;
 }
 
+.margin-wrapper {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 3rem;
+  margin-right: 3rem;
+}
+
 .form-signup,
 .form-signin {
   width: 40%;

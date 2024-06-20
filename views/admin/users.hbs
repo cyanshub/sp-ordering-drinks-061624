@@ -1,47 +1,49 @@
-{{!-- 餐廳後台 --}}
-{{> admin-tabs route = 'users'}}
+<div class="margin-wrapper">
+  {{!-- 餐廳後台 --}}
+  {{> admin-tabs route = 'users'}}
 
-<table class="table align-middle mt-4">
-  <thead class="thead-dark">
-    <tr class="table-dark">
-      <th scope="col">序號</th>
-      <th scope="col">使用者名稱</th>
-      <th scope="col">使用者頭像</th>
-      <th scope="col">使用者帳號</th>
-      <th scope="col">使用者權限</th>
-      <th scope="col"></th>
-    </tr>
-  </thead>
-  <tbody>
-    {{#each users}}
-    <tr>
-      <th scope="row">{{this.id}}</th>
-      <td><a href="/users/{{this.id}}">{{this.name}}</a></td>
-      <td>
-        <a href="/users/{{this.id}}">
-          {{#if this.avatar}}
-          <img class="img-responsive center-block me-1" src="{{this.avatar}}" width="30px" height="30px"
-            style="width: 30px; border-radius: 25%" alt="使用者圖像">
-          {{else}}
-          <img src="https://fakeimg.pl/40/" class="me-1" width="30px" height="30px" style="border-radius: 25%;" />
-          {{/if}}
-        </a>
-      </td>
-
-      <td>{{this.email}}</td>
-
-      <td>{{#if this.isAdmin}}admin{{else}}user{{/if}}</td>
-      <td>
-        <form action="/admin/users/{{this.id}}?_method=PATCH" method="POST" style="display: inline;">
-          <button type="submit" class="btn btn-link btn-color" onclick="return confirm(`確定要變更{{this.name}}使用者權限嗎?`)"
-            style="text-decoration: none;">
-            {{#if this.isAdmin}}set as user
-            {{else}}set as admin
+  <table class="table align-middle mt-4">
+    <thead class="thead-dark">
+      <tr class="table-dark">
+        <th scope="col">序號</th>
+        <th scope="col">使用者名稱</th>
+        <th scope="col">使用者頭像</th>
+        <th scope="col">使用者帳號</th>
+        <th scope="col">使用者權限</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each users}}
+      <tr>
+        <th scope="row">{{this.id}}</th>
+        <td><a href="/users/{{this.id}}">{{this.name}}</a></td>
+        <td>
+          <a href="/users/{{this.id}}">
+            {{#if this.avatar}}
+            <img class="img-responsive center-block me-1" src="{{this.avatar}}" width="30px" height="30px"
+              style="width: 30px; border-radius: 25%" alt="使用者圖像">
+            {{else}}
+            <img src="https://fakeimg.pl/40/" class="me-1" width="30px" height="30px" style="border-radius: 25%;" />
             {{/if}}
-          </button>
-        </form>
-      </td>
-    </tr>
-    {{/each}}
-  </tbody>
-</table>
+          </a>
+        </td>
+
+        <td>{{this.email}}</td>
+
+        <td>{{#if this.isAdmin}}admin{{else}}user{{/if}}</td>
+        <td>
+          <form action="/admin/users/{{this.id}}?_method=PATCH" method="POST" style="display: inline;">
+            <button type="submit" class="btn btn-link btn-color" onclick="return confirm(`確定要變更{{this.name}}使用者權限嗎?`)"
+              style="text-decoration: none;">
+              {{#if this.isAdmin}}set as user
+              {{else}}set as admin
+              {{/if}}
+            </button>
+          </form>
+        </td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</div>
