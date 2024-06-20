@@ -73,4 +73,15 @@
   </a>
   {{/if}}
 
+  {{!-- 測試寄件表單 --}}
+  <div class="d-flex justify-content-center mt-3">
+    <form action="/users/send" method="post">
+      <div class="form-row " style="display: inline-block;">
+        <label for="emailTo" class="cursor-pointer">Email: </label>
+        <input class="px-2" type="email" id="emailTo" name="emailTo" value="{{userAuth.email}}" placeholder="請輸入收件人信箱">
+      </div>
+      <button type="submit">發送</button>
+    </form>
+  </div>
+
 </div>

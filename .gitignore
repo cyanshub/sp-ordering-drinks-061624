@@ -9,3 +9,4 @@ upload/
 mysql_db_backup
 
 public/dist/css
+data

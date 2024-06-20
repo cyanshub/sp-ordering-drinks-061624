@@ -8,6 +8,8 @@ const { User, Cart, Drink, Store, Size, Sugar, Ice, Order } = require('../models
 const { localAvatarHandler } = require('../helpers/file-helpers')
 const { getOffset, getPagination } = require('../helpers/pagination-helpers')
 const { Op, literal } = require('sequelize') // 引入 sequelize 查詢符、啟用 SQL 語法
+const googleOAuth2Client = require('../config/googleOAuth2Client')
+const SCOPES = ['https://mail.google.com/']
 
 const userController = {
   signUpPage: (req, res, next) => {
@@ -41,8 +43,14 @@ const userController = {
   },
   signIn: (req, res, next) => {
     // 實際的登入功能已經由 passport 以 middlewares 的形式處理
-    req.flash('success_messages', '登入成功!')
-    res.redirect('/stores')
+    // 串接進行 googleOAuth2Client 驗證
+    const authUrl = googleOAuth2Client.generateAuthUrl({
+      access_type: 'offline',
+      scope: SCOPES
+    })
+    res.redirect(authUrl) // 透過 Google OAuth2 URL 進行驗證
+    // req.flash('success_messages', '登入成功!')
+    // return res.redirect('/stores')
   },
   logOut: (req, res, next) => {
     req.flash('success_messages', '登出成功!')

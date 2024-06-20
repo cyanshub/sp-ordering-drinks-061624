@@ -33,7 +33,7 @@ app.use(methodOverride('_method')) // 遵循RESTful 精神撰寫路由
 
 // middleware: 啟用 Flash Message
 app.use(flash())
-app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }))
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false, cookie: { secure: false } }))
 
 // middleware: 設定 passport
 app.use(passport.initialize()) // 令 passport 初始化
