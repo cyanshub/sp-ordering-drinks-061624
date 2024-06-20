@@ -8,18 +8,18 @@ $maxTableWidth: 1200px;
 
 // 指定特定資料表(記得再修改)
 .table-width {
+  width: 100%;
   max-width: $maxTableWidth;
 }
 
-#table-carts,
-#table-orders {
+
+.table-formats {
   border: 1px solid darken($baseColor, 5%);
   border-radius: $borderRadius;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
   max-width: calc(100% - 10em);
   margin-top: 1rem;
   margin-bottom: 1rem;
-
   overflow: hidden;
   width: $maxTableWidth;
 
@@ -36,25 +36,15 @@ $maxTableWidth: 1200px;
       font-weight: 300;
     }
 
-
     td {
       color: darken($baseColor, 10%);
       padding: $padding;
-      text-align: start;
+      text-align: center; // 預設儲存格文字置中(若要靠左, 請直接到元素指定class)
       vertical-align: middle;
 
       &:last-child {
         font-size: 0.95em;
         line-height: 1.4;
-      }
-
-      //  名字、數量
-      &:nth-child(1),
-      &:nth-child(2),
-      &:nth-child(3),
-      &:nth-child(6),
-      &:nth-child(7) {
-        text-align: center;
       }
     }
 
@@ -69,7 +59,6 @@ $maxTableWidth: 1200px;
       }
     }
   }
-
 }
 
 
@@ -80,8 +69,7 @@ $maxTableWidth: 1200px;
     width: auto;
   }
 
-  #table-carts,
-  #table-orders {
+  .table-formats {
     border: none;
     box-shadow: none;
     overflow: visible;
@@ -95,12 +83,8 @@ $maxTableWidth: 1200px;
     table {
       td {
 
-        //  名字、數量
-        &:nth-child(1),
-        &:nth-child(2),
-        &:nth-child(3),
-        &:nth-child(6),
-        &:nth-child(7) {
+        // 名字、數量
+        &:nth-child(n + 2):nth-child(-n + 10) {
           text-align: left;
         }
       }
@@ -146,29 +130,9 @@ $maxTableWidth: 1200px;
       }
 
       &:last-child {
-        padding-bottom: 1rem !important;
+        height: 2rem;
+        margin-bottom: 1rem;
       }
-
-      &:nth-child(2):before {
-        content: '店家: ';
-      }
-
-      &:nth-child(3):before {
-        content: '數量: ';
-      }
-
-      &:nth-child(4):before {
-        content: '商品: ';
-      }
-
-      &:nth-child(5):before {
-        content: '規格: ';
-      }
-
-      &:nth-child(6):before {
-        content: '時間: ';
-      }
-
     }
 
     tr {
@@ -188,4 +152,59 @@ $maxTableWidth: 1200px;
 
   }
 
+  // 分別製作手機縮小時的欄位名稱
+  // 前台購物車
+  #table-carts {
+    td {
+      @each $index, $content in (2: '數量: ', 3: '商品: ', 4: '規格: ', 5: '金額: ', 6: '時間: ') {
+        &:nth-child(#{$index}):before {
+          content: '#{$content}';
+        }
+      }
+    }
+  }
+
+  // 前台購物頁面
+  #table-front-orders {
+    td {
+      @each $index, $content in (2: '數量: ', 3: '商品: ', 4: '規格: ', 5: '金額: ', 6: '時間: ') {
+        &:nth-child(#{$index}):before {
+          content: '#{$content}';
+        }
+      }
+    }
+  }
+
+  // 後台店家
+  #table-stores {
+    td {
+      @each $index, $content in (2: '電話: ', 3: '地址: ') {
+        &:nth-child(#{$index}):before {
+          content: '#{$content}';
+        }
+      }
+    }
+  }
+
+  // 後台使用者
+  #table-users {
+    td {
+      @each $index, $content in (2: '頭像: ', 3: '帳號: ', 4: '權限: ') {
+        &:nth-child(#{$index}):before {
+          content: '#{$content}';
+        }
+      }
+    }
+  }
+
+  // 後台購物頁面
+  #table-back-orders {
+    td {
+      @each $index, $content in (2: '店家: ', 3: '數量: ', 4: '商品: ', 5: '規格: ', 6: '金額: ', 7: '時間: ') {
+        &:nth-child(#{$index}):before {
+          content: '#{$content}';
+        }
+      }
+    }
+  }
 }

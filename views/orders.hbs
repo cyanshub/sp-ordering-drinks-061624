@@ -8,7 +8,7 @@
 
   <div class="mt-2">
     {{!-- 列出訂單資訊 --}}
-    <div id="table-orders">
+    <div id="table-front-orders" class="table-formats">
       <table cellspacing="0">
 
         {{!-- 表頭 --}}
@@ -29,8 +29,8 @@
           <tr>
             <td><a href="/stores/{{this.Store.id}}">{{this.Store.name}}</a></td>
             <td>{{this.amount}}杯</td>
-            <td>{{this.Drink.name}}</td>
-            <td>{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>
+            <td class="text-start">{{this.Drink.name}}</td>
+            <td class="text-start">{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>
 
 
             {{!-- 判斷價格是中杯還是大杯 --}}
