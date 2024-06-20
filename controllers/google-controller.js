@@ -21,18 +21,12 @@ const googleController = {
       text: emailText
     }
 
-    // 從 req.session 拿取 token
-    const refreshToken = req.session.tokens.refresh_token
-    const accessToken = req.session.tokens.access_token
+    // 用應用程式密碼
     const transporter = nodemailer.createTransport({
       service: 'gmail',
       auth: {
-        type: 'OAuth2',
-        user: process.env.GMAIL_USER, // 你要用來發送信件的 Gmail
-        clientId: process.env.CLIENT_ID,
-        clientSecret: process.env.CLIENT_SECRET,
-        refreshToken: refreshToken,
-        accessToken: accessToken
+        user: process.env.GMAIL_USER, // 要用來發送信件的 Gmail
+        pass: process.env.GMAIL_PASS // 應用程式密碼
       }
     })
 

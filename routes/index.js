@@ -1,7 +1,6 @@
 const express = require('express')
 const router = express.Router()
 const admin = require('./modules/admin.js')
-const googleAuth = require('./modules/google-auth.js')
 
 // 載入 controller
 const storeController = require('../controllers/store-controller')
@@ -37,14 +36,11 @@ router.post('/orders/all', authenticated, userController.addOrders)
 router.get('/stores', authenticated, storeController.getStores)
 router.get('/stores/:id', authenticated, storeController.getStore)
 
-// 設計路由: 建立 Nodemailer OAuth2
+// 設計路由: 利用 Nodemailer 發送系統信件
 router.post('/users/send', authenticated, googleController.sendEmail)
 
 // 設計路由: 後台區域
 router.use('/admin', authenticatedAdmin, admin)
-
-// 設計路由: GOOGLE 驗證
-router.use('/auth', googleAuth) // 設定 Google OAuth2 郵件發送 middleware, 因為要拿 req.session 的資料, 所以必須放在 use((req, res, next) => {}之後)
 
 router.get('/', (req, res) => res.redirect('/stores'))
 router.use('/', generalErrorHandler)
