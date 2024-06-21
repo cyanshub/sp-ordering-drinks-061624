@@ -245,7 +245,10 @@ const adminController = {
       nest: true,
       where: whereClause,
       order: [['id', 'DESC']], // 依建立時間降續排列
-      include: [User, Drink, Store, Size, Sugar, Ice],
+      include: [
+        // 避免密碼外洩
+        { model: User, attributes: { exclude: ['password'] } },
+        Drink, Store, Size, Sugar, Ice],
       offset,
       limit
     })

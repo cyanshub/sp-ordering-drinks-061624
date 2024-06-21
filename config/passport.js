@@ -32,7 +32,8 @@ passport.serializeUser((user, cb) => cb(null, user.id))
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
     // 關聯 User Model 的多對多關係 Model, 並寫上多對多關係的名稱(對應model設定的名稱)
-    include: []
+    include: [],
+    attributes: { exclude: ['password'] } // 避免密碼外洩
   })
     .then(user => cb(null, user.toJSON()))
     .catch(err => cb(err))
