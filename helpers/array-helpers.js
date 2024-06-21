@@ -1,3 +1,6 @@
+// 載入工具
+const moment = require('moment-timezone') // 轉換時區
+
 module.exports = {
   // 處理關鍵字查詢
   filterKeyword: (items, keyword) => {
@@ -27,5 +30,17 @@ module.exports = {
     function getNestedValue (obj, keys) {
       return keys.reduce((acc, key) => (acc && acc[key] !== undefined) ? acc[key] : undefined, obj)
     }
+  },
+  convertToTaiwanTime: items => {
+    return items.map(item => {
+      const createdAtUTC = item.createdAt
+      const createdAtTaiwan = moment.utc(createdAtUTC).tz('Asia/Taipei')
+        .format('YYYY-MM-DD HH:mm:ss')
+      return {
+        ...item,
+        createdAt: createdAtTaiwan
+      }
+    })
   }
+
 }

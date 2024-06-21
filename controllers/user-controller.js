@@ -8,8 +8,7 @@ const { User, Cart, Drink, Store, Size, Sugar, Ice, Order } = require('../models
 const { localAvatarHandler } = require('../helpers/file-helpers')
 const { getOffset, getPagination } = require('../helpers/pagination-helpers')
 const { Op, literal } = require('sequelize') // 引入 sequelize 查詢符、啟用 SQL 語法
-// const googleOAuth2Client = require('../config/googleOAuth2Client')
-// const SCOPES = ['https://mail.google.com/']
+const { convertToTaiwanTime } = require('../helpers/array-helpers') // 自訂轉換時區工具
 
 const userController = {
   signUpPage: (req, res, next) => {
@@ -130,7 +129,9 @@ const userController = {
       ]
     })
       .then(carts => {
-        res.render('carts', { carts })
+        // 確保時間為台灣時區
+        const data = convertToTaiwanTime(carts)
+        return res.render('carts', { carts: data })
       })
   },
   addCart: (req, res, next) => {
@@ -241,8 +242,9 @@ const userController = {
       limit
     })
       .then(orders => {
-        const data = orders.rows
-        res.render('orders', {
+        // 確保時間為台灣時區
+        const data = convertToTaiwanTime(orders.rows)
+        return res.render('orders', {
           orders: data,
           pagination: getPagination(limit, page, orders.count),
           isSearched: '/orders', // 決定搜尋表單發送位置

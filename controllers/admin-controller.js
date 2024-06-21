@@ -5,6 +5,7 @@ const { Store, User, Drink, Ownership, Size, Sugar, Ice, Order } = require('../m
 const { getOffset, getPagination } = require('../helpers/pagination-helpers.js')
 const { localCoverHandler } = require('../helpers/file-helpers.js')
 const { Op, literal } = require('sequelize')
+const { convertToTaiwanTime } = require('../helpers/array-helpers') // 自訂轉換時區工具
 
 const adminController = {
   // 店家相關
@@ -249,8 +250,9 @@ const adminController = {
       limit
     })
       .then(orders => {
-        const data = orders.rows
-        res.render('admin/orders', {
+        // 自訂台歡時區
+        const data = convertToTaiwanTime(orders.rows)
+        return res.render('admin/orders', {
           orders: data,
           pagination: getPagination(limit, page, orders.count),
           isSearched: '/admin/orders', // 決定搜尋表單發送位置
