@@ -9,6 +9,12 @@ const { localAvatarHandler } = require('../helpers/file-helpers')
 const { getOffset, getPagination } = require('../helpers/pagination-helpers')
 const { Op, literal } = require('sequelize') // 引入 sequelize 查詢符、啟用 SQL 語法
 const { convertToTaiwanTime } = require('../helpers/array-helpers') // 自訂轉換時區工具
+const nodemailer = require('nodemailer') // 寄件工具
+
+// 載入環境變數
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config()
+}
 
 const userController = {
   signUpPage: (req, res, next) => {
@@ -185,13 +191,21 @@ const userController = {
       })
   },
   addOrders: (req, res, next) => {
+    // 直接從 req.user 拿到所有訂單資訊
     return Promise.all([
       Cart.findAll({ where: { userId: req.user.id }, raw: true }),
       Cart.findAll({ where: { userId: req.user.id } })
     ])
       .then(([carts, cartsToDelete]) => {
+        // 注意 forEach不會返回值; map才會!
         if (!carts) throw new Error('購物車沒有商品!')
-        carts.forEach(cart => {
+        // 清空購物車資料
+        cartsToDelete.forEach(cart => {
+          return cart.destroy()
+        })
+
+        // 依據購物資料建立 order, 因為牽扯到非同步語法(create) 故要用 Promise傳遞
+        const createOrderPromises = carts.map(cart => {
           return Order.create({
             userId: cart.userId,
             drinkId: cart.drinkId,
@@ -202,15 +216,74 @@ const userController = {
             storeId: cart.storeId
           })
         })
+        return Promise.all(createOrderPromises)
+      })
+      .then(newOrders => {
+        // 整理傳遞變數, 以便取得其id陣列, 並當作查詢條件, 重新取得帶有關聯資料的訂單
+        const newOrderIds = newOrders.map(order => order.dataValues.id)
+        const whereClause = { id: { [Op.in]: newOrderIds } }
+        const includeClause = [
+          { model: User, attributes: { exclude: ['password'] } },
+          Drink, Store, Size, Sugar, Ice
+        ]
 
-        return cartsToDelete.forEach(cart => {
-          return cart.destroy()
+        // 利用以上條件查詢, 因為是非同步語法, 所以要用 .then 傳遞
+        return Order.findAll({
+          where: whereClause,
+          include: includeClause,
+          raw: true,
+          nest: true
         })
       })
       .then(newOrders => {
-        req.flash('success_messages', '商品訂單正式成立!')
-        res.redirect('/orders')
-        return { orders: newOrders }
+        // 得到帶有關聯資料的 newOrders, 建立郵件資訊
+        const emailFrom = process.env.GMAIL_USER // 用來發送信件的 Gmail
+        const emailTo = req.body.emailTo // 從表單取得收件人地址
+        const emailSubject = '【通知】揪團訂飲料訂單成立'
+        let msg = ''
+        msg += '<p>您的訂單已成立, 訂購商品如下:</p><ul>'
+
+        newOrders.forEach(order => {
+          msg += `<li style="margin-left:0; padding-left:0;">${order.amount} 杯 <strong>${order.Size.level}</strong> ${order.Ice.level}、${order.Sugar.level}的 <strong>${order.Drink.name}</strong></li>`
+        })
+
+        msg += '</ul><p>此郵件為系統自動寄送, 請勿直接回覆, 謝謝!</p>'
+
+        // 加上字體設定
+        const emailMsgs = `
+          <html>
+            <body style="font-family: Arial, sans-serif; font-size: 14px;">
+              ${msg}
+            </body>
+          </html>
+        `
+        const mailOptions = {
+          from: emailFrom,
+          to: emailTo,
+          subject: emailSubject,
+          html: emailMsgs
+        }
+
+        // 用應用程式密碼的方式通過 GOOGLE 驗證傳遞郵件
+        const transporter = nodemailer.createTransport({
+          service: 'gmail',
+          auth: {
+            user: process.env.GMAIL_USER, // 要用來發送信件的 Gmail
+            pass: process.env.GMAIL_PASS // 應用程式密碼
+          }
+        })
+
+        // 將郵件發送出去
+        return transporter.sendMail(mailOptions, (err, info) => {
+          if (err) {
+            next(err)
+            res.status(500).send('Error sending email')
+          } else {
+            console.log(info)
+            req.flash('success_messages', '已建立訂單, 並成功寄出郵件!')
+            return res.redirect('/orders')
+          }
+        })
       })
       .catch(err => next(err))
   },

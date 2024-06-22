@@ -5,7 +5,6 @@ const admin = require('./modules/admin.js')
 // 載入 controller
 const storeController = require('../controllers/store-controller')
 const userController = require('../controllers/user-controller')
-const googleController = require('../controllers/google-controller.js')
 
 // 載入 middleware
 const { generalErrorHandler } = require('../middlewares/error-handler')
@@ -35,9 +34,6 @@ router.post('/orders/all', authenticated, userController.addOrders)
 // 設計路由: 前台區域
 router.get('/stores', authenticated, storeController.getStores)
 router.get('/stores/:id', authenticated, storeController.getStore)
-
-// 設計路由: 利用 Nodemailer 發送系統信件
-router.post('/users/send', authenticated, googleController.sendEmail)
 
 // 設計路由: 後台區域
 router.use('/admin', authenticatedAdmin, admin)
