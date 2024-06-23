@@ -35,9 +35,9 @@
 
             {{!-- 判斷價格是中杯還是大杯 --}}
             {{#ifCond this.Size.level "大杯(L)"}}
-            <td>{{formatNumber (multiply (sum this.Drink.price 5) this.amount )}}元</td>
+            <td>{{formatNumber (multiply (sum this.Drink.priceL) this.amount )}}元</td>
             {{else}}
-            <td>{{formatNumber (multiply (sum this.Drink.price) this.amount )}}元</td>
+            <td>{{formatNumber (multiply (sum this.Drink.priceM) this.amount )}}元</td>
             {{/ifCond}}
             
             <td>{{formatTime this.createdAt}}</td>

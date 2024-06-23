@@ -4,14 +4,16 @@
   {{!-- 輸入飲料 --}}
   <div id="drink-menu" class="mt-2 mb-3">
     <label for="drinkId" class="me-3"><strong>飲料</strong></label>
-    <div class="d-flex flex-column flex-wrap justify-content-start" >
+    <div class="d-flex flex-column justify-content-start" style="max-height: 50vh; overflow:auto;">
 
     {{#each drinks}}
       <div class="mb-1">
         <input id="drink-id-{{this.id}}" name="drinkId" type="radio" value="{{this.id}}" required>
-        <label for="drink-id-{{this.id}}" class="cursor-pointer">{{this.name}}/</label>
-        <label for="drink-id-{{this.id}}" class="me-3 cursor-pointer">
-          中杯M {{this.price}}元/ 大杯L {{sum this.price  5}}元
+        <label for="drink-id-{{this.id}}" class="cursor-pointer" style="white-space:nowrap">
+          <span>{{this.name}}/ </span>
+          <span class={{#ifCond this.priceM this.priceL}}"d-none"{{/ifCond}}>M:{{this.priceM}}/ </span>
+          <span>L:{{this.priceL}}元</span>
+          </label>
         </label>
       </div>
     {{/each}}

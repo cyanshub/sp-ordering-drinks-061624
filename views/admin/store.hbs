@@ -35,7 +35,7 @@
   {{!-- 販賣的飲料 --}}
   <div id="drink-menu" class="col-xs-12 mb-3">
     <h3 style="display: inline-block;">有哪些飲料？</h3>
-    <span class="small btn-color" style="display: inline-block;">點擊後畫面將在延遲後更新!</span>
+    <span class="small btn-color" style="display: inline-block;">點擊狀態後切換, 畫面將在延遲後更新!</span>
 
     <div class="drinks-container" style="max-height: 70vh; overflow: auto">
       {{#each drinks}}
@@ -43,16 +43,18 @@
         <hr style="border: none; border-top: 3px solid black; flex: 1;">
         <div class="d-flex justify-content-between align-items-center mt-0 mb-0 flex-grow-1">
           <span style="flex-grow: 1;">
-            <div style="display: inline-block;">{{this.name}}:</div>
-            <div style="display: inline-block; margin-right:4rem">價格: {{this.price}}元</div>
+            <div style="margin-right:1rem">
+              <strong>{{this.name}}/ </strong>
+              <span class={{#ifCond this.priceM this.priceL}}"d-none"{{/ifCond}}>
+              中杯(M) 價格: {{this.priceM}}元/ </span>
+              <span>大杯(L) 價格: {{this.priceL}}元/ </span>
+            </div>
           </span>
 
-          <span class="me-5">{{> drink-ownership-button storeId=../store.id }}</span>
+          <span class="me-5" style="min-width: 60px;">{{> drink-ownership-button storeId=../store.id }}</span>
         </div>
         {{/each}}
       </div>
-
-
     </div>
 
   </div>
