@@ -212,7 +212,7 @@ const adminController = {
       })
       .then(newOwnership => {
         // 點集變更後, 稍等一下才轉址
-        setTimeout(function () { res.redirect('back') }, 1000)
+        setTimeout(function () { res.redirect('back') }, 3000)
         return { ownership: newOwnership }
       })
       .catch(err => next(err))
@@ -232,7 +232,7 @@ const adminController = {
       })
       .then(deletedOwnership => {
         // 點集變更後, 稍等一下才轉址
-        setTimeout(function () { res.redirect('back') }, 1000)
+        setTimeout(function () { res.redirect('back') }, 3000)
 
         return { ownership: deletedOwnership }
       })
