@@ -42,7 +42,7 @@
   background-color: #e5eaf1;
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 800px) {
   .table-width {
     max-width: 400px;
     width: auto;

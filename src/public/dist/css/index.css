@@ -52,13 +52,11 @@ a {
 
 /* reset:end */
 .table-width {
+  width: 100%;
   max-width: 1200px;
 }
 
-#table-carts,
-#table-orders,
-#table-stores,
-#table-users {
+.table-formats {
   border: 1px solid #384b6c;
   border-radius: 10px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
@@ -68,16 +66,10 @@ a {
   overflow: hidden;
   width: 1200px;
 }
-#table-carts table,
-#table-orders table,
-#table-stores table,
-#table-users table {
+.table-formats table {
   width: 100%;
 }
-#table-carts table th,
-#table-orders table th,
-#table-stores table th,
-#table-users table th {
+.table-formats table th {
   padding: 10px;
   background-color: #384b6c;
   color: white;
@@ -85,115 +77,49 @@ a {
   text-transform: uppercase;
   font-weight: 300;
 }
-#table-carts table td,
-#table-orders table td,
-#table-stores table td,
-#table-users table td {
+.table-formats table td {
   color: #30405b;
   padding: 10px;
-  text-align: start;
+  text-align: center;
   vertical-align: middle;
 }
-#table-carts table td:last-child,
-#table-orders table td:last-child,
-#table-stores table td:last-child,
-#table-users table td:last-child {
+.table-formats table td:last-child {
   font-size: 0.95em;
   line-height: 1.4;
 }
-#table-carts table td:nth-child(1), #table-carts table td:nth-child(2), #table-carts table td:nth-child(3), #table-carts table td:nth-child(6), #table-carts table td:nth-child(7),
-#table-orders table td:nth-child(1),
-#table-orders table td:nth-child(2),
-#table-orders table td:nth-child(3),
-#table-orders table td:nth-child(6),
-#table-orders table td:nth-child(7),
-#table-stores table td:nth-child(1),
-#table-stores table td:nth-child(2),
-#table-stores table td:nth-child(3),
-#table-stores table td:nth-child(6),
-#table-stores table td:nth-child(7),
-#table-users table td:nth-child(1),
-#table-users table td:nth-child(2),
-#table-users table td:nth-child(3),
-#table-users table td:nth-child(6),
-#table-users table td:nth-child(7) {
-  text-align: center;
-}
-#table-carts table tr:nth-child(2n),
-#table-orders table tr:nth-child(2n),
-#table-stores table tr:nth-child(2n),
-#table-users table tr:nth-child(2n) {
+.table-formats table tr:nth-child(2n) {
   background-color: white;
 }
-#table-carts table tr:nth-child(2n+1),
-#table-orders table tr:nth-child(2n+1),
-#table-stores table tr:nth-child(2n+1),
-#table-users table tr:nth-child(2n+1) {
+.table-formats table tr:nth-child(2n+1) {
   background-color: #e5eaf1;
 }
 
-@media screen and (max-width: 860px) {
+@media screen and (max-width: 800px) {
   .table-width {
     max-width: 400px;
     width: auto;
   }
-  #table-carts,
-  #table-orders,
-  #table-stores,
-  #table-users {
+  .table-formats {
     border: none;
     box-shadow: none;
     overflow: visible;
   }
-  #table-carts table,
-  #table-carts tr,
-  #table-carts td,
-  #table-orders table,
-  #table-orders tr,
-  #table-orders td,
-  #table-stores table,
-  #table-stores tr,
-  #table-stores td,
-  #table-users table,
-  #table-users tr,
-  #table-users td {
+  .table-formats table,
+  .table-formats tr,
+  .table-formats td {
     display: block;
   }
-  #table-carts table td:nth-child(1), #table-carts table td:nth-child(2), #table-carts table td:nth-child(3), #table-carts table td:nth-child(6), #table-carts table td:nth-child(7),
-  #table-orders table td:nth-child(1),
-  #table-orders table td:nth-child(2),
-  #table-orders table td:nth-child(3),
-  #table-orders table td:nth-child(6),
-  #table-orders table td:nth-child(7),
-  #table-stores table td:nth-child(1),
-  #table-stores table td:nth-child(2),
-  #table-stores table td:nth-child(3),
-  #table-stores table td:nth-child(6),
-  #table-stores table td:nth-child(7),
-  #table-users table td:nth-child(1),
-  #table-users table td:nth-child(2),
-  #table-users table td:nth-child(3),
-  #table-users table td:nth-child(6),
-  #table-users table td:nth-child(7) {
+  .table-formats table td:nth-child(n+2):nth-child(-n+10) {
     text-align: left;
   }
-  #table-carts thead tr:first-child,
-  #table-orders thead tr:first-child,
-  #table-stores thead tr:first-child,
-  #table-users thead tr:first-child {
+  .table-formats thead tr:first-child {
     display: none;
   }
-  #table-carts tr,
-  #table-orders tr,
-  #table-stores tr,
-  #table-users tr {
+  .table-formats tr {
     padding: 10px 0;
     position: relative;
   }
-  #table-carts td:first-child,
-  #table-orders td:first-child,
-  #table-stores td:first-child,
-  #table-users td:first-child {
+  .table-formats td:first-child {
     background-color: #c3cee0;
     border-bottom: 1px solid #91a4c6;
     border-radius: 10px 10px 0 0;
@@ -203,32 +129,21 @@ a {
     width: 100%;
     min-width: 300px;
   }
-  #table-carts td:not(:first-child),
-  #table-orders td:not(:first-child),
-  #table-stores td:not(:first-child),
-  #table-users td:not(:first-child) {
+  .table-formats td:not(:first-child) {
     margin: 0;
     padding: 5px 1em;
     width: 100%;
     min-width: 300px;
   }
-  #table-carts td:not(:first-child):before,
-  #table-orders td:not(:first-child):before,
-  #table-stores td:not(:first-child):before,
-  #table-users td:not(:first-child):before {
+  .table-formats td:not(:first-child):before {
     padding-top: 0.3em;
     position: relative;
   }
-  #table-carts td:last-child,
-  #table-orders td:last-child,
-  #table-stores td:last-child,
-  #table-users td:last-child {
-    padding-bottom: 1rem !important;
+  .table-formats td:last-child {
+    height: 2rem;
+    margin-bottom: 1rem;
   }
-  #table-carts tr,
-  #table-orders tr,
-  #table-stores tr,
-  #table-users tr {
+  .table-formats tr {
     background-color: white !important;
     border: 1px solid #7089b4;
     border-radius: 10px;
@@ -238,40 +153,70 @@ a {
     margin-right: auto;
     padding: 0;
   }
-  #table-carts tr:last-child,
-  #table-orders tr:last-child,
-  #table-stores tr:last-child,
-  #table-users tr:last-child {
+  .table-formats tr:last-child {
     margin-bottom: 1rem;
   }
-  #table-carts td:nth-child(2):before,
-  #table-orders td:nth-child(2):before,
-  #table-stores td:nth-child(2):before,
-  #table-users td:nth-child(2):before {
-    content: "店家: ";
-  }
-  #table-carts td:nth-child(3):before,
-  #table-orders td:nth-child(3):before,
-  #table-stores td:nth-child(3):before,
-  #table-users td:nth-child(3):before {
+  #table-carts td:nth-child(2):before {
     content: "數量: ";
   }
-  #table-carts td:nth-child(4):before,
-  #table-orders td:nth-child(4):before,
-  #table-stores td:nth-child(4):before,
-  #table-users td:nth-child(4):before {
+  #table-carts td:nth-child(3):before {
     content: "商品: ";
   }
-  #table-carts td:nth-child(5):before,
-  #table-orders td:nth-child(5):before,
-  #table-stores td:nth-child(5):before,
-  #table-users td:nth-child(5):before {
+  #table-carts td:nth-child(4):before {
     content: "規格: ";
   }
-  #table-carts td:nth-child(6):before,
-  #table-orders td:nth-child(6):before,
-  #table-stores td:nth-child(6):before,
-  #table-users td:nth-child(6):before {
+  #table-carts td:nth-child(5):before {
+    content: "金額: ";
+  }
+  #table-carts td:nth-child(6):before {
+    content: "時間: ";
+  }
+  #table-front-orders td:nth-child(2):before {
+    content: "數量: ";
+  }
+  #table-front-orders td:nth-child(3):before {
+    content: "商品: ";
+  }
+  #table-front-orders td:nth-child(4):before {
+    content: "規格: ";
+  }
+  #table-front-orders td:nth-child(5):before {
+    content: "金額: ";
+  }
+  #table-front-orders td:nth-child(6):before {
+    content: "時間: ";
+  }
+  #table-stores td:nth-child(2):before {
+    content: "電話: ";
+  }
+  #table-stores td:nth-child(3):before {
+    content: "地址: ";
+  }
+  #table-users td:nth-child(2):before {
+    content: "頭像: ";
+  }
+  #table-users td:nth-child(3):before {
+    content: "帳號: ";
+  }
+  #table-users td:nth-child(4):before {
+    content: "權限: ";
+  }
+  #table-back-orders td:nth-child(2):before {
+    content: "店家: ";
+  }
+  #table-back-orders td:nth-child(3):before {
+    content: "數量: ";
+  }
+  #table-back-orders td:nth-child(4):before {
+    content: "商品: ";
+  }
+  #table-back-orders td:nth-child(5):before {
+    content: "規格: ";
+  }
+  #table-back-orders td:nth-child(6):before {
+    content: "金額: ";
+  }
+  #table-back-orders td:nth-child(7):before {
     content: "時間: ";
   }
 }/*# sourceMappingURL=index.css.map */
