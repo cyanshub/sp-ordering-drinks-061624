@@ -9,7 +9,23 @@
         
         {{!-- 發送搜尋關鍵字 --}}
         <input type="text" id="search-input" class="form-control" name="keyword" value="{{keyword}}"
-          placeholder="店名或地點" aria-label="Store Name">
+          {{#if find}}
+          {{else}}
+          placeholder="輸入關鍵字" aria-label="輸入關鍵字"         
+          {{/if}}
+
+         {{#ifCond find 'stores'}}
+          placeholder="店名、地址" aria-label="店名、地址"         
+          {{/ifCond}}
+          
+          {{#ifCond find 'drinks'}}
+          placeholder="飲料名稱" aria-label="查詢飲料"         
+          {{/ifCond}}
+
+          {{#ifCond find 'orders'}}
+          placeholder="店家、飲料名稱、訂單時間" aria-label="店家、飲料名稱、訂單時間"         
+          {{/ifCond}}
+        >
         <button id="search-button" class="btn btn-outline-light" type="submit">
           <i class="fas fa-search"></i>
         </button>

@@ -294,6 +294,7 @@ const userController = {
     const offset = getOffset(limit, page)
     const keyword = req.query.keyword ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
 
+    // 關聯 literal 的 model 依 include 填寫的 model
     const whereClause = { // find系列語法查詢條件
       ...keyword.length > 0
         ? {
@@ -327,6 +328,7 @@ const userController = {
           pagination: getPagination(limit, page, orders.count),
           isSearched: '/orders', // 決定搜尋表單發送位置
           keyword,
+          find: 'orders',
           count: orders.count
         })
       })

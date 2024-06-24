@@ -37,18 +37,32 @@ const storeController = {
           stores: data,
           pagination: getPagination(limit, page, stores.count),
           isSearched: '/stores', // 決定搜尋表單發送位置為 index 頁面
-          keyword
+          keyword,
+          find: 'stores'
         })
       })
       .catch(err => next(err))
   },
   getStore: (req, res, next) => {
+    const keyword = req.query.keyword ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+    // 關聯 literal 的 model 依 include 填寫的 model
+    const whereClause = {
+      ...keyword.length > 0
+        ? {
+            [Op.or]: [
+              literal(`LOWER(ownedDrinks.name) LIKE '%${keyword.toLowerCase()}%'`)
+            ]
+          }
+        : {}
+    }
     return Promise.all([
+      Store.findByPk(req.params.id, { raw: true }),
       Store.findByPk(req.params.id, {
         include: [{
           model: Drink,
           as: 'ownedDrinks',
-          order: [['id', 'ASC']]
+          order: [['id', 'ASC']],
+          where: whereClause
         }]
       }),
       // 撈出資料庫所有飲料, 讓個別店家勾選, 登陸進 ownerships
@@ -57,21 +71,26 @@ const storeController = {
       Ice.findAll({ raw: true })
     ])
 
-      .then(([store, sizes, sugars, ices]) => {
+      .then(([store, storeOwnedDrinks, sizes, sugars, ices]) => {
         if (!store) throw new Error('該商店不存在!')
 
         // 從店家販賣的飲料清單中, 拿取店家有販賣的飲料
-        const drinksData = store.ownedDrinks ? store.ownedDrinks.map(od => ({ ...od.toJSON() })) : []
+        const drinksData = storeOwnedDrinks?.ownedDrinks?.map(od => ({ ...od.toJSON() })) || []
 
-        store = store.toJSON()
+        storeOwnedDrinks = storeOwnedDrinks?.toJSON() || storeOwnedDrinks
+
         return res.render('store', {
           store,
           drinks: drinksData,
           sizes,
           sugars,
-          ices
+          ices,
+          isSearched: `/stores/${req.params.id}`, // 決定搜尋表單發送位置
+          keyword,
+          find: 'drinks'
         })
       })
+      .catch(err => next(err))
   }
 }
 

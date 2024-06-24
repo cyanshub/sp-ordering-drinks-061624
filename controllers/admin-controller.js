@@ -40,7 +40,8 @@ const adminController = {
           stores: data,
           pagination: getPagination(limit, page, stores.count),
           isSearched: '/admin/stores', // 決定搜尋表單發送位置為後台 index 頁面
-          keyword
+          keyword,
+          find: 'stores'
         })
       })
       .catch(err => next(err))
@@ -72,6 +73,17 @@ const adminController = {
       .catch(err => next(err))
   },
   getStore: (req, res, next) => {
+    const keyword = req.query.keyword ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+    // 關聯 literal 的 model 依 include 填寫的 model
+    const whereClause = {
+      ...keyword.length > 0
+        ? {
+            [Op.or]: [
+              literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`)
+            ]
+          }
+        : {}
+    }
     return Promise.all([
       Store.findByPk(req.params.id, {
         include: [{
@@ -81,9 +93,11 @@ const adminController = {
         }]
       }),
       // 撈出資料庫所有飲料, 讓個別店家勾選, 登陸進 ownerships
-      Drink.findAll({ raw: true })
+      Drink.findAll({
+        raw: true,
+        where: whereClause
+      })
     ])
-
       .then(([store, drinks]) => {
         if (!store) throw new Error('該商店不存在!')
         // 取出店家有販賣的 drink id 當作販賣清單
@@ -96,8 +110,15 @@ const adminController = {
         }))
 
         store = store.toJSON()
-        return res.render('admin/store', { store, drinks: drinksData })
+        return res.render('admin/store', {
+          store,
+          drinks: drinksData,
+          isSearched: `/admin/stores/${req.params.id}`,
+          keyword: keyword,
+          find: 'drinks'
+        })
       })
+      .catch(err => next(err))
   },
   editStore: (req, res, next) => {
     return Store.findByPk(req.params.id, { raw: true })
@@ -260,6 +281,7 @@ const adminController = {
           pagination: getPagination(limit, page, orders.count),
           isSearched: '/admin/orders', // 決定搜尋表單發送位置
           keyword,
+          find: 'orders',
           count: orders.count
         })
       })

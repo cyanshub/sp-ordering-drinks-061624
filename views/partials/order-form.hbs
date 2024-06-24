@@ -4,8 +4,9 @@
   {{!-- 輸入飲料 --}}
   <div id="drink-menu" class="mt-2 mb-3">
     <label for="drinkId" class="me-3"><strong>飲料</strong></label>
-    <div class="d-flex flex-column justify-content-start" style="max-height: 50vh; overflow:auto;">
-
+    
+    {{!-- 盛裝飲料項目的容器 --}}
+    <div class="d-flex flex-column justify-content-start" style="max-height: 30vh; overflow:auto;">
     {{#each drinks}}
       <div class="mb-1">
         <input id="drink-id-{{this.id}}" name="drinkId" type="radio" value="{{this.id}}" required>
@@ -25,7 +26,7 @@
     <div class="col-sm-4 col-xs-12">
       {{!-- 輸入尺寸 --}}
       <div class="form-row mb-3">
-        <label for="sizeId" class="me-3"><strong>尺寸</strong></label>
+        <label for="sizeId" class="me-3"><strong>杯型</strong></label>
         {{#each sizes}}
         <div class="mb-1">
           <input id="size-id-{{this.id}}" name="sizeId" type="radio" value="{{this.id}}" required>
