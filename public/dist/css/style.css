@@ -60,7 +60,6 @@ a {
   border: 1px solid #384b6c;
   border-radius: 10px;
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
-  max-width: calc(100% - 10em);
   margin-top: 1rem;
   margin-bottom: 1rem;
   overflow: hidden;
@@ -94,132 +93,14 @@ a {
   background-color: #e5eaf1;
 }
 
-@media screen and (max-width: 800px) {
-  .table-width {
-    max-width: 400px;
-    width: auto;
-  }
-  .table-formats {
-    border: none;
-    box-shadow: none;
-    overflow: visible;
-  }
-  .table-formats table,
-  .table-formats tr,
-  .table-formats td {
-    display: block;
-  }
-  .table-formats table td:nth-child(n+2):nth-child(-n+10) {
-    text-align: left;
-  }
-  .table-formats thead tr:first-child {
-    display: none;
-  }
-  .table-formats tr {
-    padding: 10px 0;
-    position: relative;
-  }
-  .table-formats td:first-child {
-    background-color: #c3cee0;
-    border-bottom: 1px solid #91a4c6;
-    border-radius: 10px 10px 0 0;
-    position: relative;
-    top: 0;
-    transform: translateY(0);
-    width: 100%;
-    min-width: 300px;
-  }
-  .table-formats td:not(:first-child) {
-    margin: 0;
-    padding: 5px 1em;
-    width: 100%;
-    min-width: 300px;
-  }
-  .table-formats td:not(:first-child):before {
-    padding-top: 0.3em;
-    position: relative;
-  }
-  .table-formats td:last-child {
-    height: 2rem;
-    margin-bottom: 1rem;
-  }
-  .table-formats tr {
-    background-color: white !important;
-    border: 1px solid #7089b4;
-    border-radius: 10px;
-    box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.1);
-    margin-bottom: 3rem;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0;
-  }
-  .table-formats tr:last-child {
-    margin-bottom: 1rem;
-  }
-  #table-carts td:nth-child(2):before {
-    content: "數量: ";
-  }
-  #table-carts td:nth-child(3):before {
-    content: "商品: ";
-  }
-  #table-carts td:nth-child(4):before {
-    content: "規格: ";
-  }
-  #table-carts td:nth-child(5):before {
-    content: "金額: ";
-  }
-  #table-carts td:nth-child(6):before {
-    content: "時間: ";
-  }
-  #table-front-orders td:nth-child(2):before {
-    content: "數量: ";
-  }
-  #table-front-orders td:nth-child(3):before {
-    content: "商品: ";
-  }
-  #table-front-orders td:nth-child(4):before {
-    content: "規格: ";
-  }
-  #table-front-orders td:nth-child(5):before {
-    content: "金額: ";
-  }
-  #table-front-orders td:nth-child(6):before {
-    content: "時間: ";
-  }
-  #table-stores td:nth-child(2):before {
-    content: "電話: ";
-  }
-  #table-stores td:nth-child(3):before {
-    content: "地址: ";
-  }
-  #table-users td:nth-child(2):before {
-    content: "頭像: ";
-  }
-  #table-users td:nth-child(3):before {
-    content: "帳號: ";
-  }
-  #table-users td:nth-child(4):before {
-    content: "權限: ";
-  }
-  #table-back-orders td:nth-child(2):before {
-    content: "店家: ";
-  }
-  #table-back-orders td:nth-child(3):before {
-    content: "數量: ";
-  }
-  #table-back-orders td:nth-child(4):before {
-    content: "商品: ";
-  }
-  #table-back-orders td:nth-child(5):before {
-    content: "規格: ";
-  }
-  #table-back-orders td:nth-child(6):before {
-    content: "金額: ";
-  }
-  #table-back-orders td:nth-child(7):before {
-    content: "時間: ";
-  }
+.table-formats {
+  max-width: calc(100% - 0.5rem);
+  overflow-x: auto;
 }
+.table-formats table {
+  min-width: 750px;
+}
+
 .form-signup,
 .form-signin {
   width: 40%;
