@@ -220,55 +220,6 @@ a {
     content: "時間: ";
   }
 }
-/* 設定網頁主體: start */
-html,
-body {
-  font-family: "open sans", helvetica, arial, sans;
-  background: no-repeat center center fixed;
-  background-size: cover;
-}
-
-a {
-  text-decoration: none;
-  color: #2a2a2a;
-}
-
-.btn-color {
-  color: #81b8e5;
-}
-
-.text-container {
-  color: #2a2a2a;
-  white-space: nowrap;
-  /* 防止文字換行 */
-  overflow: hidden;
-  /* 隱藏超出容器的文字 */
-  text-overflow: ellipsis;
-  /* 使用省略號表示超出的部分 */
-}
-
-.image-container {
-  overflow: hidden;
-  /* 隱藏溢出部分 */
-}
-
-.image-container img {
-  -o-object-fit: cover;
-     object-fit: cover;
-  /* 保持原始比例，填滿容器 */
-}
-
-.cursor-pointer {
-  cursor: pointer;
-}
-
-.margin-wrapper {
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 3rem;
-  margin-right: 3rem;
-}
-
 .form-signup,
 .form-signin {
   width: 40%;
@@ -378,4 +329,58 @@ a {
 .form-signin .sign a:active {
   background: #81b8e5;
   box-shadow: inset 0px 1px 1px fadeout(black, 90%);
+}
+
+@media screen and (max-width: 800px) {
+  .form-signin {
+    margin-top: 6rem;
+  }
+}
+/* 設定網頁主體: start */
+html,
+body {
+  font-family: "open sans", helvetica, arial, sans;
+  background: no-repeat center center fixed;
+  background-size: cover;
+}
+
+a {
+  text-decoration: none;
+  color: #2a2a2a;
+}
+
+.btn-color {
+  color: #81b8e5;
+}
+
+.text-container {
+  color: #2a2a2a;
+  white-space: nowrap;
+  /* 防止文字換行 */
+  overflow: hidden;
+  /* 隱藏超出容器的文字 */
+  text-overflow: ellipsis;
+  /* 使用省略號表示超出的部分 */
+}
+
+.image-container {
+  overflow: hidden;
+  /* 隱藏溢出部分 */
+}
+
+.image-container img {
+  -o-object-fit: cover;
+     object-fit: cover;
+  /* 保持原始比例，填滿容器 */
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.margin-wrapper {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 3rem;
+  margin-right: 3rem;
 }/*# sourceMappingURL=style.css.map */

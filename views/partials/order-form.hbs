@@ -8,13 +8,13 @@
     {{!-- 盛裝飲料項目的容器 --}}
     <div class="d-flex flex-column justify-content-start" style="max-height: 30vh; overflow:auto;">
     {{#each drinks}}
-      <div class="mb-1">
+      <div class="mb-1" style="white-space:nowrap">
         <input id="drink-id-{{this.id}}" name="drinkId" type="radio" value="{{this.id}}" required>
         <label for="drink-id-{{this.id}}" class="cursor-pointer" style="white-space:nowrap">
           <span>{{this.name}}/ </span>
           <span class={{#ifCond this.priceM this.priceL}}"d-none"{{/ifCond}}>M:{{this.priceM}}/ </span>
           <span>L:{{this.priceL}}元</span>
-          </label>
+        </label>
         </label>
       </div>
     {{/each}}
