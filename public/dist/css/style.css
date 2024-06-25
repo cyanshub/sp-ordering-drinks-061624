@@ -383,4 +383,32 @@ a {
   margin-bottom: 0;
   margin-left: 3rem;
   margin-right: 3rem;
+}
+
+a.nav-link {
+  color: #495057 !important;
+}
+
+a.nav-link.text-container {
+  color: rgba(255, 255, 255, 0.5490196078) !important;
+}
+
+a.nav-link.active {
+  color: #81b8e5 !important;
+  background-color: #FFFFFF !important;
+}
+
+a.page-link {
+  color: #81b8e5 !important;
+}
+
+li.page-item.active {
+  color: #fff !important;
+  background-color: #81b8e5 !important;
+  border-color: #81b8e5 !important;
+}
+li.page-item.active a.page-link {
+  color: #fff !important;
+  background-color: #81b8e5 !important;
+  border-color: #81b8e5 !important;
 }/*# sourceMappingURL=style.css.map */

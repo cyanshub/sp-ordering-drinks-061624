@@ -21,6 +21,7 @@ a {
   color: $blue
 }
 
+// 自訂樣式
 .text-container {
   color: $grey;
   white-space: nowrap;
@@ -50,4 +51,35 @@ a {
   margin-bottom: 0;
   margin-left: 3rem;
   margin-right: 3rem;
+}
+
+
+// 複寫 bootstrap 樣式
+a.nav-link {
+  color: #495057 !important;
+}
+
+a.nav-link.text-container {
+  color: #FFFFFF8C !important;
+}
+
+a.nav-link.active {
+  color: $blue !important;
+  background-color: #FFFFFF !important;
+}
+
+a.page-link {
+  color: $blue !important;
+}
+
+li.page-item.active {
+  a.page-link {
+    color: #fff !important;
+    background-color: $blue !important;
+    border-color: $blue !important;
+  }
+
+  color: #fff !important;
+  background-color: $blue !important;
+  border-color: $blue !important;
 }
