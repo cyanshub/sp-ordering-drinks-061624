@@ -61,5 +61,12 @@ module.exports = {
 
     // 將結果以千分位顯示
     return total
+  },
+  removeString: (name, ...args) => {
+    const stringsToRemove = args.filter(arg => typeof arg === 'string')
+    stringsToRemove.forEach(stringToRemove => {
+      name = name.replace(new RegExp(stringToRemove), '')
+    })
+    return name
   }
 }
