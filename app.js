@@ -19,7 +19,7 @@ const handlebarsHelpers = require('./helpers/handlebars-helpers.js')
 
 // 設定應用程式
 const app = express()
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 3002
 
 app.engine('hbs', handlebars({ extname: '.hbs', helpers: handlebarsHelpers }))
 app.set('view engine', 'hbs')
