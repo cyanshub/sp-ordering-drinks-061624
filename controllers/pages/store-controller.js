@@ -1,8 +1,8 @@
 // 引入資料表 model
-const { Store, Drink, Size, Sugar, Ice } = require('../models')
+const { Store, Drink, Size, Sugar, Ice } = require('../../models/index.js')
 
 // 載入所需的工具
-const { getOffset, getPagination } = require('../helpers/pagination-helpers.js')
+const { getOffset, getPagination } = require('../../helpers/pagination-helpers.js')
 const { Op, literal } = require('sequelize') // 引入 sequelize 查詢符、啟用 SQL 語法
 
 const storeController = {

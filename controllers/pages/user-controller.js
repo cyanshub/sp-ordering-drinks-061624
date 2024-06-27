@@ -2,13 +2,13 @@
 const bcrypt = require('bcryptjs')
 
 // 載入所需 model
-const { User, Cart, Drink, Store, Size, Sugar, Ice, Order } = require('../models')
+const { User, Cart, Drink, Store, Size, Sugar, Ice, Order } = require('../../models')
 
 // 載入所需工具
-const { localAvatarHandler } = require('../helpers/file-helpers')
-const { getOffset, getPagination } = require('../helpers/pagination-helpers')
+const { localAvatarHandler } = require('../../helpers/file-helpers')
+const { getOffset, getPagination } = require('../../helpers/pagination-helpers')
 const { Op, literal } = require('sequelize') // 引入 sequelize 查詢符、啟用 SQL 語法
-const { convertToTaiwanTime } = require('../helpers/array-helpers') // 自訂轉換時區工具
+const { convertToTaiwanTime } = require('../../helpers/array-helpers') // 自訂轉換時區工具
 const nodemailer = require('nodemailer') // 寄件工具
 
 // 載入環境變數

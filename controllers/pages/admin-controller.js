@@ -1,11 +1,11 @@
 // 引入資料表 model
-const { Store, User, Drink, Ownership, Size, Sugar, Ice, Order } = require('../models')
+const { Store, User, Drink, Ownership, Size, Sugar, Ice, Order } = require('../../models/index.js')
 
 // 載入所需的工具
-const { getOffset, getPagination } = require('../helpers/pagination-helpers.js')
-const { localCoverHandler } = require('../helpers/file-helpers.js')
+const { getOffset, getPagination } = require('../../helpers/pagination-helpers.js')
+const { localCoverHandler } = require('../../helpers/file-helpers.js')
 const { Op, literal } = require('sequelize')
-const { convertToTaiwanTime } = require('../helpers/array-helpers') // 自訂轉換時區工具
+const { convertToTaiwanTime } = require('../../helpers/array-helpers.js') // 自訂轉換時區工具
 
 const adminController = {
   // 店家相關

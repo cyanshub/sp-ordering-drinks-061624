@@ -14,7 +14,7 @@ const session = require('express-session')
 const passport = require('./config/passport.js')
 const { getUser } = require('./helpers/auth-helpers.js')
 
-const routes = require('./routes')
+const { pages, apis } = require('./routes')
 const handlebarsHelpers = require('./helpers/handlebars-helpers.js')
 
 // 設定應用程式
@@ -47,7 +47,8 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use(routes)
+app.use('/apis', apis)
+app.use(pages)
 
 // 啟動並監聽網站
 app.listen(port, () => {
