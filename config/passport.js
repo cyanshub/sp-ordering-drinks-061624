@@ -1,6 +1,11 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
+const passportJWT = require('passport-jwt') // api 專用
+const JWTStrategy = passportJWT.Strategy // api 專用
+const ExtractJWT = passportJWT.ExtractJwt // api 專用
 const bcrypt = require('bcryptjs')
+
+// 載入 model
 const { User } = require('../models')
 
 // 設置本地的登入策略 Set up passport strategy
@@ -38,5 +43,21 @@ passport.deserializeUser((id, cb) => {
     .then(user => cb(null, user.toJSON()))
     .catch(err => cb(err))
 })
+
+// 設計 jwt 的登入策略的 options
+const jwtOptions = {
+  jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
+  secretOrKey: process.env.JWT_SECRET
+}
+
+// 設置 jwt 登入策略
+passport.use(new JWTStrategy(jwtOptions, (jwtPayload, cb) => {
+  User.findByPk(jwtPayload.id, {
+    attributes: { exclude: ['password'] }, // 避免密碼外洩
+    include: []
+  })
+    .then(user => cb(null, user))
+    .catch(err => cb(err))
+}))
 
 module.exports = passport
