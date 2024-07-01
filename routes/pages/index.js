@@ -13,12 +13,14 @@ const { authenticated, authenticatedAdmin } = require('../../middlewares/auth.js
 const upload = require('../../middlewares/multer.js') // 負責圖片上傳功能
 
 // 設計路由
-// 設計路由: 使用者相關
+// 設計路由: 使用者登入相關
 router.get('/signup', userController.signUpPage)
 router.post('/signup', userController.signUp)
 router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn) // 直接使用passport提供的方法進行登入驗證
 router.get('/logout', userController.logOut)
+
+// 設計路由: 使用者相關
 router.get('/users/:id', authenticated, userController.getUser)
 router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, upload.single('avatar'), userController.putUser)

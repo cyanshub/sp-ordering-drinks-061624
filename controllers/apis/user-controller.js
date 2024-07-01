@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken')
 
 const userController = {
   signUp: (req, res, next) => {
-    userServices.signUp(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+    return userServices.signUp(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
   },
   signIn: (req, res, next) => {
     // 利用 try catch 處理不是非同步語法的錯誤事件
@@ -30,9 +30,39 @@ const userController = {
       next(err)
     }
   },
+
+  getUser: (req, res, next) => {
+    return userServices.getUser(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
   putUser: (req, res, next) => {
-    userServices.putUser(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+    return userServices.putUser(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
+  putAvatar: (req, res, next) => {
+    return userServices.putAvatar(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
+  getCarts: (req, res, next) => {
+    return userServices.getCarts(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
+  addCart: (req, res, next) => {
+    return userServices.addCart(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
+  removeCart: (req, res, next) => {
+    return userServices.removeCart(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
+  getOrders: (req, res, next) => {
+    return userServices.getOrders(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
+  addOrders: (req, res, next) => {
+    return userServices.addOrders(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
   }
+
 }
 
 module.exports = userController

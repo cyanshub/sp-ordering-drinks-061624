@@ -13,15 +13,26 @@ const { authenticated, authenticatedAdmin } = require('../../middlewares/api-aut
 const upload = require('../../middlewares/multer.js') // 負責圖片上傳功能
 
 // 設計路由
-// 設計路由: 後台區域
-router.use('/admin', admin)
+// 設計路由: 使用者登入相關
+router.post('/signup', userController.signUp)
+router.post('/signin', passport.authenticate('local', { session: false }), userController.signIn) // 直接使用passport提供的方法進行登入驗證
 
 // 設計路由: 使用者相關
-router.post('/signin', passport.authenticate('local', { session: false }), userController.signIn)
+router.get('/users/:id', authenticated, userController.getUser)
+router.put('/users/:id', authenticated, upload.single('avatar'), userController.putUser)
+router.put('/avatars/:userId', authenticated, userController.putAvatar)
+router.get('/carts', authenticated, userController.getCarts)
+router.post('/carts/:storeId', authenticated, userController.addCart)
+router.delete('/carts/:cartId', authenticated, userController.removeCart)
+router.get('/orders', authenticated, userController.getOrders)
+router.post('/orders/all', authenticated, userController.addOrders)
 
-// 設計路由: 案場相關(可測試首頁)
-router.get('/stores', storeController.getStores)
-router.put('/users/:id', upload.single('avatar'), userController.putUser)
+// 設計路由: 前台區域
+router.get('/stores', authenticated, storeController.getStores)
+router.get('/stores/:id', authenticated, storeController.getStore)
+
+// 設計路由: 後台區域
+router.use('/admin', authenticated, authenticatedAdmin, admin)
 
 // 設計路由: 錯誤相關
 router.use('/', apiErrorHandler)

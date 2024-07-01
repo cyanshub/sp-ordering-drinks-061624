@@ -30,6 +30,7 @@ app.use('/upload', express.static(path.join(__dirname, 'upload')))
 
 app.use(express.urlencoded({ extended: true })) // 啟用 req.body
 app.use(methodOverride('_method')) // 遵循RESTful 精神撰寫路由
+app.use(express.json()) // 撰寫 API 測試時, 使可識別 json 資料
 
 // middleware: 啟用 Flash Message
 app.use(flash())
@@ -47,7 +48,7 @@ app.use((req, res, next) => {
   next()
 })
 
-app.use('/apis', apis)
+app.use('/api', apis)
 app.use(pages)
 
 // 啟動並監聽網站

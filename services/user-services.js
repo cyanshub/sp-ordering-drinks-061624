@@ -257,7 +257,6 @@ const userController = {
         // 將郵件發送出去
         transporter.sendMail(mailOptions, (err, info) => {
           if (err) {
-            err.status(500).send('Error sending email')
             cb(err)
           } else {
             console.log(info)

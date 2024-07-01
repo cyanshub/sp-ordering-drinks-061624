@@ -4,6 +4,10 @@ const storeServices = require('../../services/store-services')
 const storeController = {
   getStores: (req, res, next) => {
     return storeServices.getStores(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
+  },
+
+  getStore: (req, res, next) => {
+    return storeServices.getStore(req, (err, data) => err ? next(err) : res.json({ status: 'success', data }))
   }
 }
 
