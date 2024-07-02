@@ -68,5 +68,18 @@ module.exports = {
       name = name.replace(new RegExp(stringToRemove), '')
     })
     return name
+  },
+
+  sumPrices: carts => {
+    let total = 0
+    carts.forEach(cart => {
+      if (cart.Size.level === '大杯(L)') {
+        total += cart.Drink.priceL * cart.amount
+      } else {
+        total += cart.Drink.priceM * cart.amount
+      }
+    })
+    return total
   }
+
 }

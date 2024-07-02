@@ -3,6 +3,10 @@
   {{!-- 餐廳後台 --}}
   {{> admin-tabs route = 'stores'}}
 
+  {{!-- 新增店家按鈕 --}}
+  <a href='/admin/stores/create'>
+    <p class="small btn-color">新增店家</p>
+  </a>
 
   <div id="table-stores" class="table-formats">
     <table cellspacing="0">
@@ -48,12 +52,6 @@
     </table>
   
   </div>
-
-  {{!-- 新增店家按鈕 --}}  
-  <a class="mt-0" href='/admin/stores/create'>
-    <button type="button" class="btn link-primary btn-color">新增店家</button>
-  </a>
-  
 
 
   {{!-- 加上 pagination 分頁器 --}}

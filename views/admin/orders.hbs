@@ -4,6 +4,13 @@
 
   {{#if orders}}
   <div class="mt-2">
+
+    {{!-- 取得資料總數, 顯示全部資料的按鈕 --}}
+    <p class="small btn-color">
+      {{> pagination-toggle color = 'btn-color'}}
+    </p>
+
+
     {{!-- 列出訂單資訊 --}}
     <div id="table-back-orders" class="table-formats">
       <table cellspacing="0">
@@ -57,12 +64,7 @@
       </table>
     </div>
 
-    {{!-- 取得資料總數, 顯示全部資料的按鈕 --}}
-    <p class="small btn-color">
-      {{> pagination-toggle color = 'btn-color'}}
-    </p>
-
-
+    
     {{!-- 新增頁碼器 --}}
     <div class="mt-3 d-flex justify-content-center align-items-center table-width">
       {{> pagination}}
