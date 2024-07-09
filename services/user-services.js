@@ -50,6 +50,12 @@ const userController = {
   logOut: (req, cb) => {
     return cb(null)
   },
+  facebookSignInPage: (req, cb) => {
+    return cb(null)
+  },
+  facebookSignIn: (req, cb) => {
+    return cb(null)
+  },
   getUser: (req, cb) => {
     return User.findByPk(req.params.id, {
       attributes: { exclude: ['password'] }

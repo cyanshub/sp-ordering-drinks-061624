@@ -20,6 +20,10 @@ router.get('/signin', userController.signInPage)
 router.post('/signin', passport.authenticate('local', { failureRedirect: '/signin', failureFlash: true }), userController.signIn) // 直接使用passport提供的方法進行登入驗證
 router.get('/logout', userController.logOut)
 
+// 設計路由: OAuth2 登入相關
+router.get('/oauth2/login/facebook', userController.facebookSignInPage) // Facebook 登入
+router.get('/oauth2/redirect/facebook', userController.facebookSignIn) // Facebook 驗證回調
+
 // 設計路由: 使用者相關
 router.get('/users/:id', authenticated, userController.getUser)
 router.get('/users/:id/edit', authenticated, userController.editUser)

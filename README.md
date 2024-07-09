@@ -4,6 +4,13 @@
 - 本專案旨在練習 Sequelize 資料庫的基本操作（Create、Read、Update、Delete）, 以及實作使用者登入與驗證機制。本專案以MVC架構的模式整理程式碼, 將路由包裝進routes資料夾, 並由每條路由呼叫對應的controller。另外，本專案同時存在 web API的形式, 作為後端開發的練習, 以 passport-jwt 執行本地登入策略, 以 jsonwebtoken 簽發使用者驗證憑證。
 
 ## 功能
+- 創建、讀取、更新和刪除資料
+- 使用 Handlebars 作為模板引擎
+- 實作動態式頁碼器
+- 使用關聯式資料庫管理系統進行專案開發, 透過 Sequelize ORM 框架進行資料庫操作
+- 使用者可以透過本專案註冊系統進行登入與驗證
+- 使用者可以透過 Facebook Login 直接登入 (實作 Facebook OAuth 2 功能)
+
 
 ### 前台功能
 

@@ -13,9 +13,19 @@
         required>
     </div>
 
-    <button class="btn" type="submit">登入</button>
-    <div class="sign">
-      <a href="/signup">還沒有帳號? 趕快註冊一個吧!</a>
-    </div>
-  </form>
+  {{!-- 一般登入按鈕 --}}
+  <button class="btn" type="submit">登入</button>
+  
+  {{!-- facebook 登入連結 --}}
+  <div class="sign">
+    <a href="/oauth2/login/facebook">
+      <i style="color: #3b5998;" class="fa-brands fa-facebook"></i>
+      <span class="text-secondary">使用 Facebook 登入</span>
+    </a>
+  </div>
+  
+  {{!-- 註冊連結 --}}
+  <div class="sign">
+    <a href="/signup" class="text-secondary">還沒有帳號? 趕快註冊一個吧!</a>
+  </div>
 </div>
