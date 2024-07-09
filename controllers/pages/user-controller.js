@@ -6,7 +6,7 @@ const passport = require('../../config/passport')
 
 const userController = {
   signUpPage: (req, res, next) => {
-    return res.render('signup')
+    return res.render('users/signup')
   },
   signUp: (req, res, next) => {
     return userServices.signUp(req, (err, data) => {
@@ -16,7 +16,7 @@ const userController = {
     })
   },
   signInPage: (req, res, next) => {
-    return res.render('signin')
+    return res.render('users/signin')
   },
   signIn: (req, res, next) => {
     // 實際的登入功能已經由 passport 以 middlewares 的形式處理
@@ -52,10 +52,10 @@ const userController = {
     })(req, res, next)
   },
   getUser: (req, res, next) => {
-    return userServices.getUser(req, (err, data) => err ? next(err) : res.render('profile', data))
+    return userServices.getUser(req, (err, data) => err ? next(err) : res.render('users/profile', data))
   },
   editUser: (req, res, next) => {
-    return userServices.editUser(req, (err, data) => err ? next(err) : res.render('edit-user', data))
+    return userServices.editUser(req, (err, data) => err ? next(err) : res.render('users/edit-user', data))
   },
   putUser: (req, res, next) => {
     return userServices.putUser(req, (err, data) => {
@@ -74,7 +74,7 @@ const userController = {
     })
   },
   getCarts: (req, res, next) => {
-    return userServices.getCarts(req, (err, data) => err ? next(err) : res.render('carts', data))
+    return userServices.getCarts(req, (err, data) => err ? next(err) : res.render('users/carts', data))
   },
   addCart: (req, res, next) => {
     return userServices.addCart(req, (err, data) => {
@@ -101,7 +101,7 @@ const userController = {
     })
   },
   getOrders: (req, res, next) => {
-    return userServices.getOrders(req, (err, data) => err ? next(err) : res.render('orders', data))
+    return userServices.getOrders(req, (err, data) => err ? next(err) : res.render('users/orders', data))
   }
 }
 
