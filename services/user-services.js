@@ -56,6 +56,12 @@ const userController = {
   facebookSignIn: (req, cb) => {
     return cb(null)
   },
+  googleSignInPage: (req, cb) => {
+    return cb(null)
+  },
+  googleSignIn: (req, cb) => {
+    return cb(null)
+  },
   getUser: (req, cb) => {
     return User.findByPk(req.params.id, {
       attributes: { exclude: ['password'] }

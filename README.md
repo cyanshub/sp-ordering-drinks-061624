@@ -10,6 +10,7 @@
 - 使用關聯式資料庫管理系統進行專案開發, 透過 Sequelize ORM 框架進行資料庫操作
 - 使用者可以透過本專案註冊系統進行登入與驗證
 - 使用者可以透過 Facebook Login 直接登入 (實作 Facebook OAuth 2 功能)
+- 使用者還可透過 Google Login 直接登入 (實作 Google OAuth 2 功能)
 
 
 ### 前台功能

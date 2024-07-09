@@ -1,6 +1,7 @@
 const passport = require('passport')
 const LocalStrategy = require('passport-local')
 const FacebookStrategy = require('passport-facebook') // Facebook OAuth 2 登入策略
+const GoogleStrategy = require('passport-google-oauth20').Strategy // Google OAuth 2 登入策略
 const passportJWT = require('passport-jwt') // api 專用
 const JWTStrategy = passportJWT.Strategy // api 專用
 const ExtractJWT = passportJWT.ExtractJwt // api 專用
@@ -38,6 +39,42 @@ passport.use(new FacebookStrategy({
   clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
   callbackURL: process.env.FACEBOOK_CALLBACK_URL,
   profileFields: ['email', 'displayName']
+},
+(accessToken, refreshToken, profile, cb) => {
+  // 可以觀察物件結構
+  // console.log('access token:', accessToken)
+  // console.log('profile:', profile)
+
+  const email = profile.emails[0].value
+  const name = profile.displayName
+
+  // 根據輸入帳密, 比對使用者資料表的資訊, 從資料表撈資料
+  return User.findOne({
+    attributes: ['id', 'name', 'email'],
+    where: { email: email },
+    raw: true
+  })
+    .then(user => {
+      // 如果資料庫, 曾經有吻合使用者, 則直接進入下一步
+      if (user) return cb(null, user)
+
+      // 如果資料庫沒有相符合使用者, 則在資料路建立資料後進入下一步
+      const randomPwd = Math.random().toString(36).slice(-8)
+      return bcrypt.hash(randomPwd, 10)
+        .then(hash => User.create({ name, email, password: hash }))
+        .then(user => cb(null, { id: user.id, name: user.name, email: user.email }))
+    })
+    .catch(err => {
+      err.errorMessage = '登入失敗'
+      return cb(err)
+    })
+}))
+
+// Google OAuth2 登入策略
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: process.env.GOOGLE_CALLBACK_URL
 },
 (accessToken, refreshToken, profile, cb) => {
   // 可以觀察物件結構

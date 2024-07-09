@@ -23,6 +23,8 @@ router.get('/logout', userController.logOut)
 // 設計路由: OAuth2 登入相關
 router.get('/oauth2/login/facebook', userController.facebookSignInPage) // Facebook 登入
 router.get('/oauth2/redirect/facebook', userController.facebookSignIn) // Facebook 驗證回調
+router.get('/auth/google', userController.googleSignInPage) // Google 登入
+router.get('/auth/google/callback', userController.googleSignIn) // Google 驗證回調
 
 // 設計路由: 使用者相關
 router.get('/users/:id', authenticated, userController.getUser)
