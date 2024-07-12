@@ -112,8 +112,6 @@ passport.serializeUser((user, cb) => cb(null, user.id))
 // 在 passport 設定反序列化
 passport.deserializeUser((id, cb) => {
   User.findByPk(id, {
-    // 關聯 User Model 的多對多關係 Model, 並寫上多對多關係的名稱(對應model設定的名稱)
-    include: [],
     attributes: { exclude: ['password'] } // 避免密碼外洩
   })
     .then(user => cb(null, user.toJSON()))
@@ -128,12 +126,14 @@ const jwtOptions = {
 
 // 設置 jwt 登入策略
 passport.use(new JWTStrategy(jwtOptions, (jwtPayload, cb) => {
-  User.findByPk(jwtPayload.id, {
-    attributes: { exclude: ['password'] }, // 避免密碼外洩
-    include: []
-  })
-    .then(user => cb(null, user))
-    .catch(err => cb(err))
+  // 在同步語法捕捉可能的錯誤事件
+  try {
+    // cb vs promise, 統一成其中一種風格
+    console.log('登入的user資料', jwtPayload)
+    cb(null, jwtPayload)
+  } catch (err) {
+    cb(err)
+  }
 }))
 
 module.exports = passport

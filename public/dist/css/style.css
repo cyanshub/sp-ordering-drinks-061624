@@ -260,10 +260,8 @@ a {
 }
 
 .margin-wrapper {
-  margin-top: 0;
-  margin-bottom: 0;
-  margin-left: 3rem;
-  margin-right: 3rem;
+  width: 80%;
+  margin: 0 auto;
 }
 
 #successAlert, #errorAlert, #warningAlert {
