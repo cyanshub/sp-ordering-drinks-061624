@@ -19,6 +19,7 @@ router.post('/signin', passport.authenticate('local', { session: false }), userC
 
 // 設計路由: 使用者相關
 router.get('/users/:id', authenticated, userController.getUser)
+router.get('/users/:id/edit', authenticated, userController.editUser)
 router.put('/users/:id', authenticated, upload.single('avatar'), userController.putUser)
 router.put('/avatars/:userId', authenticated, userController.putAvatar)
 router.get('/carts', authenticated, userController.getCarts)
