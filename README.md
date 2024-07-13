@@ -41,6 +41,39 @@
 + 看到以下訊息，可至瀏覽器輸入下列網址開啟 Ordering drinks application listening on port: http://localhost:3002
 
 
+## Web APIs 路由設計
+本專案同時以 Web APIs 提供服務, 依循 RESTful API 理念設計路由。 將 email、password 發送到本站的 signin 路由, 即可得到 Auth Type 為 Bearer Token 的憑證, 夾帶憑證即可使用本站 Web APIs, 路由對應功能簡述如下
+
+### 與 User 有關的路由
++ POST /api/signup 註冊
++ POST /api/signin 登入
++ GET /api/users/:id 瀏覽指定使用者頁面
++ GET /api/users/:id/edit 瀏覽指定使用者編輯頁面
++ PUT /api/users/:id 編輯指定使用者
++ PUT /api/avatars/:userId 移除指定使用者頭像
++ GET /api/carts 瀏覽複數購物車頁面
++ POST /api/carts/:storeId 新增購物車之指定商店
++ DEL /api/carts/:cartId 移除指定購物車
++ GET /api/orders 瀏覽複數訂單頁面
++ POST /api/orders/all 新增複數訂單並清空購物車
+
+### 與 Store 有關的路由
++ GET /api/stores 瀏覽複數飲料店頁面
++ GET /api/stores/:id 瀏覽指定飲料店頁面
+
+### 與 Admin 有關的路由
++ GET /api/admin/stores 在後台瀏覽複數案場頁面
++ POST /api/admin/stores 在後台新增案場
++ GET /api/admin/stores/:id 在後台瀏覽指定案場頁面
++ PUT /api/admin/stores/:id 在後台編輯指定案場
++ DEL /api/admin/stores/:id 在後台移除指定案場
++ POST /api/admin/ownership/:drinkId 在後台上架飲料品項
++ DEL /api/admin/ownership/:drinkId 在後台下架飲料品項
++ GET /api/admin/users 在後台瀏覽複數使用者頁面
++ PATCH /api/admin/users 在後台修改使定使用者
++ GET /api/admin/orders 在後台瀏覽複數訂單頁面
++ DEL /api/admin/orders/:orerId 在後台移除指定訂單
+
 
 ## 主要技術
 - [Nodemailer](https://nodemailer.com/)
