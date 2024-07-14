@@ -42,6 +42,8 @@
 
 
 ## Web APIs 路由設計
+點擊[ Web APIs ](https://scarlet-page-533.notion.site/1130612-Ordering-drinks-Web-APIs-beb80ee919da461a9ee6021fe2fc7bf4)查看使用範例
+
 本專案同時以 Web APIs 提供服務, 依循 RESTful API 理念設計路由。 將 email、password 發送到本站的 signin 路由, 即可得到 Auth Type 為 Bearer Token 的憑證, 夾帶憑證即可使用本站 Web APIs, 路由對應功能簡述如下
 
 ### 與 User 有關的路由
