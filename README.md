@@ -10,7 +10,7 @@
 
 ### 功能
 + 具有使用者驗證管理系統, 實作登入、登出功能
-+ 為簡化註冊流程, 提升安全性, 亦提供 Google、Facebook 等第三方 OAuth 登入功能
++ 為簡化註冊流程, 提升安全性, 亦提供第三方 OAuth 之 Google 登入功能
 + 可針對店家及飲品資料, 進行建立、查看、編輯、刪除等資料操作
 + 提供搜尋功能、動態頁碼, 可切換顯示全部或分頁顯示
 + 可上傳圖片, 包括使用者頭像、店家封面照片
@@ -39,6 +39,14 @@
 + 建立種子資料: Bash 指令 npx sequelize db:seed:all
 + 啟動專案: Bash 指令 npm run start; 或使用 nodemon 進行開發, Bash 指令 npm run dev
 + 看到以下訊息，可至瀏覽器輸入下列網址開啟 Ordering drinks application listening on port: http://localhost:3002
+
+
+## 測試帳號
+| 使用者類型      | email              | password   |
+| -------------- | ------------------ | ---------- |
+| 管理員使用者    | root@example.com   | 12345678   |
+| 使用者 1 號     | user1@example.com  | 12345678   |
+| 使用者 2 號     | user2@example.com  | 12345678   |
 
 
 ## Web APIs 路由設計
@@ -79,7 +87,6 @@
 
 ## 主要技術
 - [Nodemailer](https://nodemailer.com/)
-- [Facebook OAuth 2.0](https://developers.facebook.com/)
 - [Google OAuth 2.0](https://developers.google.com/?hl=zh-tw)
 - [MySQL](https://www.mysql.com/)
 - [Sequelize](https://sequelize.org/)
