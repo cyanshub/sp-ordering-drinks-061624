@@ -1,0 +1,31 @@
+{{!-- 輸入店家名稱 --}}
+<div class="form-row mb-3">
+  <label class="form-label" for="name">店家名稱</label>
+  <input class="form-control" type="text" name="name" id="name" placeholder="請輸入場域名稱" value="{{store.name}}" required>
+</div>
+
+
+{{!-- 輸入店家地點 --}}
+<div class="form-row mb-3">
+  <label class="form-label" for="fullAddress">店家地址</label>
+  <input class="form-control" type="text" name="address" id="address"
+    placeholder="請輸入店家地址 (例:台北市萬華區漢中街126號)" value="{{store.address}}">
+</div>
+
+{{!-- 輸入店家電話 --}}
+<div class="form-row mb-3">
+  <label class="form-label" for="fullAddress">店家電話</label>
+  <input class="form-control" type="text" name="phone" id="phone" placeholder="請輸入店家電話 (例:02-2370-6020)"
+    value="{{store.phone}}">
+</div>
+
+{{!-- 預留上傳圖片的欄位 --}}
+<div class="form-row mb-3">
+  <label for="cover" class="form-label">店家照片</label>
+  <input type="file" name="cover" id="cover" class="form-control form-control-file">
+</div>
+
+<div class="d-flex justify-content-center">
+  <a href="javascript:history.back()" class="btn btn-outline-secondary">返回</a>
+  <button type="submit" class="btn btn-outline-primary mx-3">提交</button>
+</div>

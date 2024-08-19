@@ -1,0 +1,60 @@
+{{!-- 套用自訂編距樣式 --}}
+<div class="margin-wrapper">
+  {{!-- 餐廳後台 --}}
+  {{> admin-tabs route = 'stores'}}
+
+  {{!-- 新增店家按鈕 --}}
+  <a href='/admin/stores/create'>
+    <p class="small btn-color">新增店家</p>
+  </a>
+
+  <div id="table-stores" class="table-formats">
+    <table cellspacing="0">
+
+      {{!-- 表頭 --}}
+      <thead>
+        <tr>
+          <th style="min-width: 60px;">店名</th>
+          <th style="min-width: 120px;">電話</th>
+          <th style="min-width: 60px;">地址</th>
+          <th style="min-width: 140px;">功能</th>
+        </tr>
+      </thead>
+
+      {{!-- 表格 --}}
+      <tbody>
+        {{#each stores}}
+        <tr>
+          <td class="text-start"><a href="/admin/stores/{{this.id}}">{{this.name}}</a></td>
+          <td>{{this.phone}}</td>
+          <td class="text-start">{{this.address}}</td>
+          
+          <td class="d-flex align-items-center my-0">
+            {{!-- 編輯按鈕 --}}
+
+            <button type="button" class="btn btn-color">
+              <a class="btn-color" href="/admin/stores/{{this.id}}/edit">
+                編輯
+              </a>
+            </button>
+              
+            
+            {{!-- </button> --}}
+            {{!-- 刪除按鈕 --}}
+            <form action="/admin/stores/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+              <button type="submit" class="btn btn-color"
+                onclick="return confirm(`確定要刪除{{this.name}}嗎?`)">刪除</button>
+            </form>
+          </td>
+        </tr>
+        {{/each}}
+      </tbody>
+    </table>
+  
+  </div>
+
+
+  {{!-- 加上 pagination 分頁器 --}}
+  {{>pagination}}
+
+</div>

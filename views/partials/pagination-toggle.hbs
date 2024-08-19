@@ -1,0 +1,24 @@
+<a id="pagination-toggle-all" class="{{color}}" href="?limit={{count}}&keyword={{keyword}}">顯示全部</a>
+<a id="pagination-toggle-paged" class="{{color}}" href="?keyword={{keyword}}">分頁顯示</a>
+
+{{!-- 使用 localStorage 來保存狀態，然後在頁面載入時根據狀態設定 classList 的 d-none 屬性 --}}
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const all = document.querySelector('#pagination-toggle-all')
+      const paged = document.querySelector('#pagination-toggle-paged')
+      const paginationMode = localStorage.getItem('paginationMode')
+         
+      if (paginationMode === 'all') {
+        all.classList.add('d-none')
+        paged.classList.remove('d-none')
+        localStorage.removeItem('paginationMode')
+      } else {
+        all.classList.remove('d-none')
+        paged.classList.add('d-none')
+      }
+    })
+           
+    document.querySelector('#pagination-toggle-all').addEventListener('click', function (event) { localStorage.setItem('paginationMode', 'all') })
+
+    document.querySelector('#pagination-toggle-paged').addEventListener('click', function (event) { localStorage.setItem('paginationMode', 'paged') })
+</script>

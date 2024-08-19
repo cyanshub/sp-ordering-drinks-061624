@@ -1,0 +1,32 @@
+{{#if error_messages}}
+<div id="errorAlert" class="alert alert-danger alert-dismissible show" role="alert">
+  {{ error_messages }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+{{#if success_messages}}
+<div id="successAlert" class="alert alert-success alert-dismissible  show" role="alert">
+  {{ success_messages }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+{{#if warning_msg}}
+<div id="warningAlert" class="alert alert-warning alert-dismissible  show" role="alert">
+  {{ warning_msg }}
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+{{/if}}
+
+<script>
+  // 選取警告訊息的元素
+  const successAlert = document.getElementById('successAlert')
+
+  // 如果有提示訊息，設置定時器在一段時間後自動隱藏
+  // 但是如果報錯則留著, 等使用者確定完後自己按掉
+  if (successAlert) {
+    setTimeout(function () {
+      successAlert.classList.remove('show')
+      successAlert.classList.add('d-none')
+    }, 1000) // 1 秒後執行
+  }
+</script>

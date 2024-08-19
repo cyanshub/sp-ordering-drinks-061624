@@ -1,0 +1,31 @@
+{{!-- 使用者登入頁面 --}}
+<div class="form-signin">
+  <h2>Sign In</h2>
+  <form action="/signin" method="POST" style="width: 100%;">
+    <div class="form-row">
+      <label class="form-label" for="email">帳號</label>
+      <input class="form-control" id="email" type="text" name="email" class="form-control" placeholder="請輸入註冊信箱"
+        required autofocus>
+    </div>
+    <div class="form-row">
+      <label class="form-label" for="password">密碼</label>
+      <input class="form-control" id="password" type="password" name="password" class="form-control" placeholder="請輸入密碼"
+        required>
+    </div>
+
+  {{!-- 一般登入按鈕 --}}
+  <button class="btn" type="submit">登入</button>
+
+  {{!-- google 登入連結 --}}
+  <div class="sign">
+    <a href="/auth/google">
+      <i style="color: #4286F3 ;" class="fa-brands fa-google"></i>
+      <span class="text-secondary">使用 Google 登入</span>
+    </a>
+  </div>
+   
+  {{!-- 註冊連結 --}}
+  <div class="sign">
+    <a href="/signup" class="text-secondary">還沒有帳號? 趕快註冊一個吧!</a>
+  </div>
+</div>

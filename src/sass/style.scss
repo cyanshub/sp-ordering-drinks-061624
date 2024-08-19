@@ -1,0 +1,96 @@
+// 載入低階模組彙整器, 使用 as * 免除輸入引用低階模組的名稱
+@use "./modules/index" as *;
+
+/* 設定網頁主體: start */
+html,
+body {
+  font-family: 'open sans', helvetica, arial, sans;
+  background: no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+a {
+  text-decoration: none;
+  color: $grey;
+}
+
+.btn-color{
+  color: $blue
+}
+
+// 自訂樣式
+.text-container {
+  color: $grey;
+  white-space: nowrap;
+  /* 防止文字換行 */
+  overflow: hidden;
+  /* 隱藏超出容器的文字 */
+  text-overflow: ellipsis;
+  /* 使用省略號表示超出的部分 */
+}
+
+.image-container {
+  overflow: hidden;
+  /* 隱藏溢出部分 */
+}
+
+.image-container img {
+  object-fit: cover;
+  /* 保持原始比例，填滿容器 */
+}
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.margin-wrapper {
+  width: 80%;
+  margin: 0 auto;
+}
+
+// 訊息提示
+#successAlert, #errorAlert, #warningAlert{
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 1050;
+  /* 使其位於較高層級，避免被其他元素遮蔽 */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  /* 添加陰影效果 */
+}
+
+
+// 複寫 bootstrap 樣式
+a.nav-link {
+  color: #495057 !important;
+}
+
+a.nav-link.text-container {
+  color: #FFFFFF8C !important;
+}
+
+a.nav-link.active {
+  color: $blue !important;
+  background-color: #FFFFFF !important;
+}
+
+a.page-link {
+  color: $blue !important;
+}
+
+li.page-item.active {
+  a.page-link {
+    color: #fff !important;
+    background-color: $blue !important;
+    border-color: $blue !important;
+  }
+
+  color: #fff !important;
+  background-color: $blue !important;
+  border-color: $blue !important;
+}

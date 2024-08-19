@@ -1,0 +1,80 @@
+<div class="margin-wrapper">
+  {{!-- 後台頁籤 --}}
+  {{> admin-tabs route = 'orders'}}
+
+  {{#if orders}}
+  <div class="mt-2">
+
+    {{!-- 取得資料總數, 顯示全部資料的按鈕 --}}
+    <p class="small btn-color">
+      {{> pagination-toggle color = 'btn-color'}}
+    </p>
+
+
+    {{!-- 列出訂單資訊 --}}
+    <div id="table-back-orders" class="table-formats">
+      <table cellspacing="0">
+
+        {{!-- 表頭 --}}
+        <thead>
+          <tr>
+            <th style="min-width: 60px;">用戶</th>
+            <th style="min-width: 60px;">店家</th>
+            <th style="min-width: 60px;">數量</th>
+            <th style="min-width: 100px;">商品</th>
+            <th style="min-width: 130px;">規格</th>
+            <th style="min-width: 130px;">金額</th>
+            <th style="min-width: 100px;">時間</th>
+            <th style="min-width: 80px;">功能</th>
+          </tr>
+        </thead>
+
+        {{!-- 表格 --}}
+        <tbody>
+          {{#each orders}}
+          <tr>
+            <td>{{this.User.name}}</td>
+            <td> <a href="/admin/stores/{{this.Store.id}}">{{this.Store.name}}</a></td>
+            <td>{{this.amount}}杯</td>
+            <td>{{this.Drink.name}}</td>
+            <td>{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>
+
+            {{!-- 判斷價格是中杯還是大杯 --}}
+            {{#ifCond this.Size.level "大杯(L)"}}
+            <td>{{formatNumber (multiply (sum this.Drink.priceL) this.amount)}}元</td>
+            {{else}}
+            <td>{{formatNumber (multiply (sum this.Drink.priceM) this.amount)}}元</td>
+            {{/ifCond}}
+
+            <td>{{formatTime this.createdAt}}</td>
+              
+
+            <td>
+              {{!-- 取消訂單 --}}
+              <form action="/admin/orders/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-link btn-color " style="text-decoration: none; line-height: 1.2rem;"
+                  onclick="return confirm(`確定要取消訂單嗎?`)">移除</button>
+              </form>
+
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+
+      </table>
+    </div>
+
+    
+    {{!-- 新增頁碼器 --}}
+    <div class="mt-3 d-flex justify-content-center align-items-center table-width">
+      {{> pagination}}
+    </div>
+  </div>
+
+
+  {{else}}
+  <a href="/stores">
+    <h6 class="mt-1 ms-3" style="line-height: 1.5rem">還沒有喝飲料?<br>趕快去逛逛吧!</h6>
+  </a>
+  {{/if}}
+</div>

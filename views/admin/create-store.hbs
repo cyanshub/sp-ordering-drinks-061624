@@ -1,0 +1,10 @@
+<div class="margin-wrapper">
+  <form action="/admin/stores" method="POST" enctype="multipart/form-data">
+    <div class="mb-4 text-center">
+      <h1 class="h3 font-weight-normal mb-3">新增店家資訊</h1>
+    </div>
+
+    {{!-- 改成引用 partial, 實現 create 與 edit 頁面共用 --}}
+    {{> admin-store-form}}
+  </form>
+</div>

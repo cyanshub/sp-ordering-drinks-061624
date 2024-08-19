@@ -1,0 +1,30 @@
+{{!-- 使用 row 搭配 col 排版各個區塊 --}}
+<div class="row">
+
+  {{!-- 獨佔上方區塊 --}}
+  <div class="col-12" style="max-width: 960px; margin: 0 auto;">
+    {{!-- 使用者資訊 --}}
+    <div class="card mb-3">
+      <div class="row g-0 align-items-center">
+        <div class="col-md-4">
+          {{#if user.avatar}}
+          <img class="img-responsive center-block" src="{{user.avatar}}" style="width: 180px;" alt="使用者圖像">
+          {{else}}
+          <img src="https://fakeimg.pl/180/" width="180px" height="180px" />
+          {{/if}}
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <h5 class="card-title mt-2">{{user.name}}</h5>
+            <p class="card-text">{{user.email}}</p>
+            <div class="btn-container mt-4">
+              <a href="javascript:history.back()" class="btn btn-outline-secondary me-2">返回</a>
+              <a href="/users/{{user.id}}/edit" class="btn btn-outline-primary" {{#ifCond userAuth.id user.id }} {{else}} style="pointer-events: none; color: gray;"{{/ifCond}}>編輯</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

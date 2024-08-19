@@ -1,0 +1,116 @@
+.form-signup,
+.form-signin {
+  width: 40%;
+  min-width: 320px;
+  max-width: 475px;
+  background: #fff;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.25);
+}
+@media (max-width: 40em) {
+  .form-signup,
+  .form-signin {
+    width: 95%;
+    position: relative;
+    margin: 2.5% auto 0 auto;
+    left: 0%;
+    transform: translate(0%, 0%);
+  }
+}
+.form-signup form,
+.form-signin form {
+  display: block;
+  width: 100%;
+  padding: 2em;
+}
+.form-signup h2,
+.form-signin h2 {
+  width: 100%;
+  color: #d6e8f6;
+  font-family: "open sans condensed";
+  font-size: 1.5em;
+  display: block;
+  background: #2a2a2a;
+  width: 100%;
+  text-transform: uppercase;
+  padding: 0.75em 1em 0.75em 1.5em;
+  box-shadow: inset 0px 1px 1px fadeout(white, 95%);
+  border: 1px solid #1d1d1d;
+  text-shadow: 0px 1px 1px #1d1d1d;
+  margin: 0;
+  font-weight: 200;
+  text-align: center;
+}
+.form-signup input,
+.form-signin input {
+  display: block;
+  margin: auto auto;
+  width: 100%;
+  margin-bottom: 1em;
+  padding: 0.5em;
+  border: none;
+  border-bottom: 1px solid #eaeaea;
+  color: #757575;
+}
+.form-signup input:focus,
+.form-signin input:focus {
+  outline: none;
+}
+.form-signup .btn,
+.form-signin .btn {
+  display: block;
+  background: #81b8e5;
+  border: 1px solid #6cace1;
+  padding: 0.5em 2em;
+  color: white;
+  margin-right: 0.5em;
+  margin: 0 auto;
+  box-shadow: inset 0px 1px 0px fadeout(white, 80%);
+}
+.form-signup .btn:hover,
+.form-signin .btn:hover {
+  background: #96c4e9;
+}
+.form-signup .btn:active,
+.form-signin .btn:active {
+  background: #81b8e5;
+  box-shadow: inset 0px 1px 1px fadeout(black, 90%);
+}
+.form-signup .btn:focus,
+.form-signin .btn:focus {
+  outline: none;
+}
+.form-signup .sign,
+.form-signin .sign {
+  margin-top: 1em;
+  margin-bottom: 0em;
+  display: flex;
+  justify-content: end;
+}
+.form-signup .sign a,
+.form-signin .sign a {
+  color: #abd0ee;
+  line-height: 0.9em;
+  text-decoration: none;
+  font-size: 0.9em;
+  position: relative;
+  right: 0;
+}
+.form-signup .sign a:hover,
+.form-signin .sign a:hover {
+  color: #6cace1;
+}
+.form-signup .sign a:active,
+.form-signin .sign a:active {
+  background: #81b8e5;
+  box-shadow: inset 0px 1px 1px fadeout(black, 90%);
+}
+
+@media screen and (max-width: 800px) {
+  .form-signin {
+    margin-top: 6rem;
+  }
+}/*# sourceMappingURL=sign.css.map */

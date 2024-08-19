@@ -1,0 +1,73 @@
+$baseColor: #41577d;
+$borderRadius: 10px;
+$imageBig: 100px;
+$imageSmall: 60px;
+$padding: 10px;
+$maxTableWidth: 1200px;
+
+
+// 指定特定資料表(記得再修改)
+.table-width {
+  width: 100%;
+  max-width: $maxTableWidth;
+}
+
+
+.table-formats {
+  border: 1px solid darken($baseColor, 5%);
+  border-radius: $borderRadius;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  overflow: hidden;
+  width: $maxTableWidth;
+
+
+  table {
+    width: 100%;
+
+    th {
+      padding: $padding;
+      background-color: darken($baseColor, 5%);
+      color: white;
+      text-align: center;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+
+    td {
+      color: darken($baseColor, 10%);
+      padding: $padding;
+      text-align: center; // 預設儲存格文字置中(若要靠左, 請直接到元素指定class)
+      vertical-align: middle;
+
+      &:last-child {
+        font-size: 0.95em;
+        line-height: 1.4;
+      }
+    }
+
+
+    tr {
+      &:nth-child(2n) {
+        background-color: white;
+      }
+
+      &:nth-child(2n+1) {
+        background-color: lighten($baseColor, 55%)
+      }
+    }
+  }
+}
+
+
+.table-formats {
+  max-width: calc(100% - 0.5rem);
+  
+  table {
+    min-width: 750px;
+  }
+
+  overflow-x: auto;
+}
+

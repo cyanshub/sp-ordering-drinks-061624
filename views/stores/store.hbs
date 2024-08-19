@@ -1,0 +1,44 @@
+<div class="margin-wrapper">
+  {{!-- 導入頁籤 --}}
+  {{>store-tabs route = 'store'}}
+</div>
+
+
+<div style="max-width: 1080px; margin: 0 auto;">
+  {{!-- 開始套用 bootstrap grid 樣式排版 --}}
+  <div class="row d-flex align-items-center">
+    {{!-- 圖片區塊 --}}
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 ms-5">
+      <img class="img-responsive center-block" src="{{store.cover}}"
+        style="width:auto; max-width: 320px; margin-bottom: 1rem; transition: opacity 0.5s; opacity:0;"
+        onload="this.style.opacity=1;">
+      <br>
+    </div>
+
+    {{!-- 資訊區塊 --}}
+    <div class="col-xs-12 col-sm-12 col-md-5 col-lg-5 ms-5">
+      <h3 class="my-2">
+        <strong style="white-space: nowrap;">{{store.name}}</strong>
+      </h3>
+      <ul class="list-unstyled">
+        <li style="white-space: nowrap;"><strong>地址: </strong> {{store.address}}</li>
+        <li style="white-space: nowrap;"><strong>電話: </strong>{{store.phone}}</li>
+      </ul>
+
+      <a class="btn btn-outline-secondary mt-2 me-3" href="/stores">返回</a>
+      <a class="btn btn-outline-primary mt-2" href="#drink-menu">菜單</a>
+    </div>
+  </div>
+
+  <hr style="border: none; border-top: 1px solid black;">
+</div>
+
+
+
+{{!-- 將商品加入購物車 --}}
+<div class="px-5" style="max-width: 1080px; margin: 0 auto;">
+  {{>order-form storeId=store.id}}
+</div>
+
+  
+

@@ -1,0 +1,85 @@
+<form action="/carts/{{storeId}}" method="post">
+
+{{#if drinks}}
+  {{!-- 輸入飲料 --}}
+  <div id="drink-menu" class="mt-2 mb-3">
+    <label for="drinkId" class="me-3"><strong>飲料(單選)</strong></label>
+    
+    {{!-- 盛裝飲料項目的容器 --}}
+    <div class="d-flex flex-column justify-content-start" style="max-height: 30vh; overflow:auto;">
+    {{#each drinks}}
+      <div class="mb-1 d-flex align-items-center" style="white-space:nowrap">
+        <input class="me-1" id="drink-id-{{this.id}}" name="drinkId" type="radio" value="{{this.id}}" required>
+        <label for="drink-id-{{this.id}}" class="cursor-pointer" style="white-space:nowrap">
+          <span>{{removeString this.name "迷客夏 " "Coco " "50嵐 " "五桐號 " }}/ </span>
+          <span class={{#ifCond this.priceM this.priceL}}"d-none"{{/ifCond}}>M:{{this.priceM}}/ </span>
+          <span>L:{{this.priceL}}元</span>
+        </label>
+        </label>
+      </div>
+    {{/each}}
+    </div>
+  </div> 
+
+  {{!-- 尺寸、甜度、冰塊 --}}
+  <div class="row mt-3">
+    <div class="col-sm-4 col-xs-12">
+      {{!-- 輸入尺寸 --}}
+      <div class="form-row mb-3">
+        <label for="sizeId" class="me-3"><strong>杯型</strong></label>
+        {{#each sizes}}
+        <div class="mb-1 d-flex align-items-center">
+          <input class="me-1" id="size-id-{{this.id}}" name="sizeId" type="radio" value="{{this.id}}" required>
+          <label for="size-id-{{this.id}}" class="me-3 cursor-pointer">{{this.level}}</label>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-xs-12">
+      {{!-- 輸入甜度 --}}
+      <div class="form-row mb-3">
+        <label for="sugarId" class="me-3"> <strong>甜度</strong></label>
+        {{#each sugars}}
+        <div class="mb-1 d-flex align-items-center">
+          <input class="me-1" id="sugar-id-{{this.id}}" name="sugarId" type="radio" value="{{this.id}}" required>
+          <label for="sugar-id-{{this.id}}" class="me-3 cursor-pointer">{{this.level}}</label>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+    <div class="col-sm-4 col-xs-12">
+      {{!-- 輸入冰量 --}}
+      <div class="form-row mb-3">
+        <label for="iceId" class="me-3"><strong>冰量</strong></label>
+        {{#each ices}}
+        <div class="mb-1 d-flex align-items-center">
+          <input class="me-1" id="ice-id-{{this.id}}" name="iceId" type="radio" value="{{this.id}}" required>
+          <label for="ice-id-{{this.id}}" class="me-3 cursor-pointer">{{this.level}}</label>
+        </div>
+        {{/each}}
+      </div>
+    </div>
+
+  </div>
+
+  {{!-- 輸入購買數量 --}}
+  <div class="mt-2 mb-3 row">
+    <label for="amount" class="col-auto col-form-label"><strong>杯數</strong></label>
+    <div class="col-auto">
+      <input type="number" class="form-control" name="amount" id="amount" value="1" min="1" max="30" placeholder="數字" required>
+    </div>
+  </div>
+
+  {{!-- 提交控制項 --}}
+  <div class="d-flex justify-content-center mt-5">
+    <a href="javascript:history.back()" class="btn btn-outline-secondary">返回</a>
+    <button type="submit" class="btn btn-outline-primary mx-3">加入購物車</button>
+  </div>
+
+  {{else}}
+  <h5 class="mt-1">商品還在準備中...</h5>
+  {{/if}}
+
+</form>

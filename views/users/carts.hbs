@@ -1,0 +1,102 @@
+{{!-- 套用自訂編距樣式 --}}
+<div class="margin-wrapper">
+
+  {{!-- 前台頁籤 --}}
+  {{> store-tabs route = 'carts'}}
+
+  {{#if carts}}
+
+  <div class="mt-2">
+    {{!-- 提示文字 --}}
+    <p class="btn-color cursor-pointer">
+      <small id="email-toggler">輸入訂購人 email</small>
+    </p>
+
+    {{!-- 列出訂單資訊 --}}
+    <div id="table-carts" class="table-formats">
+      <table cellspacing="0">
+
+        {{!-- 表頭 --}}
+        <thead>
+          <tr>
+            <th style="min-width: 90px;">店家</th>
+            <th style="min-width: 60px;">數量</th>
+            <th style="min-width: 80px;">商品</th>
+            <th style="min-width: 130px;">規格</th>
+            <th style="min-width: 90px;">金額</th>
+            <th style="min-width: 100px;">時間</th>
+            <th style="min-width: 140px;">取消</th>
+          </tr>
+        </thead>
+        
+        {{!-- 表格 --}}
+        <tbody>
+          {{#each carts}}
+          <tr>
+            <td><a href="/stores/{{this.Store.id}}">{{this.Store.name}}</a></td>
+            <td>{{this.amount}}杯</td>
+            <td class="text-start">{{this.Drink.name}}</td>
+            <td class="text-start">{{this.Size.level}}、{{this.Sugar.level}}、{{this.Ice.level}}</td>
+
+            {{!-- 判斷價格是中杯還是大杯 --}}
+            {{#ifCond this.Size.level "大杯(L)"}}
+            <td>{{formatNumber (multiply (sum this.Drink.priceL) this.amount )}}元</td>
+            {{else}}
+            <td>{{formatNumber (multiply (sum this.Drink.priceM) this.amount )}}元</td>
+            {{/ifCond}}
+            
+            <td>{{formatTime this.createdAt}}</td>
+            <td>
+              {{!-- 取消訂單 --}}
+              <form action="/carts/{{this.id}}?_method=DELETE" method="POST" style="display: inline;">
+                <button type="submit" class="btn btn-link btn-color " style="text-decoration: none; line-height: 1.2rem;"
+                  onclick="return confirm(`確定要取消訂單嗎?`)">移出購物車</button>
+              </form>
+            </td>
+          </tr>
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+    
+ 
+
+    {{!-- 按鈕區塊 --}}
+    <div class="mt-3 table-width">
+      <form action="/orders/all" method="post" style="display: inline;">
+
+        {{!-- 輸入訂購人信箱 --}}
+        <div class="form-row mt-1 mb-3 d-none toggle-email">
+          <label class="form-label" for="emailTo" class="cursor-pointer"><strong>訂購人 email : </strong></label>
+          <input class="form-control px-2" type="email" id="emailTo" name="emailTo" value="{{userAuth.email}}"
+            placeholder="請輸入收件信箱" style="width: 300px;">
+        </div>
+
+        {{!-- 控制按鈕 --}}
+        <div class="d-flex justify-content-center table-width">
+          <a class="btn btn-outline-secondary mt-2 me-3" href="javascript:history.back()">繼續逛逛</a>
+          
+          <button type="submit" class="btn btn-outline-primary mt-2" onclick="return confirm(`確定要購買嗎?`)">正式下訂 {{formatNumber (sumPrices carts)}}元</button>
+        </div>
+
+      </form>
+    </div>
+
+  </div>
+
+  {{else}}
+  <a href="/stores">
+    <h6 class="mt-1 ms-3" style="line-height: 1.5rem">還沒想到喝什麼?<br>趕快去逛逛吧!</h6>
+  </a>
+  {{/if}}
+</div>
+
+{{!-- toogle --}}
+<script>
+  document.getElementById('email-toggler').addEventListener('click', function() {
+    const elements = document.querySelectorAll('.toggle-email')
+    elements.forEach(function(element) {
+      element.classList.toggle('d-none')
+    } )
+  })
+</script>

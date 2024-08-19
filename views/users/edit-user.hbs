@@ -1,0 +1,37 @@
+<div class="margin-wrapper">
+  <form action="/users/{{user.id}}?_method=PUT" method="post" enctype="multipart/form-data">
+    {{!-- 名稱控制項 --}}
+    <div class="form-row mb-3">
+      <label class="form-label" for="name">使用者名稱</label>
+      <input class="form-control" type="text" name="name" id="name" placeholder="請輸入使用者名稱" value="{{user.name}}" required>
+    </div>
+    {{!-- 圖片控制項 --}}
+    <div class="form-row mb-3">
+      <label class="form-label" for="avatar">使用者頭像</label>
+
+      {{!-- 移除使用者頭像 --}}
+      <button type="button" id="removeAvatarBtn" class="btn btn-link small mb-1">移除使用者頭像</button>
+
+      <input class="form-control" type="file" class="form-control-file" id="avatar" name="avatar">
+    </div>
+    {{!-- 按鈕 --}}
+    <div class="btn-container mt-4">
+      <button type="submit" class="btn btn-outline-primary me-2" {{#ifCond userAuth.id user.id }} {{else}} disabled {{/ifCond}} >提交</button>
+      <a href="javascript:history.back()" class="btn btn-outline-secondary">返回</a>
+    </div>
+    
+  </form>
+
+  {{!-- 用來移除頭像的表單 --}}
+  <form id="removeAvatarForm" action="/avatars/{{user.id}}?_method=PUT" method="post" style="display: none;">
+    {{!-- 可以在這裡加上其他必要的隱藏字段 --}}
+  </form>
+</div>
+
+<script>
+  document.getElementById('removeAvatarBtn').addEventListener('click', function () {
+    if (confirm('確定要移除使用者頭像嗎?')) {
+      document.getElementById('removeAvatarForm').submit()
+    }
+  })
+</script>
