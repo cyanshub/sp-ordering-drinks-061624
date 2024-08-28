@@ -8,3 +8,4 @@ temp/
 mysql_db_backup
 
 data
+dist/

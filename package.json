@@ -5,8 +5,12 @@
   "main": "app.js",
   "scripts": {
     "heroku-postbuild": "",
-    "start": "node app.js",
-    "dev": "nodemon app.js",
+    "prebuild" : "rimraf dist && mkdir dist\\models && mkdir dist\\config && cp -R src-ts/models dist && cp -R src-ts/config dist",
+    "build": "npx tsc",
+    "prestart": "npm run build",
+    "start": "node dist/app.js",
+    "predev": "npm run build",
+    "dev": "concurrently \"npx tsc --watch \" \"nodemon dist/app.js\" ",
     "lint": "eslint \"**/*.js\" --fix"
   },
   "engines": {
@@ -32,10 +36,16 @@
     "passport-google-oauth20": "^2.0.0",
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
+    "rimraf": "^6.0.1",
     "sequelize": "^6.6.5",
-    "sequelize-cli": "^6.2.0"
+    "sequelize-cli": "^6.2.0",
+    "typescript": "^5.5.4"
   },
   "devDependencies": {
+    "@types/express": "^4.17.21",
+    "@types/express-handlebars": "^6.0.0",
+    "@types/node": "^22.5.1",
+    "concurrently": "^8.2.2",
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-import": "^2.23.4",

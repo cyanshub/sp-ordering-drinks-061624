@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    /* Basic Options */
+    "target": "es5",                         
+    "module": "commonjs",                 
+    "lib": ["es6"],               /* 指定要包含的庫文件 */
+    "allowJs": true,              /* 允許編譯 JavaScript 文件 */
+    "checkJs": true,              /* 報告 JavaScript 文件中的錯誤 */
+    "jsx": "preserve",            /* 指定 JSX 代碼的轉換方式 */
+    "outDir": "./dist",           /* 指定編譯輸出的目錄 */
+    "rootDir": "./src-ts",        /* 指定編譯的源文件目錄 */
+    "strict": true,               /* 啟用所有的嚴格檢查選項 */
+    "esModuleInterop": true,      /* 啟用 ES 模塊的互操作性 */
+    "skipLibCheck": true,         /* 跳過定義文件的類型檢查 */
+    "forceConsistentCasingInFileNames": true,  /* 檔案名的大小寫保持一致 */
+    "typeRoots": ["./node_modules/@types", "src-ts/typings"],   /* 指定 TypeScript 應該在哪些目錄中尋找型別定義文件（.d.ts 文件） */
+    "removeComments": true,       /* 省略編譯後文件的註解 */
+    "resolveJsonModule": true     /* 允許 TypeScript 導入 JSON 文件 */
+  },
+  "include": ["src-ts/**/*"],
+  "exclude": ["node_modules", "migrations", "seeders","src-ts/models","src-ts/config/config.json"] /* 排除 Migrations 和 Seeders 資料夾：可以避免不必要的編譯和檢查，專注於應用核心代碼的型別安全 */
+}
