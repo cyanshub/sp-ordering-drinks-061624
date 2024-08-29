@@ -8,6 +8,8 @@ import handlebarsHelpers from './helpers/handlebars-helpers'
 import flash from 'connect-flash'
 import session from 'express-session'
 import { pages, apis } from './routes'
+import passport from './config/passport' // 注意要導入自訂的
+import { getUser } from './helpers/auth-helpers'
 
 // 載入環境變數
 if (process.env.NODE_ENV !== 'production') {
@@ -45,11 +47,17 @@ app.use(session({
   cookie: { secure: false } // 用來配置會話 ID cookie 的屬性。secure: false 表示 cookie 可以在不安全的 HTTP 連接上傳送（例如 http://）
 }))
 
+// middleware: 使用者登入相關, 設定 passport 與 passport 化已宣告的 session
+app.use(passport.initialize()) // 令 passport 初始化
+app.use(passport.session()) // 啟動 passport 的 session 功能; 必須放在原本的session之後
+
+
 // middleware: 設計專案全域變數, 所有路由都會經過的 middleware
 app.use((req, res, next) => {
   // views/partial/messages.hbs 設計當以下兩個變數存在時, 會出現對應的畫面
   res.locals.success_messages = req.flash('success_messages')
   res.locals.error_messages = req.flash('error_messages')
+  res.locals.userAuth = getUser(req)
   next()
 })
 
