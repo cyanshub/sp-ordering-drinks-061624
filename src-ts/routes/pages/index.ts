@@ -5,9 +5,10 @@ import admin from './modules/admin'
 // 載入 controller
 
 // 載入 middleware
+import { generalErrorHandler } from '../../middlewares/error-handler'
 
 // 設計路由
-router.get('/', (req, res) => {
+router.get('/stores', (req, res) => {
   res.send('首頁: 功能開發中!')
 })
 
@@ -21,5 +22,9 @@ router.get('/', (req, res) => {
 
 // 設計路由: 後台區域
 router.use('/admin', admin)
+
+// 設計路由: 錯誤相關
+router.use('/', (req, res) => res.redirect('/stores'))
+router.use('/', generalErrorHandler)
 
 export default router

@@ -5,6 +5,8 @@ import dotenv from 'dotenv'
 import path from 'path'
 import methodOverride from 'method-override'
 import handlebarsHelpers from './helpers/handlebars-helpers'
+import flash from 'connect-flash'
+import session from 'express-session'
 import { pages, apis } from './routes'
 
 // 載入環境變數
@@ -25,16 +27,31 @@ app.engine('hbs', handlebars({
 
 // 使用樣版引擎
 app.set('view engine', 'hbs')
-app.get('/', (req, res) => {
-  res.send('首頁')
-})
 
 // 設計 middleware
+// middleware
 app.use('/', express.static(path.join(__dirname, '..', 'public')))
 app.use('/upload', express.static(path.join(__dirname, '..', 'upload')))
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use(methodOverride('_method'))
+
+// middleware: 利用 session 啟用 flash message
+app.use(flash())
+app.use(session({
+  secret: process.env.SESSION_SECRET, // session 的 加密密鑰
+  resave: false, // 在請求期間沒有修改會話，則不會重新保存會話
+  saveUninitialized: false, // 只有在會話內容初始化後（例如設置某個值）才會儲存會話
+  cookie: { secure: false } // 用來配置會話 ID cookie 的屬性。secure: false 表示 cookie 可以在不安全的 HTTP 連接上傳送（例如 http://）
+}))
+
+// middleware: 設計專案全域變數, 所有路由都會經過的 middleware
+app.use((req, res, next) => {
+  // views/partial/messages.hbs 設計當以下兩個變數存在時, 會出現對應的畫面
+  res.locals.success_messages = req.flash('success_messages')
+  res.locals.error_messages = req.flash('error_messages')
+  next()
+})
 
 app.use('/api', apis)
 app.use(pages)

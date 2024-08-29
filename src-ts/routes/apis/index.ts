@@ -5,6 +5,7 @@ import admin from './modules/admin'
 // 載入 controller
 
 // 載入 middleware
+import { apiErrorHandler } from '../../middlewares/error-handler'
 
 // 設計路由
 // 設計路由: 使用者登入相關
@@ -17,5 +18,5 @@ import admin from './modules/admin'
 router.use('/admin', admin)
 
 // 設計路由: 錯誤相關
-
+router.use('/', apiErrorHandler)
 export default router
