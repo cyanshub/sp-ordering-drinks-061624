@@ -32,7 +32,16 @@ const userController = {
       req.flash('success_messages', '登出成功!')
       return res.redirect('/signin')
     })
-  }
+  },
+  getUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  editUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  putUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  putAvatar: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  getCarts: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  addCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  removeCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  getOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  addOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中')
 }
 
 export default userController
