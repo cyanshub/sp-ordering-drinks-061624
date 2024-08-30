@@ -33,7 +33,9 @@ const userController = {
       return res.redirect('/signin')
     })
   },
-  getUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  getUser: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.getUser(req, (err, data) => err ? next(err) : res.render('users/profile', data))
+  },
   editUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   putUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   putAvatar: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

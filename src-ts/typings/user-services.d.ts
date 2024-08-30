@@ -14,7 +14,6 @@ export interface UserData extends Model {
   updatedAt: date
 }
 
-
 interface Callback<T> {
   (err: Error | null, data?: T): void
 }
@@ -30,10 +29,14 @@ export interface SignUpBody {
 export interface UserServices {
   signUpPage: (req: Request, cb: Callback<void>) => void
 
+  // Request<{},{},{},{}> 4個參數分別代表 Params 型別, ResBody, ReqBody, ReqQuery
   // cb: Callback<{ user: UserData }> 相等於  cb: (error: Error | null, { user: UserData }?: { user: UserData }) => void
   signUp: (req: Request<{}, {}, SignUpBody>, cb: Callback<{ user: UserData }>) => void
 
   signInPage: (req: Request, cb: Callback<void>) => void
   signIn: (req: Request, cb: Callback<void>) => void
   logOut: (req: Request, cb: Callback<void>) => void
+
+  // 擴展 req params 類型，指定 id 屬性為 string
+  getUser: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
 }

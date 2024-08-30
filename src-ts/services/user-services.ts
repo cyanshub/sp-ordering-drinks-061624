@@ -41,6 +41,18 @@ const userServices: UserServices = {
   },
   logOut: (req, cb) => {
     return cb(null)
+  },
+  getUser: (req, cb) => {
+    const userId = Number(req.params.id)
+    return User.findByPk(userId, {
+      attributes: { exclude: ['password'] }
+    })
+      .then((user: UserData) => {
+        if (!user) throw Object.assign(new Error('使用者不存在!'), { status: 404 })
+        user = user.toJSON() // 整理 user 資料
+        return cb(null, { user })
+      })
+      .catch((err: Error) => cb(err))
   }
 }
 
