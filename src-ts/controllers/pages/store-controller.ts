@@ -11,7 +11,12 @@ const storeController = {
       res.render('stores/stores', data)
     })
   },
-  getStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中')
+  getStore: (req: Request, res: Response, next: NextFunction) => {
+    storeServices.getStore(req, (err, data) => {
+      if (err) next(err)
+      res.render('stores/store', data)
+    })
+  }
 }
 
 export default storeController
