@@ -36,7 +36,9 @@ const userController = {
   getUser: (req: Request, res: Response, next: NextFunction) => {
     return userServices.getUser(req, (err, data) => err ? next(err) : res.render('users/profile', data))
   },
-  editUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  editUser: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.editUser(req, (err, data) => err ? next(err) : res.render('users/edit-user', data))
+  },
   putUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   putAvatar: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getCarts: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

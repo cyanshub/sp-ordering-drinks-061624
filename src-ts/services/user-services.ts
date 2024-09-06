@@ -53,6 +53,19 @@ const userServices: UserServices = {
         return cb(null, { user })
       })
       .catch((err: Error) => cb(err))
+  },
+  editUser: (req, cb) => {
+    // 使用者只能編輯自己的資料: 比對傳入的id 與 passport的id
+    if (Number(req.params.id) !== req.user.id) throw Object.assign(new Error('只能編輯自己的使用者資料!'), { status: 403 })
+    return User.findByPk(Number(req.params.id), {
+      attributes: { exclude: ['password'] },
+      raw: true
+    })
+      .then((user:UserData) => {
+        if (!user) throw Object.assign(new Error('使用者不存在!'), { status: 404 })
+        return cb(null, { user })
+      })
+      .catch((err:Error) => cb(err))
   }
 }
 
