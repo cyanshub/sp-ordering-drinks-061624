@@ -34,12 +34,21 @@ const userController = {
     })
   },
   getUser: (req: Request, res: Response, next: NextFunction) => {
-    return userServices.getUser(req, (err, data) => err ? next(err) : res.render('users/profile', data))
+    return userServices.getUser(req, (err, data) => (err ? next(err) : res.render('users/profile', data)))
   },
   editUser: (req: Request, res: Response, next: NextFunction) => {
-    return userServices.editUser(req, (err, data) => err ? next(err) : res.render('users/edit-user', data))
+    return userServices.editUser(req, (err, data) => (err ? next(err) : res.render('users/edit-user', data)))
   },
-  putUser: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  putUser: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.putUser(req, (err, data) => {
+      if (err) {
+        return next(err)
+      }
+      console.log("測試:", data)
+      req.flash('success_messages', '已變更成功!')
+      return res.redirect(`/users/${data?.user.id}`)
+    })
+  },
   putAvatar: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getCarts: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   addCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

@@ -11,6 +11,8 @@ import userController from '../../controllers/pages/user-controller'
 import passport from '../../config/passport'
 import { authenticated, authenticatedAdmin } from '../../middlewares/auth'
 import { generalErrorHandler } from '../../middlewares/error-handler'
+import upload from '../../middlewares/multer'
+
 
 // 設計路由
 // 設計路由: 使用者登入相關
@@ -23,7 +25,7 @@ router.get('/logout', userController.logOut)
 // 設計路由: 使用者相關
 router.get('/users/:id', authenticated, userController.getUser)
 router.get('/users/:id/edit', authenticated, userController.editUser)
-router.put('/users/:id', authenticated, userController.putUser) // 預期開發上傳圖片的 middleware
+router.put('/users/:id', authenticated, upload.single('avatar'), userController.putUser)
 router.put('/avatars/:userId', authenticated, userController.putAvatar)
 router.get('/carts', authenticated, userController.getCarts)
 router.post('/carts/:storeId', authenticated, userController.addCart)

@@ -40,4 +40,5 @@ export interface UserServices {
   // 在第一個參數擴展 req params 類型，指定 id 屬性為 string
   getUser: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
   editUser: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
+  putUser: (req: Request<{ id: number }, {}, { name: string }>, cb: Callback<{ user: UserData }>) => void
 }

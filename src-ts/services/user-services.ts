@@ -7,6 +7,8 @@ const { User } = require('../models')
 
 // 載入所需工具
 import bcrypt from 'bcryptjs'
+import { localAvatarHandler } from '../helpers/file-helpers'
+import { UserAuth } from '../typings/express'
 
 const userServices: UserServices = {
   signUpPage: (req, cb) => {
@@ -61,11 +63,38 @@ const userServices: UserServices = {
       attributes: { exclude: ['password'] },
       raw: true
     })
-      .then((user:UserData) => {
+      .then((user: UserData) => {
         if (!user) throw Object.assign(new Error('使用者不存在!'), { status: 404 })
         return cb(null, { user })
       })
-      .catch((err:Error) => cb(err))
+      .catch((err: Error) => cb(err))
+  },
+  putUser: (req: Request & { body: { name: string }; file?: Express.Multer.File }, cb) => {
+    // 使用者只能編輯自己的資料: 比對傳入的id 與 passport的id
+    const userAuth = req.user as UserAuth // 利用 as 類型斷言明確告訴 TS req.user 的型別是 UserDate
+    if (Number(req.params.id) !== userAuth?.id) throw Object.assign(new Error('只能編輯自己的使用者資料!'), { status: 403 })
+
+    const { name } = req.body
+
+    if (!name.trim()) throw Object.assign(new Error('需要輸入使用者名稱!'), { status: 422 })
+
+    const file = req.file // 根據之前修正的form content, 把檔案從req取出來
+    return Promise.all([
+      User.findByPk(Number(req.params.id), {
+        attributes: { exclude: ['password'] }
+      }),
+      localAvatarHandler(file) // 將圖案寫入指定資料夾, 並回傳圖檔路徑
+    ])
+      .then(([user, filePath]: [UserData, string | null]) => {
+        // 檢查使用者是否存在
+        if (!user) throw new Error('使用者不存在!')
+        return user.update({
+          name,
+          avatar: filePath || user.avatar
+        })
+      })
+      .then((updatedUser) => cb(null, { user: updatedUser }))
+      .catch((err: Error) => cb(err))
   }
 }
 
