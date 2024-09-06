@@ -49,7 +49,13 @@ const userController = {
       return res.redirect(`/users/${data?.user.id}`)
     })
   },
-  putAvatar: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  putAvatar: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.putAvatar(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '成功移除頭像!')
+      return res.redirect('back')
+    })
+  },
   getCarts: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   addCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   removeCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

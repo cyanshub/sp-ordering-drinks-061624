@@ -95,6 +95,18 @@ const userServices: UserServices = {
       })
       .then((updatedUser) => cb(null, { user: updatedUser }))
       .catch((err: Error) => cb(err))
+  },
+  putAvatar: (req, cb) => {
+    const userId = Number(req.params.userId)
+    return User.findByPk(userId, {
+      attributes: { exclude: ['password'] }
+    })
+      .then((user: UserData) => {
+        if (!user) throw Object.assign(new Error('使用者不存在!'), { status: 404 })
+        return user.update({ avatar: null })
+      })
+      .then((updatedUser: UserData) => cb(null, { user: updatedUser }))
+      .catch((err: Error) => cb(err))
   }
 }
 

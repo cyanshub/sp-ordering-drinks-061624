@@ -41,4 +41,5 @@ export interface UserServices {
   getUser: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
   editUser: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
   putUser: (req: Request<{ id: number }, {}, { name: string }>, cb: Callback<{ user: UserData }>) => void
+  putAvatar: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
 }
