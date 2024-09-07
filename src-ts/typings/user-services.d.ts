@@ -2,6 +2,9 @@
 
 import { Model } from 'sequelize'
 
+// 引入類型聲明
+import { PaginationResult } from '../helpers/pagination-helpers'
+
 // 繼承 sequelize 物件方法
 export interface UserData extends Model {
   id: number
@@ -27,6 +30,8 @@ export interface CartData extends Model {
   updatedAt: date
 }
 
+export interface OrderData extends CartData {}
+
 export interface DrinkData extends Model {
   id: number
   name: string
@@ -34,6 +39,20 @@ export interface DrinkData extends Model {
   updatedAt: date
   priceM: number
   priceL: number
+}
+
+// helpers 回傳值類型
+export interface PaginationResult {
+  pages: number[]
+  totalPage: number
+  currentPage: number
+  prev: number
+  next: number
+  initialPages: number[]
+  visiblePages: number[]
+  finalPages: number[]
+  hasPrevEllipsis: boolean
+  hasNextEllipsis: boolean
 }
 
 interface Callback<T> {
@@ -46,6 +65,16 @@ export interface SignUpBody {
   email: string
   password: string
   passwordCheck: string
+}
+
+// controller 的 callback 傳遞的資料型別
+export interface GetOrdersData {
+  orders: OrderData[]
+  pagination: PaginationResult
+  isSearched: string
+  keyword: string
+  find: string
+  count: number
 }
 
 export interface UserServices {
@@ -67,4 +96,6 @@ export interface UserServices {
   getCarts: (req: Request<>, cb: Callback<{ carts: CartData[] }>) => void
   addCart: (req: Request<>, cb: Callback<{ cart: CartData }>) => void
   removeCart: (req: Request<{ cartId: number }>, cb: Callback<{ cart: CartData }>) => void
+
+  getOrders: (req: Request<>, cb: Callback<GetOrdersData>) => void
 }

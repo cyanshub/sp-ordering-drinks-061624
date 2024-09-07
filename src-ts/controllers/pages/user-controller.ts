@@ -44,7 +44,7 @@ const userController = {
       if (err) {
         return next(err)
       }
-      console.log("測試:", data)
+      console.log('測試:', data)
       req.flash('success_messages', '已變更成功!')
       return res.redirect(`/users/${data?.user.id}`)
     })
@@ -57,7 +57,7 @@ const userController = {
     })
   },
   getCarts: (req: Request, res: Response, next: NextFunction) => {
-    return userServices.getCarts(req, (err, data) => err ? next(err) : res.render('users/carts', data))
+    return userServices.getCarts(req, (err, data) => (err ? next(err) : res.render('users/carts', data)))
   },
   addCart: (req: Request, res: Response, next: NextFunction) => {
     return userServices.addCart(req, (err, data) => {
@@ -73,7 +73,9 @@ const userController = {
       return res.redirect(`/stores/${data?.cart.storeId}`)
     })
   },
-  getOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  getOrders: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.getOrders(req, (err, data) => (err ? next(err) : res.render('users/orders', data)))
+  },
   addOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中')
 }
 

@@ -1,15 +1,18 @@
 // 載入類型聲明
 import { Request } from 'express'
-import { UserServices, UserData, CartData, DrinkData } from '../typings/user-services'
+import { UserServices } from '../typings/user-services'
+import { UserData, CartData, DrinkData, OrderData } from '../typings/user-services'
 
 // 載入所需 model
-const { User, Cart, Drink, Store, Size, Sugar, Ice } = require('../models')
+const { User, Cart, Drink, Store, Size, Sugar, Ice, Order } = require('../models')
 
 // 載入所需工具
 import bcrypt from 'bcryptjs'
 import { localAvatarHandler } from '../helpers/file-helpers'
 import { UserAuth } from '../typings/express'
 import { convertToTaiwanTime } from '../helpers/array-helpers'
+import { getOffset, getPagination } from '../helpers/pagination-helpers'
+import { Op, literal } from 'sequelize' // 引入 sequelize 查詢符、啟用 SQL 語法
 
 const userServices: UserServices = {
   signUpPage: (req, cb) => {
@@ -172,6 +175,62 @@ const userServices: UserServices = {
         return cart.destroy()
       })
       .then((deletedCart: CartData) => cb(null, { cart: deletedCart }))
+      .catch((err: Error) => cb(err))
+  },
+  getOrders: (req, cb) => {
+    const userAuth = req.user
+    const DEFAULT_LIMIT = 5 // 預設每頁顯示幾筆資料
+    const page = Number(req.query.page) || 1 // 預設第一頁或從query string拿資料
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT // 預設每頁顯示資料數或從query string拿資料
+    const offset = getOffset(limit, page)
+    const keyword = req.query.keyword ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+
+    // 關聯 literal 的 model 依 include 填寫的 model
+    const whereClause = {
+      // find系列語法查詢條件
+      userId: userAuth.id, // 只能查詢自己的訂單
+      ...(keyword.length > 0
+        ? {
+            [Op.or]: [
+              literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.address) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`DATE_ADD(Order.created_at, INTERVAL 8 HOUR) LIKE '%${keyword}%'`)
+            ]
+          }
+        : {})
+    }
+
+    return Order.findAndCountAll({
+      raw: true,
+      nest: true,
+      where: whereClause,
+      order: [['id', 'DESC']], // 依建立時間降續排列
+      include: [
+        // 避免密碼外洩
+        { model: User, attributes: { exclude: ['password'] } },
+        Drink,
+        Store,
+        Size,
+        Sugar,
+        Ice
+      ],
+      offset,
+      limit
+    })
+      .then((orders: { rows: OrderData[]; count: number }) => {
+        // 確保時間為台灣時區
+        const ordersData = convertToTaiwanTime(orders.rows)
+
+        return cb(null, {
+          orders: ordersData,
+          pagination: getPagination(limit, page, orders.count),
+          isSearched: '/orders', // 決定搜尋表單發送位置
+          keyword,
+          find: 'orders',
+          count: orders.count
+        })
+      })
       .catch((err: Error) => cb(err))
   }
 }
