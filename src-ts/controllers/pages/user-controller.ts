@@ -59,7 +59,13 @@ const userController = {
   getCarts: (req: Request, res: Response, next: NextFunction) => {
     return userServices.getCarts(req, (err, data) => err ? next(err) : res.render('users/carts', data))
   },
-  addCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  addCart: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.addCart(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '商品已成功加入購物車!')
+      return res.redirect('/carts')
+    })
+  },
   removeCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   addOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中')

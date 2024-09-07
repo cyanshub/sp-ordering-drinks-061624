@@ -27,6 +27,15 @@ export interface CartData extends Model {
   updatedAt: date
 }
 
+export interface DrinkData extends Model {
+  id: number
+  name: string
+  createdAt: date
+  updatedAt: date
+  priceM: number
+  priceL: number
+}
+
 interface Callback<T> {
   (err: Error | null, data?: T): void
 }
@@ -56,4 +65,5 @@ export interface UserServices {
   putUser: (req: Request<{ id: number }, {}, { name: string }>, cb: Callback<{ user: UserData }>) => void
   putAvatar: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
   getCarts: (req: Request<>, cb: Callback<{ carts: CartData[] }>) => void
+  addCart: (req: Request<>, cb: Callback<{ cart: CartData }>) => void
 }

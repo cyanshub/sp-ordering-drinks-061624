@@ -1,6 +1,6 @@
 // 載入類型聲明
 import { Request } from 'express'
-import { UserServices, UserData, CartData } from '../typings/user-services'
+import { UserServices, UserData, CartData, DrinkData } from '../typings/user-services'
 
 // 載入所需 model
 const { User, Cart, Drink, Store, Size, Sugar, Ice } = require('../models')
@@ -131,6 +131,37 @@ const userServices: UserServices = {
         const data = convertToTaiwanTime(carts)
         return cb(null, { carts: data })
       })
+      .catch((err: Error) => cb(err))
+  },
+  addCart: (req, cb) => {
+    const userId = req.user.id
+    const drinkId = Number(req.body.drinkId)
+    const sizeId = Number(req.body.sizeId)
+    const sugarId = Number(req.body.sugarId)
+    const iceId = Number(req.body.iceId)
+    const amount = Number(req.body.amount)
+
+    if (!sizeId) throw Object.assign(new Error('請選擇中杯或大杯'), { status: 422 })
+    if (!sugarId) throw Object.assign(new Error('請選擇甜度'), { status: 422 })
+    if (!iceId) throw Object.assign(new Error('請選擇冰量!'), { status: 422 })
+    if (!amount) throw Object.assign(new Error('請選擇購買杯數!'), { status: 422 })
+
+    const storeId = Number(req.params.storeId)
+    if (!storeId) throw Object.assign(new Error('店家不存在!'), { status: 404 })
+    return Drink.findByPk(drinkId)
+      .then((drink: DrinkData) => {
+        if (!drink) throw Object.assign(new Error('該商品不存在!'), { status: 404 })
+        return Cart.create({
+          userId,
+          drinkId,
+          sizeId,
+          sugarId,
+          iceId,
+          amount,
+          storeId
+        })
+      })
+      .then((newCart: CartData) => cb(null, { cart: newCart }))
       .catch((err: Error) => cb(err))
   }
 }
