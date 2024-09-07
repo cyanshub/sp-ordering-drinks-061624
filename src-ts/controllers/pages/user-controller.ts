@@ -56,7 +56,9 @@ const userController = {
       return res.redirect('back')
     })
   },
-  getCarts: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  getCarts: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.getCarts(req, (err, data) => err ? next(err) : res.render('users/carts', data))
+  },
   addCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   removeCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

@@ -1,14 +1,15 @@
 // 載入類型聲明
 import { Request } from 'express'
-import { UserServices, UserData } from '../typings/user-services'
+import { UserServices, UserData, CartData } from '../typings/user-services'
 
 // 載入所需 model
-const { User } = require('../models')
+const { User, Cart, Drink, Store, Size, Sugar, Ice } = require('../models')
 
 // 載入所需工具
 import bcrypt from 'bcryptjs'
 import { localAvatarHandler } from '../helpers/file-helpers'
 import { UserAuth } from '../typings/express'
+import { convertToTaiwanTime } from '../helpers/array-helpers'
 
 const userServices: UserServices = {
   signUpPage: (req, cb) => {
@@ -106,6 +107,30 @@ const userServices: UserServices = {
         return user.update({ avatar: null })
       })
       .then((updatedUser: UserData) => cb(null, { user: updatedUser }))
+      .catch((err: Error) => cb(err))
+  },
+  getCarts: (req, cb) => {
+    const userAuth = req.user as UserAuth // 利用 as 類型斷言明確告訴 TS req.user 的型別是 UserDate
+    return Cart.findAll({
+      raw: true,
+      nest: true,
+      where: { userId: userAuth.id },
+      include: [
+        // 避免密碼外洩
+        { model: User, attributes: { exclude: ['password'] } },
+        Drink,
+        Store,
+        Size,
+        Sugar,
+        Ice
+      ]
+    })
+      .then((carts: CartData[]) => {
+        if (!carts) throw Object.assign(new Error('購物車不存在'), { status: 404 })
+        // 確保時間為台灣時區
+        const data = convertToTaiwanTime(carts)
+        return cb(null, { carts: data })
+      })
       .catch((err: Error) => cb(err))
   }
 }
