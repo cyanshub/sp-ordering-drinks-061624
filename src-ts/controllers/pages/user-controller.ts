@@ -66,7 +66,13 @@ const userController = {
       return res.redirect('/carts')
     })
   },
-  removeCart: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  removeCart: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.removeCart(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '成功退回訂單')
+      return res.redirect(`/stores/${data?.cart.storeId}`)
+    })
+  },
   getOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   addOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中')
 }

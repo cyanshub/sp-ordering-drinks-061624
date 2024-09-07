@@ -66,4 +66,5 @@ export interface UserServices {
   putAvatar: (req: Request<{ id: number }>, cb: Callback<{ user: UserData }>) => void
   getCarts: (req: Request<>, cb: Callback<{ carts: CartData[] }>) => void
   addCart: (req: Request<>, cb: Callback<{ cart: CartData }>) => void
+  removeCart: (req: Request<{ cartId: number }>, cb: Callback<{ cart: CartData }>) => void
 }

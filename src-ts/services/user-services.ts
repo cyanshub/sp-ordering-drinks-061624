@@ -163,6 +163,16 @@ const userServices: UserServices = {
       })
       .then((newCart: CartData) => cb(null, { cart: newCart }))
       .catch((err: Error) => cb(err))
+  },
+  removeCart: (req, cb) => {
+    const cartId = Number(req.params.cartId)
+    return Cart.findByPk(cartId)
+      .then((cart: CartData) => {
+        if (!cart) throw Object.assign(new Error('此購物車商品不存在!'), { status: 404 })
+        return cart.destroy()
+      })
+      .then((deletedCart: CartData) => cb(null, { cart: deletedCart }))
+      .catch((err: Error) => cb(err))
   }
 }
 
