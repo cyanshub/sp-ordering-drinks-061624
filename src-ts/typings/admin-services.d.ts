@@ -5,7 +5,7 @@ import { Request } from 'express'
 import { Model } from 'sequelize'
 
 // 資料表類型 (注意若有關聯資料, 記得增添為可選)
-import { StoreData } from './store-services'
+import { DrinkData, StoreData } from './store-services'
 
 // helpers 工具類型
 import { PaginationResult } from './store-services'
@@ -27,6 +27,14 @@ export interface GetStoresData {
   find: string
 }
 
+export interface GetStoreData {
+  store: StoreData
+  drinks: DrinkData[]
+  isSearched: string
+  keyword: string
+  find: string
+}
+
 interface Callback<T> {
   (err: Error | null, data?: T): void
 }
@@ -36,4 +44,5 @@ export interface AdminServices {
   getStores: (req: Request, cb: Callback<GetStoresData>) => void
   createStore: (req: Request, cb: Callback<void>) => void
   postStore: (req: Request<{}, {}, PostStoreBody, {}>, cb: Callback<{ store: StoreData }>) => void
+  getStore: (req: Request, cb: Callback<GetStoreData>) => void
 }

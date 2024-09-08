@@ -1,9 +1,9 @@
 // 載入類型聲明
 import { AdminServices } from '../typings/admin-services'
-import { StoreData } from '../typings/store-services'
+import { StoreData, DrinkData } from '../typings/store-services'
 
 // 載入所需 Model
-const { Store } = require('../models')
+const { Store, Drink } = require('../models')
 
 // 載入所需工具
 import { getOffset, getPagination } from '../helpers/pagination-helpers'
@@ -73,6 +73,55 @@ const adminServices: AdminServices = {
         })
       })
       .then((newStore) => cb(null, { store: newStore }))
+      .catch((err: Error) => cb(err))
+  },
+  getStore: (req, cb) => {
+    // 確保 keyword 是 string 然後進行 trim
+    const keyword = typeof req.query.keyword === 'string' ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+    // 關聯 literal 的 model 依 include 填寫的 model
+    const whereClause = {
+      ...(keyword.length > 0
+        ? {
+            [Op.or]: [literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`)]
+          }
+        : {})
+    }
+    return Promise.all([
+      Store.findByPk(Number(req.params.id), {
+        include: [
+          {
+            model: Drink,
+            as: 'ownedDrinks',
+            order: [['id', 'ASC']]
+          }
+        ]
+      }),
+      // 撈出資料庫所有飲料, 讓個別店家勾選, 登陸進 ownerships
+      Drink.findAll({
+        raw: true,
+        where: whereClause
+      })
+    ])
+      .then(([store, drinks]: [StoreData, DrinkData[]]) => {
+        if (!store) throw Object.assign(new Error('該商店不存在!'), { status: 404 })
+        // 取出店家有販賣的 drink id 當作販賣清單
+        const ownedDrinksId = store.ownedDrinks ? store.ownedDrinks.map((od) => od.id) : []
+
+        // 將所有飲料逐一比對販賣清單中的飲料, 並將有無結果用isOwned變數儲存
+        const drinksData = drinks.map((d) => ({
+          ...d,
+          isOwned: ownedDrinksId.includes(d.id)
+        }))
+
+        store = store.toJSON()
+        return cb(null, {
+          store,
+          drinks: drinksData,
+          isSearched: `/admin/stores/${req.params.id}`,
+          keyword: keyword,
+          find: 'drinks'
+        })
+      })
       .catch((err: Error) => cb(err))
   }
 }

@@ -18,7 +18,9 @@ const adminController = {
       res.redirect('/admin/stores')
     })
   },
-  getStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  getStore: (req: Request, res: Response, next: NextFunction) => {
+    return adminServices.getStore(req, (err, data) => (err ? next(err) : res.render('admin/store', data)))
+  },
   editStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   putStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   deleteStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

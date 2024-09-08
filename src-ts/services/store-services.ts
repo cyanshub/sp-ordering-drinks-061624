@@ -84,7 +84,7 @@ const storeServices: StoreServices = {
         const store = storeOwnedDrinks.toJSON()
 
         // 從店家販賣的飲料清單中, 拿取店家有販賣的飲料
-        const drinksData = storeOwnedDrinks?.ownedDrinks?.map((od) => ({ ...od.toJSON() })) || []
+        const drinksData = storeOwnedDrinks?.ownedDrinks?.map((od) => (od?.toJSON ? { ...od.toJSON() } : od)) || []
 
         return cb(null, {
           store,

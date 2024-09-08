@@ -22,8 +22,8 @@ export interface StoreData extends Model {
   updatedAt: date
   ownedDrinks?: DrinkData[]
 }
-
-export interface DrinkData extends Model {
+// 使用 Partial 表示在某些情況下, 繼承的 sequelize 方法是可選的
+export interface DrinkData extends Partial<Model> {
   id: number
   name: string
   priceM: number
