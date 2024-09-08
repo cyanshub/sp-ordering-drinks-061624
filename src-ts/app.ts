@@ -18,7 +18,7 @@ if (process.env.NODE_ENV !== 'production') {
 
 // 設定應用程式
 const app = express()
-const port = process.env.PORT || 3005
+const port = process.env.PORT || 3002
 
 
 // 設定樣板引擎
