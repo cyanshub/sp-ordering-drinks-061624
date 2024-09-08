@@ -8,7 +8,9 @@ const adminController = {
   getStores: (req: Request, res: Response, next: NextFunction) => {
     return adminServices.getStores(req, (err, data) => (err ? next(err) : res.render('admin/stores', data)))
   },
-  createStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  createStore: (req: Request, res: Response, next: NextFunction) => {
+    return res.render('admin/create-store')
+  },
   postStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   editStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

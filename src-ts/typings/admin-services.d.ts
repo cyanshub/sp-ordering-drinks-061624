@@ -29,4 +29,5 @@ interface Callback<T> {
 // Request<{},{},{},{}> 4個參數分別代表 Params, ResBody, ReqBody, ReqQuery 型別
 export interface AdminServices {
   getStores: (req: Request, cb: Callback<GetStoresData>) => void
+  createStore: (req: Request, cb: Callback<void>) => void
 }

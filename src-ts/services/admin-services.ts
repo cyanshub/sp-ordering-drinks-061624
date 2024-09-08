@@ -50,6 +50,9 @@ const adminServices: AdminServices = {
         })
       })
       .catch((err: Error) => cb(err))
+  },
+  createStore: (req, cb) => {
+    return cb(null)
   }
 }
 
