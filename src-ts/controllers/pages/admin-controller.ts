@@ -62,7 +62,12 @@ const adminController = {
   getOrders: (req: Request, res: Response, next: NextFunction) => {
     return adminServices.getOrders(req, (err, data) => (err ? next(err) : res.render('admin/orders', data)))
   },
-  deleteOrder: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中')
+  deleteOrder: (req: Request, res: Response, next: NextFunction) => {
+    return adminServices.deleteOrder(req, (err, data) => {
+      if (err) return next(err)
+      return res.redirect('back')
+    })
+  }
 }
 
 export default adminController

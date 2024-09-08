@@ -282,6 +282,16 @@ const adminServices: AdminServices = {
         })
       })
       .catch((err: Error) => cb(err))
+  },
+  deleteOrder: (req, cb) => {
+    const orderId = Number(req.params.orderId)
+    return Order.findByPk(orderId)
+      .then((order: OrderData) => {
+        if (!order) throw Object.assign(new Error('指定的訂單不存在!'), { status: 404 })
+        return order.destroy()
+      })
+      .then((deletedOrder: OrderData) => cb(null, { order: deletedOrder }))
+      .catch((err: Error) => cb(err))
   }
 }
 

@@ -6,7 +6,7 @@ import { Model } from 'sequelize'
 
 // 資料表類型 (注意若有關聯資料, 記得增添為可選)
 import { DrinkData, StoreData } from './store-services'
-import { UserData } from './user-services'
+import { OrderData, UserData } from './user-services'
 export interface OwnershipData extends Partial<Model> {
   id: number
   storeId: number
@@ -76,4 +76,5 @@ export interface AdminServices {
   addOwnership: (req: Request, cb: Callback<{ ownership: OwnershipData }>) => void
   removeOwnership: (req: Request, cb: Callback<{ ownership: OwnershipData }>) => void
   getOrders: (req: Request, cb: Callback<GetOrdersData>) => void
+  deleteOrder: (req: Request, cb: Callback<{ order: OrderData }>) => void
 }
