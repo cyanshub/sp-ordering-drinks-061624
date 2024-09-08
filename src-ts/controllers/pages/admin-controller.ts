@@ -38,7 +38,12 @@ const adminController = {
       res.redirect('back')
     })
   },
-  addOwnership: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  addOwnership: (req: Request, res: Response, next: NextFunction) => {
+    return adminServices.addOwnership(req, (err, data) => {
+      if (err) return next(err)
+      return setTimeout(() => res.redirect('back'), 3000)
+    })
+  },
   removeOwnership: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getUsers: (req: Request, res: Response, next: NextFunction) => {
     return adminServices.getUsers(req, (err, data) => (err ? next(err) : res.render('admin/users', data)))

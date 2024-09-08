@@ -1,9 +1,10 @@
 // 載入類型聲明
 import { AdminServices } from '../typings/admin-services'
 import { StoreData, DrinkData } from '../typings/store-services'
+import { OwnershipData } from '../typings/admin-services'
 
 // 載入所需 Model
-const { Store, Drink, User } = require('../models')
+const { Store, Drink, User, Ownership } = require('../models')
 
 // 載入所需工具
 import { getOffset, getPagination } from '../helpers/pagination-helpers'
@@ -191,6 +192,18 @@ const adminServices: AdminServices = {
         })
       })
       .then((editedUser: UserData) => cb(null, { user: editedUser }))
+      .catch((err: Error) => cb(err))
+  },
+  addOwnership: (req, cb) => {
+    const storeId = Number(req.body.storeId) // 從隱藏input拿取店家 id
+    const drinkId = Number(req.params.drinkId) // 從路由拿取商品 id
+    return Promise.all([Drink.findByPk(drinkId), Ownership.findOne({ where: { storeId, drinkId } })])
+      .then(([drink, ownership]: [DrinkData, OwnershipData]) => {
+        if (!drink) throw Object.assign(new Error('該商品不存在!'), { status: 404 })
+        if (ownership) throw Object.assign(new Error('商品已在販賣清單!'), { status: 409 })
+        return Ownership.create({ storeId, drinkId })
+      })
+      .then((newOwnership: OwnershipData) => cb(null, { ownership: newOwnership }))
       .catch((err: Error) => cb(err))
   }
 }

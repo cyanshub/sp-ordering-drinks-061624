@@ -7,6 +7,13 @@ import { Model } from 'sequelize'
 // 資料表類型 (注意若有關聯資料, 記得增添為可選)
 import { DrinkData, StoreData } from './store-services'
 import { UserData } from './user-services'
+export interface OwnershipData extends Partial<Model> {
+  id: number
+  storeId: number
+  drinkId: number
+  createdAt: date
+  updatedAt: date
+}
 
 // helpers 工具類型
 import { PaginationResult } from './store-services'
@@ -57,4 +64,5 @@ export interface AdminServices {
   deleteStore: (req: Request, cb: Callback<{ store: StoreData }>) => void
   getUsers: (req: Request, cb: Callback<{ users: UserData[] }>) => void
   patchUser: (req: Request, cb: Callback<{ user: UserData }>) => void
+  addOwnership: (req: Request, cb: Callback<{ ownership: OwnershipData }>) => void
 }
