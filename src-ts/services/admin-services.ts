@@ -8,6 +8,7 @@ const { Store } = require('../models')
 // 載入所需工具
 import { getOffset, getPagination } from '../helpers/pagination-helpers'
 import { Op, literal } from 'sequelize' // 引入 sequelize 查詢符、啟用 SQL 語法
+import { localCoverHandler } from '../helpers/file-helpers'
 
 const adminServices: AdminServices = {
   // 店家相關
@@ -53,6 +54,26 @@ const adminServices: AdminServices = {
   },
   createStore: (req, cb) => {
     return cb(null)
+  },
+  postStore: (req, cb) => {
+    const { name, address, phone } = req.body
+    const file = req.file // 根據之前修正的form content, 把檔案從req取出來
+
+    // 檢驗必填欄位是否存在
+    if (!name) throw Object.assign(new Error('店家名稱為必填欄位!'), { status: 422 })
+
+    // 把取出的檔案 file 傳給 file-helper 處理
+    return localCoverHandler(file)
+      .then((filePath) => {
+        return Store.create({
+          name,
+          address,
+          phone,
+          cover: filePath || null
+        })
+      })
+      .then((newStore) => cb(null, { store: newStore }))
+      .catch((err: Error) => cb(err))
   }
 }
 

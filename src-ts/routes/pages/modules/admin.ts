@@ -2,6 +2,7 @@ import express from 'express'
 const router = express.Router()
 
 // 載入 middlewawre
+import upload from '../../../middlewares/multer'
 
 // 載入 controller
 import adminController from '../../../controllers/pages/admin-controller'
@@ -10,7 +11,7 @@ import adminController from '../../../controllers/pages/admin-controller'
 // 設計路由: 場域相關
 router.get('/stores', adminController.getStores)
 router.get('/stores/create', adminController.createStore)
-router.post('/stores', adminController.postStore) // 預期開發圖片上傳功能
+router.post('/stores', upload.single('cover'), adminController.postStore)
 router.get('/stores/:id', adminController.getStore)
 router.get('/stores/:id/edit', adminController.editStore)
 router.put('/stores/:id', adminController.putStore) // 預期開發圖片上傳功能

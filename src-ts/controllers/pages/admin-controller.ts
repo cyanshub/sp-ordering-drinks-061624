@@ -11,7 +11,13 @@ const adminController = {
   createStore: (req: Request, res: Response, next: NextFunction) => {
     return res.render('admin/create-store')
   },
-  postStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  postStore: (req: Request, res: Response, next: NextFunction) => {
+    return adminServices.postStore(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '成功新增店家!')
+      res.redirect('/admin/stores')
+    })
+  },
   getStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   editStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   putStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

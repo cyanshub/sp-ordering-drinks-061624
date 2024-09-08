@@ -11,6 +11,11 @@ import { StoreData } from './store-services'
 import { PaginationResult } from './store-services'
 
 // 假設有 req.body
+export interface PostStoreBody {
+  name: string
+  address: string
+  phone: string
+}
 
 // controller 的 callback 傳遞的資料型別
 // getStores 回傳的資料
@@ -30,4 +35,5 @@ interface Callback<T> {
 export interface AdminServices {
   getStores: (req: Request, cb: Callback<GetStoresData>) => void
   createStore: (req: Request, cb: Callback<void>) => void
+  postStore: (req: Request<{}, {}, PostStoreBody, {}>, cb: Callback<{ store: StoreData }>) => void
 }
