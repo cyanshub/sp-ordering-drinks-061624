@@ -17,6 +17,12 @@ export interface PostStoreBody {
   phone: string
 }
 
+export interface PutStoreBody {
+  name: string
+  address: string
+  phone: string
+}
+
 // controller 的 callback 傳遞的資料型別
 // getStores 回傳的資料
 export interface GetStoresData {
@@ -46,4 +52,5 @@ export interface AdminServices {
   postStore: (req: Request<{}, {}, PostStoreBody, {}>, cb: Callback<{ store: StoreData }>) => void
   getStore: (req: Request, cb: Callback<GetStoreData>) => void
   editStore: (req: Request, cb: Callback<{ store: StoreData }>) => void
+  putStore: (req: Request<{ id?: number }, {}, PutStoreBody, {}>, cb: Callback<{ store: StoreData }>) => void
 }

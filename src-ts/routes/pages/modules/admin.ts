@@ -14,7 +14,7 @@ router.get('/stores/create', adminController.createStore)
 router.post('/stores', upload.single('cover'), adminController.postStore)
 router.get('/stores/:id', adminController.getStore)
 router.get('/stores/:id/edit', adminController.editStore)
-router.put('/stores/:id', adminController.putStore) // 預期開發圖片上傳功能
+router.put('/stores/:id', upload.single('cover'), adminController.putStore)
 router.delete('/stores/:id', adminController.deleteStore)
 
 // 設計路由: 飲料販賣相關

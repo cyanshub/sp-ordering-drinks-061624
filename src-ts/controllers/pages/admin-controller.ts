@@ -24,7 +24,13 @@ const adminController = {
   editStore: (req: Request, res: Response, next: NextFunction) => {
     return adminServices.editStore(req, (err, data) => (err ? next(err) : res.render('admin/edit-store', data)))
   },
-  putStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  putStore: (req: Request, res: Response, next: NextFunction) => {
+    return adminServices.putStore(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '變更成功!')
+      res.redirect('/admin/stores')
+    })
+  },
   deleteStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   addOwnership: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   removeOwnership: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

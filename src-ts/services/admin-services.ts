@@ -131,6 +131,29 @@ const adminServices: AdminServices = {
         return cb(null, { store })
       })
       .catch((err: Error) => cb(err))
+  },
+  putStore: (req, cb) => {
+    const storeId = Number(req.params.id)
+    const { name, address, phone } = req.body
+    if (!name) {
+      // 檢驗必填欄位是否存在
+      throw Object.assign(new Error('案場名稱為必填欄位!'), { status: 422 })
+    }
+    const file = req.file // 拿到 middleware: multer 上傳的圖片
+    // 使用 Promise.all 語法, 待所有非同步事件處理完才跳入下一個.then()
+    // Promise.all([非同步A, 非同步B]).then(([A結果, B結果]) => {...})
+    return Promise.all([Store.findByPk(storeId), localCoverHandler(file)])
+      .then(([store, filePath]: [StoreData, string | null]) => {
+        if (!store) throw Object.assign(new Error('該案場不存在!'), { status: 404 })
+        return store.update({
+          name,
+          address,
+          phone,
+          cover: filePath || store.cover
+        })
+      })
+      .then((editedStore: StoreData) => cb(null, { store: editedStore }))
+      .catch((err: Error) => cb(err))
   }
 }
 
