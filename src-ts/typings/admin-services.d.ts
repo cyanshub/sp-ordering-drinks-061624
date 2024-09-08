@@ -65,4 +65,5 @@ export interface AdminServices {
   getUsers: (req: Request, cb: Callback<{ users: UserData[] }>) => void
   patchUser: (req: Request, cb: Callback<{ user: UserData }>) => void
   addOwnership: (req: Request, cb: Callback<{ ownership: OwnershipData }>) => void
+  removeOwnership: (req: Request, cb: Callback<{ ownership: OwnershipData }>) => void
 }

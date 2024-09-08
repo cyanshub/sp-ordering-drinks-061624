@@ -205,6 +205,23 @@ const adminServices: AdminServices = {
       })
       .then((newOwnership: OwnershipData) => cb(null, { ownership: newOwnership }))
       .catch((err: Error) => cb(err))
+  },
+  removeOwnership: (req, cb) => {
+    const storeId = Number(req.body.storeId) // 從隱藏input拿取店家 id
+    const drinkId = Number(req.params.drinkId) // 從路由拿取商品 id
+
+    return Promise.all([Drink.findByPk(drinkId), Ownership.findOne({ where: { storeId, drinkId } })])
+      .then(([drink, ownership]: [DrinkData, OwnershipData]) => {
+        if (!drink) throw Object.assign(new Error('該商品不存在!'), { status: 404 })
+        if (!ownership) throw Object.assign(new Error('商品不在販賣清單!'), { status: 409 })
+
+        // 在刪除之前存儲 ownership 資料
+        const deletedOwnership = ownership
+        // 非空斷言 (!)：使用 ! 運算符告訴 TypeScript 你已經確認 destroy 方法一定存在
+        return ownership.destroy!().then(() => deletedOwnership) // 刪除後回傳已刪除的 ownership 資料
+      })
+      .then((deletedOwnership: OwnershipData) => cb(null, { ownership: deletedOwnership }))
+      .catch((err) => cb(err))
   }
 }
 
