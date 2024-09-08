@@ -76,7 +76,13 @@ const userController = {
   getOrders: (req: Request, res: Response, next: NextFunction) => {
     return userServices.getOrders(req, (err, data) => (err ? next(err) : res.render('users/orders', data)))
   },
-  addOrders: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中')
+  addOrders: (req: Request, res: Response, next: NextFunction) => {
+    return userServices.addOrders(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '已建立訂單, 並成功寄出郵件!')
+      return res.redirect('/orders')
+    })
+  }
 }
 
 export default userController

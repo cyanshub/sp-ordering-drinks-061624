@@ -30,7 +30,13 @@ export interface CartData extends Model {
   updatedAt: date
 }
 
-export interface OrderData extends CartData {}
+// 注意若有關聯資料, 記得增添為可選)
+export interface OrderData extends CartData {
+  Size?: { level?: string }
+  Ice?: { level?: string }
+  Sugar?: { level?: string }
+  Drink?: { name?: string }
+}
 
 export interface DrinkData extends Model {
   id: number
@@ -98,4 +104,5 @@ export interface UserServices {
   removeCart: (req: Request<{ cartId: number }>, cb: Callback<{ cart: CartData }>) => void
 
   getOrders: (req: Request<>, cb: Callback<GetOrdersData>) => void
+  addOrders: (req: Request<>, cb: Callback<{ orders: OrderData[] }>) => void
 }
