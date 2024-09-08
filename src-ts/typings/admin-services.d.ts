@@ -6,6 +6,7 @@ import { Model } from 'sequelize'
 
 // 資料表類型 (注意若有關聯資料, 記得增添為可選)
 import { DrinkData, StoreData } from './store-services'
+import { UserData } from './user-services'
 
 // helpers 工具類型
 import { PaginationResult } from './store-services'
@@ -54,4 +55,5 @@ export interface AdminServices {
   editStore: (req: Request, cb: Callback<{ store: StoreData }>) => void
   putStore: (req: Request<{ id?: number }, {}, PutStoreBody, {}>, cb: Callback<{ store: StoreData }>) => void
   deleteStore: (req: Request, cb: Callback<{ store: StoreData }>) => void
+  getUsers: (req: Request, cb: Callback<{ users: UserData[] }>) => void
 }

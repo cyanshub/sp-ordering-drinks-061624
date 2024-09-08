@@ -3,12 +3,13 @@ import { AdminServices } from '../typings/admin-services'
 import { StoreData, DrinkData } from '../typings/store-services'
 
 // 載入所需 Model
-const { Store, Drink } = require('../models')
+const { Store, Drink, User } = require('../models')
 
 // 載入所需工具
 import { getOffset, getPagination } from '../helpers/pagination-helpers'
 import { Op, literal } from 'sequelize' // 引入 sequelize 查詢符、啟用 SQL 語法
 import { localCoverHandler } from '../helpers/file-helpers'
+import { UserData } from '../typings/user-services'
 
 const adminServices: AdminServices = {
   // 店家相關
@@ -162,6 +163,16 @@ const adminServices: AdminServices = {
         return store.destroy()
       })
       .then((deletedStore: StoreData) => cb(null, { store: deletedStore }))
+      .catch((err: Error) => cb(err))
+  },
+
+  // 使用者相關
+  getUsers: (req, cb) => {
+    return User.findAll({
+      raw: true,
+      attributes: { exclude: ['password'] }
+    })
+      .then((users: UserData[]) => cb(null, { users }))
       .catch((err: Error) => cb(err))
   }
 }
