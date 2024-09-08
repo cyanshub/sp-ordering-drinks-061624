@@ -31,7 +31,13 @@ const adminController = {
       res.redirect('/admin/stores')
     })
   },
-  deleteStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  deleteStore: (req: Request, res: Response, next: NextFunction) => {
+    return adminServices.deleteStore(req, (err, data) => {
+      if (err) return next(err)
+      req.flash('success_messages', '刪除成功!')
+      res.redirect('back')
+    })
+  },
   addOwnership: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   removeOwnership: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getUsers: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),

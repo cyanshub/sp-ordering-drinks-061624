@@ -154,6 +154,15 @@ const adminServices: AdminServices = {
       })
       .then((editedStore: StoreData) => cb(null, { store: editedStore }))
       .catch((err: Error) => cb(err))
+  },
+  deleteStore: (req, cb) => {
+    return Store.findByPk(Number(req.params.id))
+      .then((store: StoreData) => {
+        if (!store) throw Object.assign(new Error('該案場不存在!'), { status: 404 })
+        return store.destroy()
+      })
+      .then((deletedStore: StoreData) => cb(null, { store: deletedStore }))
+      .catch((err: Error) => cb(err))
   }
 }
 

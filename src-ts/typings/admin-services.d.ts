@@ -53,4 +53,5 @@ export interface AdminServices {
   getStore: (req: Request, cb: Callback<GetStoreData>) => void
   editStore: (req: Request, cb: Callback<{ store: StoreData }>) => void
   putStore: (req: Request<{ id?: number }, {}, PutStoreBody, {}>, cb: Callback<{ store: StoreData }>) => void
+  deleteStore: (req: Request, cb: Callback<{ store: StoreData }>) => void
 }
