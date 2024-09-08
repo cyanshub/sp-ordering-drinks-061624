@@ -123,6 +123,14 @@ const adminServices: AdminServices = {
         })
       })
       .catch((err: Error) => cb(err))
+  },
+  editStore: (req, cb) => {
+    return Store.findByPk(req.params.id, { raw: true })
+      .then((store: StoreData) => {
+        if (!store) throw Object.assign(new Error('該店家不存在!'), { status: 404 })
+        return cb(null, { store })
+      })
+      .catch((err: Error) => cb(err))
   }
 }
 
