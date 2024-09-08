@@ -174,6 +174,24 @@ const adminServices: AdminServices = {
     })
       .then((users: UserData[]) => cb(null, { users }))
       .catch((err: Error) => cb(err))
+  },
+  patchUser: (req, cb) => {
+    return User.findByPk(Number(req.params.id), {
+      // 避免密碼資料外洩
+      attributes: { exclude: ['password'] }
+    })
+      .then((user: UserData) => {
+        // 檢查使用者是否存在
+        if (!user) throw Object.assign(new Error('使用者不存在!'), { status: 404 })
+        if (user.email === 'root@example.com') {
+          throw Object.assign(new Error('禁止變更 root 使用者權限!'), { status: 403 })
+        }
+        return user.update({
+          isAdmin: !user.isAdmin
+        })
+      })
+      .then((editedUser: UserData) => cb(null, { user: editedUser }))
+      .catch((err: Error) => cb(err))
   }
 }
 
