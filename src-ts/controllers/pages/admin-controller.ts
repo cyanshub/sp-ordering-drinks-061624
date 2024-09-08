@@ -2,9 +2,12 @@
 import { Request, Response, NextFunction } from 'express'
 
 // 抽取 services 層
+import adminServices from '../../services/admin-services'
 
 const adminController = {
-  getStores: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
+  getStores: (req: Request, res: Response, next: NextFunction) => {
+    return adminServices.getStores(req, (err, data) => (err ? next(err) : res.render('admin/stores', data)))
+  },
   createStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   postStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
   getStore: (req: Request, res: Response, next: NextFunction) => res.send('功能開發中'),
