@@ -4,13 +4,14 @@ import { StoreData, DrinkData } from '../typings/store-services'
 import { OwnershipData } from '../typings/admin-services'
 
 // 載入所需 Model
-const { Store, Drink, User, Ownership } = require('../models')
+const { Store, Drink, User, Ownership, Order, Size, Sugar, Ice } = require('../models')
 
 // 載入所需工具
 import { getOffset, getPagination } from '../helpers/pagination-helpers'
 import { Op, literal } from 'sequelize' // 引入 sequelize 查詢符、啟用 SQL 語法
 import { localCoverHandler } from '../helpers/file-helpers'
-import { UserData } from '../typings/user-services'
+import { OrderData, UserData } from '../typings/user-services'
+import { convertToTaiwanTime } from '../helpers/array-helpers'
 
 const adminServices: AdminServices = {
   // 店家相關
@@ -222,6 +223,65 @@ const adminServices: AdminServices = {
       })
       .then((deletedOwnership: OwnershipData) => cb(null, { ownership: deletedOwnership }))
       .catch((err) => cb(err))
+  },
+  getOrders: (req, cb) => {
+    const userAuth = req.user
+    if (userAuth?.email !== 'root@example.com') {
+      throw Object.assign(new Error('只有專責管理員可以訪問此頁面!'), { status: 403 })
+    }
+
+    const DEFAULT_LIMIT = 5 // 預設每頁顯示幾筆資料
+    const page = Number(req.query.page) || 1 // 預設第一頁或從query string拿資料
+    const limit = Number(req.query.limit) || DEFAULT_LIMIT // 預設每頁顯示資料數或從query string拿資料
+    const offset = getOffset(limit, page)
+    // 確保 keyword 是 string 然後進行 trim
+    const keyword = typeof req.query.keyword === 'string' ? req.query.keyword.trim() : '' // 取得並修剪關鍵字
+    const whereClause = {
+      // find系列語法查詢條件
+      ...(keyword.length > 0
+        ? {
+            [Op.or]: [
+              literal(`LOWER(User.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(User.email) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Drink.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.name) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`LOWER(Store.address) LIKE '%${keyword.toLowerCase()}%'`),
+              literal(`DATE_ADD(Order.created_at, INTERVAL 8 HOUR) LIKE '%${keyword}%'`)
+            ]
+          }
+        : {})
+    }
+
+    return Order.findAndCountAll({
+      raw: true,
+      nest: true,
+      where: whereClause,
+      order: [['id', 'DESC']], // 依建立時間降續排列
+      include: [
+        // 避免密碼外洩
+        { model: User, attributes: { exclude: ['password'] } },
+        Drink,
+        Store,
+        Size,
+        Sugar,
+        Ice
+      ],
+      offset,
+      limit
+    })
+      .then((orders: { rows: OrderData[]; count: number }) => {
+        // 自訂台歡時區
+        const data = convertToTaiwanTime(orders.rows)
+        return cb(null, {
+          orders: data,
+          pagination: getPagination(limit, page, orders.count),
+          isSearched: '/admin/orders', // 決定搜尋表單發送位置
+          keyword,
+          find: 'orders',
+          count: orders.count
+        })
+      })
+      .catch((err: Error) => cb(err))
   }
 }
 

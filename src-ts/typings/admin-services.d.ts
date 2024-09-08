@@ -49,6 +49,15 @@ export interface GetStoreData {
   find: string
 }
 
+export interface GetOrdersData {
+  orders: orderData
+  pagination: PaginationResult
+  isSearched: string
+  keyword: string
+  find: string
+  count: number
+}
+
 interface Callback<T> {
   (err: Error | null, data?: T): void
 }
@@ -66,4 +75,5 @@ export interface AdminServices {
   patchUser: (req: Request, cb: Callback<{ user: UserData }>) => void
   addOwnership: (req: Request, cb: Callback<{ ownership: OwnershipData }>) => void
   removeOwnership: (req: Request, cb: Callback<{ ownership: OwnershipData }>) => void
+  getOrders: (req: Request, cb: Callback<GetOrdersData>) => void
 }
