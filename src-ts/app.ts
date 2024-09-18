@@ -10,6 +10,7 @@ import session from 'express-session'
 import { pages, apis } from './routes'
 import passport from './config/passport' // 注意要導入自訂的
 import { getUser } from './helpers/auth-helpers'
+import scheduleKeepAliveReq from './helpers/req-helpers'
 
 // 載入環境變數
 if (process.env.NODE_ENV !== 'production') {
@@ -63,6 +64,9 @@ app.use((req, res, next) => {
 
 app.use('/api', apis)
 app.use(pages)
+
+// 掛載執行處理程序
+scheduleKeepAliveReq() // 定時發送請求以維持入站流量
 
 // 啟動並監聽網站
 app.listen(port, () => {
